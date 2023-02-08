@@ -8,10 +8,12 @@ const initialState = {
     tasks: [],
 
 }
-
+function isPendingAction(action) {
+    return action.type.endsWith('/pending')
+}
 export const getTasks = createAsyncThunk(
     'tasks/getTasksList',
-    async (_, { rejectWithValue, dispatch }) => {
+    async (_, { rejectWithValue }) => {
         try {
             const tasksList = await api.getTasks();
             console.log(tasksList)
@@ -66,20 +68,27 @@ export const taskSlice = createSlice({
 
         }
     },
-    extraReducers: {
-        [getTasks.pending]: (state) => {
-            state.status = 'Loading';
-        },
-        [getTasks.fulfilled]: (state, action) => {
-            state.status = 'Resolved';
-            state.tasks = action.payload;
-        },
-        [getTasks.rejected]: (state, action) => {
-            state.status = 'Rejected';
-            state.error = action.payload;
-        },
-
+    extraReducers: (builder) => {
+        builder
+            .addMatcher(isPendingAction, (state, action) =>{
+                state[action.meta.requestId] = 'pending'
+            })
+            .addMatcher(
+                // matcher can be defined inline as a type predicate function
+                (action) => action.type.endsWith('/rejected'),
+                (state, action) => {
+                    state[action.meta.requestId] = 'rejected'
+                }
+            )
+            .addMatcher(
+                (action) => action.type.endsWith('/fulfilled'),
+                (state, action) => {
+                    state.tasks = action.payload;
+                    state[action.meta.requestId] = 'fulfilled'
+                }
+            )
     }
+   
 })
 export const { addTask, removeTask, updateTask} = taskSlice.actions;
 export default taskSlice.reducer;

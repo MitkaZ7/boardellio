@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import TaskCard from '../TaskCard/TaskCard'
 import { db } from '../../utils/firebase'
@@ -24,7 +24,7 @@ const TaskList = () => {
   return (
     <ul className='taskList'>
       {
-        tasks.map((task) => <TaskCard key={task.id} title={task.title} priority={task.priority}/>)
+        tasks.map((task) => <TaskCard key={task.objectId} title={task.title} priority={task.priority}/>)
       }
      
     </ul>

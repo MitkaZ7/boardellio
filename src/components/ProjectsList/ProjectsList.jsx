@@ -1,12 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProjectCard from '../ProjectCard/ProjectCard'
 import AddProjectPopup from '../AddProjectPopup/AddProjectPopup'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getProjects } from '../../store/slices/projectSlice';
 const ProjectsList = () => {
+  const projects = useSelector(state => state.projects.projects)
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProjects())
+  }, [])
+  
+
+
   const [isAddProjectPopupOpen, setIsAddProjectPopupOpen] = useState(false)
   const openPopupHandler = () => {
     setIsAddProjectPopupOpen(true);
   }
+
   return (
     <>
     <section className="projects-list">
@@ -15,22 +25,11 @@ const ProjectsList = () => {
           <button className="projects-list__add-button" onClick={openPopupHandler}>Create project</button>
       </header>
       <ul className="projects-list__list">
-          <ProjectCard/>
-
-         
+   
           
-       {/* {
-          Project.map((item) => <Project key={item._id} {...item} />)
-        } */}
-        {/* <li className="projects-list__item">
-          <a href='#' className="projects-list__link">Project ONE</a>
-        </li>
-        <li className="projects-list__item">
-          <a href='#' className="projects-list__link">Project TWO</a>
-        </li>
-        <li className="projects-list__item">
-          <a href='#' className="projects-list__link">Project three</a>
-        </li> */}
+       {
+          projects.map((item) => <ProjectCard key={item.objectId} name={item.name} />)
+        }
 
       </ul>
       

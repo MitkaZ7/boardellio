@@ -23,20 +23,20 @@ class Api {
 
     }
 
-    updateTask() {
-
+    updateTask(taskId,data) {
+        instance.put(`/classes/Task/${taskId}`, data)
     }
 
-    deleteTask() {
-
+    deleteTask(taskId) {
+        instance.delete(`/classes/Task/${taskId}`)
     }
 
     getProjects() {
-        instance.get('/classes/Project')
+        return instance.get('/classes/Project')
             .then(res => {
                 const { results } = res.data;
-                //  console.log(results)
-                return res
+                console.log(results)
+                 return results
             })
     }
 

@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ProjectCard = ({title, link}) => {
+const ProjectCard = ({name, link}) => {
   return (
       <li className="project-card">
-      <a href={link} className="project-card__link">{title}</a>
+      <a href={link} className="project-card__link">{name}</a>
       </li>
   )
 }

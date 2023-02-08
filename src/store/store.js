@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import taskSlice from './slices/taskSlice';
-import projectSlice from './slices/projectSlice'
+import taskSlice from './slices/TaskSlice';
+import projectSlice from './slices/ProjectSlice'
 
 export default configureStore ({
     reducer: {

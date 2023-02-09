@@ -4,12 +4,13 @@ import Layout from '../Layout'
 import {useEffect} from 'react'
 import ProjectsList from '../ProjectsList/ProjectsList'
 import Project from '../Project/Project'
+import { getAllTasks } from '../../store/slices/tasksSlice'
 
 import { useDispatch, useSelector } from 'react-redux'
 function App() {
-  // const tasks = useSelector(state => state.tasks.tasks)
+ 
   const dispatch = useDispatch();
-  
+
   return (
 
       <Routes>

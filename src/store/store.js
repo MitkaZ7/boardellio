@@ -1,11 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import taskSlice from './slices/TaskSlice';
-import projectSlice from './slices/ProjectSlice'
+
+import tasksSlice from './slices/tasksSlice';
+import projectSlice from './slices/projectSlice'
+import popupSlice from './slices/popupSlice'
+import loaderSlice from './slices/loaderSlice';
 
 export default configureStore ({
     reducer: {
-        task: taskSlice,
-        project: projectSlice,
+        tasks: tasksSlice,
+        popup: popupSlice,
+        projects: projectSlice,
+        loader: loaderSlice,
+
     }
        
+})
 })

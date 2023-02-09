@@ -1,22 +1,24 @@
 import React,{ useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { closePopup } from '../../store/slices/popupSlice';
 
-
-
-const Popup = ({ isOpen, setOpen,  children }) => {
- 
-  function closePopup(evt) {
-    setOpen(false);
-    
+const Popup = ({children}) => {
+  const { isOpen } = useSelector((state) => state.popup)
+  const dispatch = useDispatch();
+  function closePopupHandler() {
+    dispatch(closePopup())
   }
+  
   const closeByOverlayClick = (evt) => {
     if (evt.target === evt.currentTarget) {
-      closePopup();
+      closePopupHandler()
     }
   }
+
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.keyCode === 27) {
-        closePopup()
+        closePopupHandler()
       }
     };
     window.addEventListener('keydown', handleEsc);
@@ -26,9 +28,10 @@ const Popup = ({ isOpen, setOpen,  children }) => {
   }, []);
   
   return (
+    
     <div className={`popup ${isOpen ? 'popup_state_open' : ''}`} onClick={closeByOverlayClick}>
       <div className="popup__container">
-        <button className="popup__button-close button" type="button" onClick={closePopup}></button>
+        <button className="popup__button-close button" type="button" onClick={closePopupHandler}></button>
         {children}
       </div>
     </div>

@@ -1,12 +1,12 @@
 import React from 'react'
 
-const TaskCard = ({taskTitle, taskPriority, taskLink}) => {
+const TaskCard = ({title, priority, link}) => {
   return (
    
       <li className="task-item">
-      <a href={taskLink} className="task-item__link">
-          <span className="task-item__title">{taskTitle}</span>
-          <span className="task-item__priotiry">{taskPriority}</span>
+      <a href={link} className="task-item__link">
+        <span className="task-item__title">{title}</span>
+        <span className="task-item__priotiry">{priority}</span>
         </a>
       </li>
      

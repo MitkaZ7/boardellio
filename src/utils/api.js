@@ -1,37 +1,50 @@
-import { collection, doc, setDoc, getDoc, getDocs } from "firebase/firestore";
-import { db } from '../utils/firebase'
+import axios from 'axios';
+const instance = axios.create({
+    baseURL: 'https://parseapi.back4app.com',
+    headers: {
+        'X-Parse-Application-Id': process.env.REACT_APP_PARSE_APP_ID,
+        'X-Parse-REST-API-Key': process.env.REACT_APP_PARSE_API_KEY,
+        'Content-Type': 'application/json',
+    }
+})
 class Api {
-   
 
     getTasks() {
-     
-       const res =  getDocs(collection(db,'tasks'))
-            .then((querySnapshot) =>{
-                const tasksArray = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
-                console.log(tasksArray)
-                return tasksArray;
-            });
-            return res;
+        return instance.get('/classes/Task')
+             .then(res => {
+                 const {results} = res.data;
+                //  console.log(results)
+                 return results
+             })
+    }
+    
+    createTask(data) {
+        instance.post('/classes/Task' , JSON.stringify(data))
+
     }
 
-    addTask(taskData) {
-
+    updateTask(taskId,data) {
+        instance.put(`/classes/Task/${taskId}`, data)
     }
-   
+
+    deleteTask(taskId) {
+        instance.delete(`/classes/Task/${taskId}`)
+    }
+
+    getProjects() {
+        return instance.get('/classes/Project')
+            .then(res => {
+                const { results } = res.data;
+                // console.log(results)
+                 return results
+            })
+    }
+
+    createProjects(data) {
+        instance.post('/classes/Project', JSON.stringify(data)) 
+    }
 
 }
-// export const getAllTasks = async () => {
 
-//     await getDocs(collection(db, "tasks"))
-//         .then((querySnapshot) => {
-//             const newData = querySnapshot.docs
-//                 .map((doc) => ({ ...doc.data(), id: doc.id }));
-//             return newData;
-//         })
-
-// }
-
-
-
-const api = new Api();
+const api = new Api(instance);
 export default api;

@@ -35,7 +35,7 @@ class Api {
         return instance.get('/classes/Project')
             .then(res => {
                 const { results } = res.data;
-                console.log(results)
+                // console.log(results)
                  return results
             })
     }

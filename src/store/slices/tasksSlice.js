@@ -6,6 +6,7 @@ import Parse from 'parse/dist/parse.min.js';
 import api from '../../utils/api'
 const initialState = {
     tasks: [],
+    isLoad: false,
 
 }
 function isPendingAction(action) {
@@ -85,6 +86,7 @@ export const taskSlice = createSlice({
                 (state, action) => {
                     state.tasks = action.payload;
                     state[action.meta.requestId] = 'fulfilled'
+                    state.isLoad = true;
                 }
             )
     }

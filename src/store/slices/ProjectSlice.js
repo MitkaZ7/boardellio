@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import loaderSlice from './loaderSlice';
 import api from '../../utils/api'
 const initialState = {
     projects: [],
-
+    isLoad: false,
 };
 function isPendingAction(action) {
     return action.type.endsWith('/pending')
@@ -12,7 +13,7 @@ export const getProjects = createAsyncThunk(
     async (_,{ rejectWithValue,dispatch}) => {
         try {
             const projectsList = await api.getProjects();
-            console.log(projectsList)
+            // console.log(projectsList)
             return projectsList;
         } catch (error) {
             return rejectWithValue((error.message))
@@ -33,12 +34,20 @@ const projectSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // .addMatcher(isPendingAction, (state, action) => {
-            //     state[action.meta.requestId] = 'pending'
-            // })
+            .addMatcher(isPendingAction, (state, action) => {
+                state[action.meta.requestId] = 'pending';
+          
+            })
             .addMatcher(
                 (action) => action.type.startsWith('projects'),
             )
+            // .addMatcher(
+            //     (action) => action.type.endsWith('pending'),
+            //     (state, action) => {
+            //         console.log(state)
+            //     }
+                
+            // )
             .addMatcher(
                 // matcher can be defined inline as a type predicate function
                 (action) => action.type.endsWith('/rejected'),
@@ -50,7 +59,9 @@ const projectSlice = createSlice({
                 (action) => action.type.endsWith('/fulfilled'),
                 (state, action) => {
                     state.projects = action.payload;
+                    state.isLoad = true;
                     state[action.meta.requestId] = 'fulfilled'
+                   
                 }
             )
     }

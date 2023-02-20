@@ -9,6 +9,7 @@ import Parse from 'parse/dist/parse.min.js';
 import api from '../../utils/api' 
 
 const TaskList = () => {
+  const { isLoading } = useSelector(state => state.loader);
   const dispatch = useDispatch();
 
 
@@ -25,7 +26,7 @@ const TaskList = () => {
  
   return (
     <>
-      {!isLoad && <Loader />} 
+      {isLoading && <Loader />} 
     
     <ul className='taskList'>
       {

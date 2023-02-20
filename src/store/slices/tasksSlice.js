@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import parseDb from '../../utils/parseDatabase'
 import Parse from 'parse/dist/parse.min.js';
-// import { db } from '../../utils/firebase';
-// import { getDocs, collection } from 'firebase/firestore';
 import api from '../../utils/api'
+import { hideLoader, showLoader } from './loaderSlice';
 const initialState = {
     tasks: [],
     isLoad: false,
@@ -14,10 +12,12 @@ function isPendingAction(action) {
 }
 export const getTasks = createAsyncThunk(
     'tasks/getTasksList',
-    async (_, { rejectWithValue }) => {
+    async (_, { rejectWithValue, dispatch }) => {
+        dispatch(showLoader())
         try {
             const tasksList = await api.getTasks();
             console.log(tasksList)
+            dispatch(hideLoader())
             return tasksList;
         } catch (error) {
             return rejectWithValue((error.message))

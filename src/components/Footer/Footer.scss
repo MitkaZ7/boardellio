@@ -7,4 +7,11 @@
     height: 10px;
     grid-area: footer;
   }
+  &__icon {
+    background-image: url('../../assets/icons/github-icon.svg');
+    height: 50px;
+    width: 25px;
+    display: block;
+    margin-left: 10px;
+  }
 }

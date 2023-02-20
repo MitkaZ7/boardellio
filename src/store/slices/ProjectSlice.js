@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import loaderSlice from './loaderSlice';
+import { hideLoader, showLoader } from './loaderSlice';
 import api from '../../utils/api'
 const initialState = {
     projects: [],
@@ -11,8 +11,10 @@ function isPendingAction(action) {
 export const getProjects = createAsyncThunk(
     'projects/getProjectsList',
     async (_,{ rejectWithValue,dispatch}) => {
+        dispatch(showLoader())
         try {
             const projectsList = await api.getProjects();
+            dispatch(hideLoader())
             // console.log(projectsList)
             return projectsList;
         } catch (error) {

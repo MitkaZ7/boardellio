@@ -1,6 +1,7 @@
 # Одностраничное приложение "Dashboard" 
 Создан через [Create React App](https://github.com/facebook/create-react-app).
 Дизайн и стиль свой. Находится в процессе разработки на данный момент.
+Состоит из двух страниц, с выбором проекта и выбором задач. Взаимодействие(изменение задач/проектов) через модальные окна.
 
 ### Стек:
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
@@ -13,6 +14,7 @@
 + **React hook form**  
 + **React DnD**
 + **Redux Toolkit**
++ Axios
 + GRID
 + BEM
 + **[Back4App в качестве бэкенда](https://dashboard.back4app.com/)**

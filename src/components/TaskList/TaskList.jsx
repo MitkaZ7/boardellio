@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import TaskCard from '../TaskCard/TaskCard'
 import { db } from '../../utils/firebase'
 import { getTasks } from '../../store/slices/tasksSlice'
-import Loader from '../Loader/Loader';
-import { doc, getDocs, addDoc, collection } from "firebase/firestore";
-import Parse from 'parse/dist/parse.min.js';
-import api from '../../utils/api' 
+import Loader from '../Loader/Loader'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import  {DndProvider} from 'react-dnd'
 
 const TaskList = () => {
   const { isLoading } = useSelector(state => state.loader);
@@ -25,7 +24,7 @@ const TaskList = () => {
   
  
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       {isLoading && <Loader />} 
     
     <ul className='taskList'>
@@ -34,7 +33,7 @@ const TaskList = () => {
       }
      
     </ul>
-    </>
+    </DndProvider>
   )
 }
 

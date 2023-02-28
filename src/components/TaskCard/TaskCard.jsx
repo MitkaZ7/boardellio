@@ -1,6 +1,15 @@
 import React from 'react'
-
+import { useDrag } from 'react-dnd'
 const TaskCard = ({title, priority, link}) => {
+  const itemTypes = {
+    TASK: 'task'
+  }
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: itemTypes.TASK,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging()
+    })
+  }))
   return (
    
       <li className="task-item">

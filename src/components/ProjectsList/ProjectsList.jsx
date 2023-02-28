@@ -3,6 +3,7 @@ import ProjectCard from '../ProjectCard/ProjectCard'
 import AddProjectPopup from '../AddProjectPopup/AddProjectPopup'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProjects } from '../../store/slices/projectSlice';
+import { openPopup } from '../../store/slices/popupSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice'
 import Loader from '../Loader/Loader';
 const ProjectsList = () => {
@@ -15,9 +16,9 @@ const ProjectsList = () => {
   
 
 
-  const [isAddProjectPopupOpen, setIsAddProjectPopupOpen] = useState(false)
+  // const [isAddProjectPopupOpen, setIsAddProjectPopupOpen] = useState(false)
   const openPopupHandler = () => {
-    setIsAddProjectPopupOpen(true);
+    dispatch(openPopup());
   }
 
   return (
@@ -40,7 +41,7 @@ const ProjectsList = () => {
       
 
     </section>
-      <AddProjectPopup isOpen={isAddProjectPopupOpen} setOpen={setIsAddProjectPopupOpen} />
+      <AddProjectPopup />
     </>
   )
 }

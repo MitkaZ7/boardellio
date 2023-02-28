@@ -6,6 +6,7 @@ import { getProjects } from '../../store/slices/projectSlice';
 import { openPopup } from '../../store/slices/popupSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice'
 import Loader from '../Loader/Loader';
+import { Link, useParams } from 'react-router-dom'
 const ProjectsList = () => {
   const { projects } = useSelector(state => state.projects);
   const { isLoading } = useSelector(state => state.loader);
@@ -13,7 +14,7 @@ const ProjectsList = () => {
   useEffect(() => {
     dispatch(getProjects())
   }, [])
-  
+  const {id} = useParams();
 
 
   // const [isAddProjectPopupOpen, setIsAddProjectPopupOpen] = useState(false)
@@ -34,7 +35,12 @@ const ProjectsList = () => {
    
           
        {
-          projects.map((item) => <ProjectCard key={item.objectId} name={item.name} />)
+          projects.map((item) => 
+          
+          <Link key={item.objectId} to={`/projects/${item.objectId}`}>
+              <ProjectCard name={item.name} />
+           </Link>
+          )
         }
 
       </ul>

@@ -15,7 +15,7 @@ export const getProjects = createAsyncThunk(
         try {
             const projectsList = await api.getProjects();
             dispatch(hideLoader())
-            // console.log(projectsList)
+            console.log(projectsList)
             return projectsList;
         } catch (error) {
             return rejectWithValue((error.message))

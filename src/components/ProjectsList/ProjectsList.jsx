@@ -14,12 +14,15 @@ const ProjectsList = () => {
   useEffect(() => {
     dispatch(getProjects())
   }, [])
-  const {id} = useParams();
-
+  const {} = useParams();
+  const popupProps = {
+    name: 'addProject',
+    isOpen: false,
+  }
 
   // const [isAddProjectPopupOpen, setIsAddProjectPopupOpen] = useState(false)
   const openPopupHandler = () => {
-    dispatch(openPopup());
+    dispatch(openPopup(popupProps));
   }
 
   return (
@@ -36,10 +39,9 @@ const ProjectsList = () => {
           
        {
           projects.map((item) => 
-          
-          <Link key={item.objectId} to={`/projects/${item.objectId}`}>
+            <Link key={item.objectId} to={`/projects/${item.objectId}`}>
               <ProjectCard name={item.name} />
-           </Link>
+            </Link>
           )
         }
 

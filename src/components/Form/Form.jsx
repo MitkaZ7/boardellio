@@ -7,10 +7,6 @@ import { addTask, getTasks, createTask } from '../../store/slices/tasksSlice'
 import {useForm, reset} from 'react-hook-form'
 import Parse from 'parse/dist/parse.min.js';
 
-
-
-
-
 const Form = () => {
    
     const dispatch = useDispatch();

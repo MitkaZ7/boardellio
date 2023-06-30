@@ -42,10 +42,6 @@ const TaskList = ({ onTaskClick, taskStatus }) => {
             onClick={() => handleTaskClick(task.id)}
           />
         ))}
-
-
-
-
         {activeTaskId && <TaskPopup taskId={activeTaskId} />} {/* Рендеринг попапа только при наличии активного taskId */}
       </ul>
     </DndProvider>

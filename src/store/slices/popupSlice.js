@@ -7,6 +7,10 @@ const initialState = {
     openedTaskId: null,
     addTaskPopupIsOpen: false,
     activePopup: null,
+    addProjectPopup: {
+        isOpen: false,
+        data: null,
+    }
 }
 const popupSlice = createSlice({
     name: 'popup',
@@ -19,7 +23,7 @@ const popupSlice = createSlice({
         },
         closePopup: (state,action) => {
             state.isOpen = false;
-            state.popups = []
+            // state.popups = []
         },
         openTaskPopup: (state,action) => {
             console.log(action.payload)
@@ -30,19 +34,18 @@ const popupSlice = createSlice({
             state.taskPopupIsOpen = false;
             state.openedTaskId = null; 
         },
+        openAddProjectPopup(state) {
+            state.addProjectPopup.isOpen = true;
+        },
+        closeAddProjectPopup(state) {
+            state.addProjectPopup.isOpen = false;
+        },
+        setAddProjectPopupData(state, action) {
+            state.addProjectPopup.data = action.payload;
+        },
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addMatcher(
-    //             (action) => action.type.endsWith('/fulfilled'),
-    //             (state, action) => {
- 
-    //                 console.log(action.payload)
-    //             }
-               
-    //         )
-    // },
+  
 });
 
-export const { openPopup, closePopup, openTaskPopup, closeTaskPopup } = popupSlice.actions;
+export const { openPopup, closePopup, openTaskPopup, closeTaskPopup, openAddProjectPopup, closeAddProjectPopup, setAddProjectPopupData } = popupSlice.actions;
 export default popupSlice.reducer;

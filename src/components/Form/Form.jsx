@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
 import Upload from '../../assets/icons/upload.svg'
 import { useDispatch } from 'react-redux'
-
 import { closePopup } from '../../store/slices/popupSlice'
 import { addTask, getTasks, createTask } from '../../store/slices/tasksSlice'
-import {useForm, reset} from 'react-hook-form'
-import Parse from 'parse/dist/parse.min.js';
+import { useForm } from 'react-hook-form'
+
 
 const Form = () => {
    
     const dispatch = useDispatch();
-    const { register, handleSubmit, reset, formState } = useForm();
+    const { register, handleSubmit, reset } = useForm();
   
     const onSubmit = async data => {
         dispatch(createTask({
@@ -19,15 +18,9 @@ const Form = () => {
             description: data.description,
             priority: data.priority,
         }))
-        // console.log(data)
-
-      
-        // const task = new Parse.Object('Task');
-        // task.set('title','11gfffsssffffd sdf');
-        // await task.save();
-  
+        
         dispatch(closePopup())
-       
+        reset();
     };
    
     

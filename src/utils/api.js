@@ -40,9 +40,10 @@ class Api {
             })
     }
 
-    createProjects(data) {
-        instance.post('/classes/Project', JSON.stringify(data)) 
+    createProject(data) {
+        return instance.post('/classes/Project', JSON.stringify(data));
     }
+
 
 }
 

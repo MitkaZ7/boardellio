@@ -20,7 +20,8 @@ const AddProjectPopup = () => {
     console.log('Form submitted!');
     dispatch(createProject(formData))
       .then(() => dispatch(getProjects()))
-      .then(() => dispatch(closePopup()));
+      .then(() => dispatch(closePopup()))
+      .then(() => reset());
   };
 
   // useEffect(() => {

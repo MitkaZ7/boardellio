@@ -6,6 +6,7 @@ import api from '../../utils/api';
 const initialState = {
     projects: [],
     isLoad: false,
+    selectedProjectId: localStorage.getItem("selectedProjectId") || null,
 };
 
 function isPendingAction(action) {
@@ -16,7 +17,6 @@ export const getProjects = createAsyncThunk(
     'projects/getProjectsList',
     async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
-        
         try {
             dispatch(showLoader());
             const projectsList = await api.getProjects();
@@ -50,7 +50,15 @@ const projectSlice = createSlice({
         addProject(state, action) {
             state.projects.push(action.payload);
         },
-        updateProject(state, action) { },
+        updateProject(state, action) {},
+        selectProject(state,action) {
+            state.selectedProjectId = action.payload;
+            localStorage.setItem("selectedProjectId", action.payload);
+        },
+        resetSelectedProjectId: (state) => {
+            state.selectedProjectId = null;
+            localStorage.removeItem("selectedProjectId"); 
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -87,5 +95,5 @@ const projectSlice = createSlice({
     },
 });
 
-export const { addProject, updateProject } = projectSlice.actions;
+export const { addProject, updateProject, selectProject, resetSelectedProjectId } = projectSlice.actions;
 export default projectSlice.reducer;

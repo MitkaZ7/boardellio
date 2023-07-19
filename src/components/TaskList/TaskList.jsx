@@ -1,33 +1,31 @@
-import React, {useEffect,useState} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import TaskCard from '../TaskCard/TaskCard'
-import { getTasks } from '../../store/slices/tasksSlice'
-import Loader from '../Loader/Loader'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import {DndProvider} from 'react-dnd'
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import TaskCard from '../TaskCard/TaskCard';
+import { getTasks, updateTaskStatus, setSelectedTaskStatus } from '../../store/slices/tasksSlice';
+import Loader from '../Loader/Loader';
 import { openTaskPopup } from '../../store/slices/popupSlice';
-import TaskPopup from '../TaskPopup/TaskPopup'
+import TaskPopup from '../TaskPopup/TaskPopup';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider, useDrop } from 'react-dnd';
 
-
-const TaskList = ({ onTaskClick, taskStatus }) => {
-  const { isLoading } = useSelector(state => state.loader);
+const TaskList = forwardRef(({ onTaskClick, taskStatus }, ref) => {
+  const { isLoading } = useSelector((state) => state.loader);
   const dispatch = useDispatch();
   const [activeTaskId, setActiveTaskId] = useState(null);
+  
   const handleTaskClick = (taskId) => {
     onTaskClick(taskId);
   };
 
-
-
   const { tasks } = useSelector((state) => state.tasks);
   useEffect(() => {
     dispatch(getTasks());
-    console.log(tasks)
   }, []);
-  
-  const filteredTasks = tasks[taskStatus] || [];
 
-  
+  const filteredTasks = tasks[taskStatus] || [];
+ 
+
+
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -42,10 +40,10 @@ const TaskList = ({ onTaskClick, taskStatus }) => {
             onClick={() => handleTaskClick(task.id)}
           />
         ))}
-        {activeTaskId && <TaskPopup taskId={activeTaskId} />} {/* Рендеринг попапа только при наличии активного taskId */}
+        {activeTaskId && <TaskPopup taskId={activeTaskId} />}
       </ul>
     </DndProvider>
-  )
-}
+  );
+});
 
-export default TaskList
+export default TaskList;

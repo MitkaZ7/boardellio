@@ -10,7 +10,7 @@ const Popup = ({ children, resetForm }) => {
   const dispatch = useDispatch();
   function closePopupHandler() {
     dispatch(closePopup());
-    resetForm();
+   
   }
 
   

@@ -18,7 +18,7 @@ const Project = ({ projectTitle }) => {
 
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log('Project ID:', id);
+  // console.log('Project ID:', id);
   const openPopupHandler = () => {
     dispatch(openPopup({ isOpen: true }));
   };

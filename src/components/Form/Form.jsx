@@ -9,15 +9,16 @@ import { createTask } from '../../store/slices/tasksSlice';
 const Form = ({ projects }) => {
     const dispatch = useDispatch();
     const { register, handleSubmit, reset } = useForm();
-
+    const [selectedProject, setSelectedProject] = useState(null);
     const onSubmit = async (data) => {
         dispatch(
             createTask({
                 title: data.title,
                 isCompleted: false,
+                status: 'dev',
                 description: data.description,
                 priority: data.priority,
-                project: data.project,
+                projectId: selectedProject,
             })
         );
 
@@ -29,13 +30,13 @@ const Form = ({ projects }) => {
         <form id="form" action="#" className="form" onSubmit={handleSubmit(onSubmit)}>
             <h3 className="form__title">Add new task</h3>
             <fieldset className="form__fieldset">
-                <input className="form__input" {...register('title')} />
+                <input className="form__input" {...register('title')} placeholder="Add task title" />
 
-                <select className="form__select" {...register('project')}>
+                <select className="form__select" {...register('project')} onChange={(e) => setSelectedProject(e.target.value)}>
                     <option value="noNameProject">Select a project</option>
                     {Array.isArray(projects) &&
                         projects.map((project) => (
-                            <option key={project.objectId} value={project.name}>
+                            <option key={project.objectId} value={project.objectId}>
                                 {project.name}
                             </option>
                         ))}

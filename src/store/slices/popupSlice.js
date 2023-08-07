@@ -26,7 +26,7 @@ const popupSlice = createSlice({
             // state.popups = []
         },
         openTaskPopup: (state,action) => {
-            console.log(action.payload)
+            // console.log(action.payload)
             state.taskPopupIsOpen = true;
             state.openedTaskId = action.payload;
         },

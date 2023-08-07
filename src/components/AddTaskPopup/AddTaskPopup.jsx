@@ -3,6 +3,7 @@ import Popup from '../Popup/Popup';
 import Form from '../Form/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { closePopup } from '../../store/slices/popupSlice';
+
 import { getProjects } from '../../store/slices/projectSlice';
 
 const AddTaskPopup = () => {

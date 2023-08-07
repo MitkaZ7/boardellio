@@ -21,7 +21,6 @@ export const getProjects = createAsyncThunk(
             dispatch(showLoader());
             const projectsList = await api.getProjects();
             dispatch(hideLoader());
-            console.log(projectsList);
             return projectsList;
         } catch (error) {
             return rejectWithValue(error.message);

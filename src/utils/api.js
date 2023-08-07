@@ -19,7 +19,8 @@ class Api {
     // }
     
     createTask(data) {
-        return instance.post('/classes/Task' , JSON.stringify(data))
+        console.log(JSON.stringify(data))
+        return instance.post('/classes/Task/' , data)
 
     }
 
@@ -47,7 +48,7 @@ class Api {
             .get('/classes/Task', { params: queryParams })
             .then((res) => {
                 const { results } = res.data;
-                console.log('Received tasks:', results);
+                // console.log('Received tasks:', results);
                 return results;
             });
     }
@@ -70,7 +71,7 @@ class Api {
         return instance.get('/classes/Project')
             .then(res => {
                 const { results } = res.data;
-                // console.log(results)
+                console.log(results)
                  return results
             })
     }
@@ -82,7 +83,7 @@ class Api {
         return instance.get(`/classes/Project/${projectId}`)
             .then((res) => res.data);
     }
-
+   
 
 }
 

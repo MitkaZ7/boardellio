@@ -17,30 +17,17 @@ const AddProjectPopup = () => {
   const { isOpen, data } = useSelector((state) => state.popup.addProjectPopup);
 
   const onSubmit = (formData) => {
-    console.log('Form submitted!');
     dispatch(createProject(formData))
       .then(() => dispatch(getProjects()))
       .then(() => dispatch(closePopup()))
       .then(() => reset());
   };
 
-  // useEffect(() => {
-  //   reset(); // 
-  // }, [isOpen, reset]);
-
-
   const closePopupHandler = () => {
     dispatch(closeAddProjectPopup());
     reset()
   };
   
-  // const onSubmit = data => {
-  //   console.log(data);
-  // };
-  
-  // const closePopupHandler = () => {
-  //   dispatch(closePopup());
-  // }
   return (
     <Popup className="popup_place_addProjectPopup" isOpen={isOpen} onClose={closePopupHandler} resetForm={reset}>
       <form onSubmit={handleSubmit(onSubmit)} className="form">

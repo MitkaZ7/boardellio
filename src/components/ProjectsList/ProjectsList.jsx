@@ -17,6 +17,8 @@ const ProjectsList = () => {
 
   useEffect(() => {
     dispatch(getProjects());
+    let arr = Object.entries(projects)
+    console.log(arr)
   }, [dispatch]);
 
   const popupProps = {
@@ -29,9 +31,9 @@ const ProjectsList = () => {
   };
 
   // Проверяем, что projects - это массив перед его использованием
-  if (!Array.isArray(projects) || projects.length === 0) {
-    return null;
-  }
+  // if (!Array.isArray(projects) || projects.length === 0) {
+  //   return null;
+  // }
 
   return (
     <>
@@ -44,8 +46,8 @@ const ProjectsList = () => {
           </button>
         </header>
         <ul className="projects-list__list">
-          {projects.map(item => (
-            item && <ProjectCard key={item.objectId} name={item.name} projectId={item.objectId} />
+          {Object.entries(projects).map(([projectId, projectData]) => (
+            <ProjectCard key={projectId} name={projectData.title} projectId={projectId} />
           ))}
         </ul>
       </section>

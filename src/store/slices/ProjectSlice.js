@@ -81,7 +81,8 @@ const projectSlice = createSlice({
                 (state, action) => {
                     const { dispatch } = builder;
                     if (action.type === createProject.fulfilled.toString()) {
-                        state.projects.push(action.payload);
+                        
+                        // state.projects.push(action.payload);
                         // dispatch(closePopup());
                       
                     } else {

@@ -1,7 +1,10 @@
 import axios from 'axios';
 const instance = axios.create({
     // baseURL: 'https://firestore.googleapis.com/v1/projects/dashboard-app-2ad06/databases/(default)/documents',
-    baseURL: 'https://dashboard-app-2ad06-default-rtdb.europe-west1.firebasedatabase.app/'
+    baseURL: 'https://dashboard-app-2ad06-default-rtdb.europe-west1.firebasedatabase.app/',
+    // headers: {
+    //     Authorization: 
+    // }
 })
 class Api {
     createTask(data) {
@@ -27,7 +30,7 @@ class Api {
             include: 'project',
         };
         return instance
-            .get('/classes/Task', { params: queryParams })
+            .get('/tasks.json', { params: queryParams })
             .then((res) => {
                 const { results } = res.data;
                 // console.log('Received tasks:', results);
@@ -38,7 +41,6 @@ class Api {
         return instance.get('/projects.json')
             .then(res => {
                 const { data } = res;
-                console.log(data)
                 return data
             })
     }
@@ -58,10 +60,10 @@ class Api {
     // createProject(data) {
     //     return instance.post('/classes/Project', JSON.stringify(data));
     // }
-    getProjectById(projectId) {
-        return instance.get(`/classes/Project/${projectId}`)
-            .then((res) => res.data);
-    }
+    // getProjectById(projectId) {
+    //     return instance.get(`/classes/Project/${projectId}`)
+    //         .then((res) => res.data);
+    // }
    
 
 }

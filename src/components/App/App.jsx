@@ -12,8 +12,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<ProjectsList />} />
-        <Route path="/projects" element={<ProjectsList />} />
-        <Route path="/:id" element={<Project />} />
+        <Route path="/projects/" element={<ProjectsList />} />
+          <Route path="/projects/:id" element={<Project />} />
         <Route path="/projects/:id/:taskId" element={<TaskPopup />} />
       </Route>
     </Routes>

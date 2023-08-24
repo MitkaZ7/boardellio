@@ -14,7 +14,7 @@ import { itemTypes } from '../../utils/constants';
 const Project = ({ projectTitle }) => {
   // const { selectedProjectId } = useSelector(state => state.projects);
   const { selectedTaskId } = useSelector(state => state.popup);
-  const { activeTaskId, selectedTaskStatus } = useSelector(state => state.tasks);
+  // const { activeTaskId, selectedTaskStatus } = useSelector(state => state.tasks);
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -25,11 +25,11 @@ const Project = ({ projectTitle }) => {
   const openTaskPopupHandler = (taskId) => {
     dispatch(openTaskPopup(taskId));
   };
-  // useEffect(() => {
+  useEffect(() => {
   
     
-  //   dispatch(getTasks());
-  // }, [dispatch]);
+    dispatch(getTasks());
+  }, [dispatch]);
   // const handleTaskDrop = (taskId, newStatus) => {
   //   dispatch(updateTaskStatus({ taskId, previousStatus: selectedTaskStatus, newStatus }));
   // };
@@ -86,7 +86,7 @@ const Project = ({ projectTitle }) => {
           </section>
         </section>
       </article>
-      {selectedTaskId && <TaskPopup taskId={selectedTaskId} />}
+      {/* {selectedTaskId && <TaskPopup taskId={selectedTaskId} />} */}
       <AddTaskPopup />
     </DndProvider>
   );

@@ -17,8 +17,6 @@ const ProjectsList = () => {
 
   useEffect(() => {
     dispatch(getProjects());
-    let arr = Object.entries(projects)
-    console.log(arr)
   }, [dispatch]);
 
   const popupProps = {

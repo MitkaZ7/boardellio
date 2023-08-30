@@ -19,24 +19,42 @@ class Api {
          return instance.delete(`/classes/Task/${taskId}`)
     }
     getProjectTasks(projectId) {
-        const queryParams = {
-            where: JSON.stringify({
-                project: {
-                    __type: 'Pointer',
-                    className: 'Project',
-                    objectId: projectId,
-                },
-            }),
-            include: 'project',
-        };
         return instance
-            .get('/tasks.json', { params: queryParams })
+            .get('/tasks.json', {
+            params: {
+                orderBy: '"projectId"',
+                equalTo: `"${projectId}"`
+            }
+            })
             .then((res) => {
-                const { results } = res.data;
-                // console.log('Received tasks:', results);
-                return results;
+                const tasksArray = [];
+                for (const taskId in res.data) {
+                    tasksArray.push(res.data[taskId]);
+                }
+                console.log(tasksArray);
+                return tasksArray;
             });
     }
+ 
+    // getProjectTasks(projectId) {
+    //     const queryParams = {
+    //         where: JSON.stringify({
+    //             project: {
+    //                 __type: 'Pointer',
+    //                 className: 'Project',
+    //                 objectId: projectId,
+    //             },
+    //         }),
+    //         include: 'project',
+    //     };
+    //     return instance
+    //         .get('/tasks.json', { params: queryParams })
+    //         .then((res) => {
+    //             const { results } = res.data;
+    //             // console.log('Received tasks:', results);
+    //             return results;
+    //         });
+    // }
     getProjects() {
         return instance.get('/projects.json')
             .then(res => {

@@ -30,18 +30,17 @@ const Form = ({ projects }) => {
         <form id="form" action="#" className="form" onSubmit={handleSubmit(onSubmit)}>
             <h3 className="form__title">Add new task</h3>
             <fieldset className="form__fieldset">
-                <input className="form__input" {...register('title')} placeholder="Add task title" />
+                <input className="form__input" {...register('title', {required: true, maxLength:5})} placeholder="Add task title" />
 
                 <select className="form__select" {...register('project')} onChange={(e) => setSelectedProject(e.target.value)}>
                     <option value="noNameProject">Select a project</option>
-                    {Array.isArray(projects) &&
-                        projects.map((project) => (
-                            <option key={project.objectId} value={project.objectId}>
-                                {project.name}
-                            </option>
-                        ))}
+                    {Object.entries(projects).map(([projectId, projectData]) => (
+                        <option key={projectId} value={projectId}>
+                            {projectData.title}
+                        </option>
+                    ))}
                 </select>
-                <select className="form__select" {...register('priority')}>
+                <select className="form__select" {...register('priority', { required: true})} >
                     <option value="usual">Assign priority</option>
                     <option value="usual">usual</option>
                     <option value="seriously">seriously</option>

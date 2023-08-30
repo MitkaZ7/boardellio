@@ -20,6 +20,7 @@ export const getProjects = createAsyncThunk(
         try {
             dispatch(showLoader());
             const projectsList = await api.getProjects();
+            // console.log(projectsList)
             dispatch(hideLoader());
             return projectsList;
         } catch (error) {

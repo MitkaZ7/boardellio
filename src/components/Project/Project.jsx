@@ -11,8 +11,11 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { itemTypes } from '../../utils/constants';
 
+
 const Project = ({ projectTitle }) => {
-  // const { selectedProjectId } = useSelector(state => state.projects);
+  const params = useParams();
+  const current = params.projectTitle;
+  const { selectedProjectId } = useSelector(state => state.projects);
   const { selectedTaskId } = useSelector(state => state.popup);
   // const { activeTaskId, selectedTaskStatus } = useSelector(state => state.tasks);
 
@@ -26,10 +29,14 @@ const Project = ({ projectTitle }) => {
     dispatch(openTaskPopup(taskId));
   };
   useEffect(() => {
-  
-    
+    if (!selectedProjectId) {
+      const storedSelectedProjectId = localStorage.getItem('selectedProjectId');
+      if (storedSelectedProjectId) {
+        dispatch(selectProject(storedSelectedProjectId));
+      }
+    }
     dispatch(getTasks());
-  }, [dispatch]);
+  }, [id, selectedProjectId, dispatch]);
   // const handleTaskDrop = (taskId, newStatus) => {
   //   dispatch(updateTaskStatus({ taskId, previousStatus: selectedTaskStatus, newStatus }));
   // };

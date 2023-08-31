@@ -29,6 +29,7 @@ const Project = ({ projectTitle }) => {
     dispatch(openTaskPopup(taskId));
   };
   useEffect(() => {
+ 
     if (!selectedProjectId) {
       const storedSelectedProjectId = localStorage.getItem('selectedProjectId');
       if (storedSelectedProjectId) {

@@ -6,6 +6,10 @@ import api from '../../utils/api';
 const initialState = {
     projects: [],
     isLoad: false,
+    selectedProject: {
+        id: localStorage.getItem("selectedProjectId") || null,
+        name: localStorage.getItem("selectedProjectName") || null
+    },
     selectedProjectId: localStorage.getItem("selectedProjectId") || null,
 };
 

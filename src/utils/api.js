@@ -27,49 +27,25 @@ class Api {
             }
             })
             .then((res) => {
-                const tasksArray = [];
-                for (const taskId in res.data) {
-                    tasksArray.push(res.data[taskId]);
-                }
-                console.log(tasksArray);
-                return tasksArray;
+                const {data} = res;
+                // console.log(data)
+                // const tasksArray = [];
+                // for (const taskId in res.data) {
+                //     tasksArray.push(res.data[taskId]);
+                // }
+                // return tasksArray;
+                return data
             });
     }
- 
-    // getProjectTasks(projectId) {
-    //     const queryParams = {
-    //         where: JSON.stringify({
-    //             project: {
-    //                 __type: 'Pointer',
-    //                 className: 'Project',
-    //                 objectId: projectId,
-    //             },
-    //         }),
-    //         include: 'project',
-    //     };
-    //     return instance
-    //         .get('/tasks.json', { params: queryParams })
-    //         .then((res) => {
-    //             const { results } = res.data;
-    //             // console.log('Received tasks:', results);
-    //             return results;
-    //         });
-    // }
     getProjects() {
         return instance.get('/projects.json')
             .then(res => {
                 const { data } = res;
+                console.log(data)
                 return data
             })
     }
-    // getProjects() {
-    //     return instance.get('/projects')
-    //         .then(res => {
-    //             const { documents } = res.data;
-    //             console.log(documents)
-    //             return documents
-    //         })
-    // }
+   
 
     createProject(data) {
         return instance.post('/projects.json', data);

@@ -11,17 +11,17 @@ const TaskCard = ({ title, priority, link, id, status }) => {
     dispatch(openTaskPopup(id));
   };
 
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: itemTypes.TASK,
-    item: { id, status }, // Передаем объект с информацией о задаче
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }));
+  // const [{ isDragging }, drag] = useDrag(() => ({
+  //   type: itemTypes.TASK,
+  //   item: { id, status }, // Передаем объект с информацией о задаче
+  //   collect: (monitor) => ({
+  //     isDragging: !!monitor.isDragging(),
+  //   }),
+  // }));
 
   return (
     <>
-      <li className="task-item" ref={drag} onClick={openTaskPopupHandler}>
+      <li className="task-item" onClick={openTaskPopupHandler}>
         <a href={link} className="task-item__link">
           <span className="task-item__title">{title}</span>
           <span className="task-item__priotiry">{priority}</span>

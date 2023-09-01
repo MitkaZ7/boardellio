@@ -32,7 +32,7 @@ const AddProjectPopup = () => {
     <Popup className="popup_place_addProjectPopup" isOpen={isOpen} onClose={closePopupHandler} resetForm={reset}>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <h3 className="form__title">New project</h3>
-        <input placeholder="Insert project name" {...register("name")} />
+        <input placeholder="Insert project title" {...register("title")} />
         <button type="submit" className="form__button-submit button">Create new project</button>
       </form>
     </Popup>

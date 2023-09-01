@@ -17,11 +17,12 @@ export const getTasks = createAsyncThunk(
     async (_, { rejectWithValue, dispatch, getState }) => {
         dispatch(showLoader());
         try {
-            const currentProjectId = getState().projects.selectedProjectId;
+            const currentProjectId = getState().projects.selectedProject.projectId;
             const tasksList = await api.getProjectTasks(currentProjectId);
             dispatch(hideLoader());
             const categorizedTasks = categorizeTasks(tasksList);
-            return categorizedTasks;
+            const serializedTasks = serializeTasks(categorizedTasks);
+            return serializedTasks;
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -34,13 +35,30 @@ const categorizeTasks = (tasksList) => {
         dev: [],
         done: [],
     };
-    tasksList.forEach((task) => {
-        categorizedTasks[task.status].push(task);
-    });
-
+    Object.entries(tasksList).map(([taskId, task])=>{
+        categorizedTasks[task.status].push({
+            ...task,
+            taskId,
+        })
+    })
+    
     return categorizedTasks;
 };
-
+// сериализация для редакса
+const serializeTasks = (categorizedTasks) => {
+    const serializedTasks = {
+        queue: [],
+        dev: [],
+        done: [],
+    };
+    for (const [status, tasks] of Object.entries(categorizedTasks)) {
+        serializedTasks[status] = tasks.map((task) => ({
+            ...task,
+        }));
+    }
+    return serializedTasks;
+};
+//
 export const createTask = createAsyncThunk(
     'tasks/createTask',
     async (data, { rejectWithValue, dispatch }) => {

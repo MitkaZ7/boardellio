@@ -34,14 +34,13 @@ const Form = ({ projects }) => {
 
                 <select className="form__select" {...register('project')} onChange={(e) => setSelectedProject(e.target.value)}>
                     <option value="noNameProject">Select a project</option>
-                    {Array.isArray(projects) &&
-                        projects.map((project) => (
-                            <option key={project.objectId} value={project.objectId}>
-                                {project.name}
-                            </option>
-                        ))}
+                    {Object.entries(projects).map(([projectId, projectData]) => (
+                        <option key={projectId} value={projectId}>
+                            {projectData.title} {/* Ваше свойство для имени проекта */}
+                        </option>
+                    ))}
                 </select>
-                <select className="form__select" {...register('priority')}>
+                <select className="form__select" {...register('priority')} >
                     <option value="usual">Assign priority</option>
                     <option value="usual">usual</option>
                     <option value="seriously">seriously</option>

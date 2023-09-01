@@ -3,10 +3,18 @@ import { hideLoader, showLoader } from './loaderSlice';
 import { closePopup } from './popupSlice';
 import api from '../../utils/api';
 
+const getInitialSelectedProject = () => {
+    const storedSelectedProject = localStorage.getItem('selectedProject');
+    if (storedSelectedProject) {
+        return JSON.parse(storedSelectedProject);
+    }
+    return { projectId: null, projectName: null };
+};
+
 const initialState = {
     projects: [],
     isLoad: false,
-    selectedProjectId: localStorage.getItem("selectedProjectId") || null,
+    selectedProject: getInitialSelectedProject(),
 };
 
 function isPendingAction(action) {
@@ -20,6 +28,7 @@ export const getProjects = createAsyncThunk(
         try {
             dispatch(showLoader());
             const projectsList = await api.getProjects();
+            // console.log(projectsList)
             dispatch(hideLoader());
             return projectsList;
         } catch (error) {
@@ -27,6 +36,19 @@ export const getProjects = createAsyncThunk(
         }
     }
 );
+// export const getOneProject = createAsyncThunk(
+//     'projects/getOnePeoject',
+//     async (projectId, thunkAPI) => {
+//         const { dispatch, rejectWithValue } = thunkAPI;
+//         try {
+//             const project = await api.getProjectById(projectId);
+//             console.log(project)
+//             return project;
+//         } catch (error) {
+//             return rejectWithValue(error.message);
+//         }
+//     }
+// )
 
 export const createProject = createAsyncThunk(
     'projects/createProject',
@@ -51,8 +73,8 @@ const projectSlice = createSlice({
         },
         updateProject(state, action) {},
         selectProject(state,action) {
-            state.selectedProjectId = action.payload;
-            localStorage.setItem("selectedProjectId", action.payload);
+            state.selectedProject = action.payload;
+            localStorage.setItem('selectedProject', JSON.stringify(action.payload))
         },
         resetSelectedProjectId: (state) => {
             state.selectedProjectId = null;
@@ -81,7 +103,8 @@ const projectSlice = createSlice({
                 (state, action) => {
                     const { dispatch } = builder;
                     if (action.type === createProject.fulfilled.toString()) {
-                        state.projects.push(action.payload);
+                        
+                        // state.projects.push(action.payload);
                         // dispatch(closePopup());
                       
                     } else {

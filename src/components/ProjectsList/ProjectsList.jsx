@@ -46,7 +46,7 @@ const ProjectsList = () => {
         </header>
         <ul className="projects-list__list">
           {Object.entries(projects).map(([projectId, projectData]) => (
-            <ProjectCard key={projectId} name={projectData.title} projectId={projectId} />
+            <ProjectCard key={projectId} projectName={projectData.title} projectId={projectId} />
           ))}
         </ul>
       </section>

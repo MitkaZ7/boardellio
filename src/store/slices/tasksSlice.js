@@ -17,7 +17,7 @@ export const getTasks = createAsyncThunk(
     async (_, { rejectWithValue, dispatch, getState }) => {
         dispatch(showLoader());
         try {
-            const currentProjectId = getState().projects.selectedProjectId;
+            const currentProjectId = getState().projects.selectedProject.projectId;
             const tasksList = await api.getProjectTasks(currentProjectId);
             dispatch(hideLoader());
             const categorizedTasks = categorizeTasks(tasksList);
@@ -44,7 +44,7 @@ const categorizeTasks = (tasksList) => {
     
     return categorizedTasks;
 };
-// уберу это позже
+// сериализация для редакса
 const serializeTasks = (categorizedTasks) => {
     const serializedTasks = {
         queue: [],

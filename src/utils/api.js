@@ -28,12 +28,6 @@ class Api {
             })
             .then((res) => {
                 const {data} = res;
-                // console.log(data)
-                // const tasksArray = [];
-                // for (const taskId in res.data) {
-                //     tasksArray.push(res.data[taskId]);
-                // }
-                // return tasksArray;
                 return data
             });
     }
@@ -41,24 +35,24 @@ class Api {
         return instance.get('/projects.json')
             .then(res => {
                 const { data } = res;
-                console.log(data)
                 return data
             })
     }
-   
-
     createProject(data) {
         return instance.post('/projects.json', data);
     }
-
-    // createProject(data) {
-    //     return instance.post('/classes/Project', JSON.stringify(data));
-    // }
-    // getProjectById(projectId) {
-    //     return instance.get(`/classes/Project/${projectId}`)
-    //         .then((res) => res.data);
-    // }
-   
+    getProjectById(projectId) {
+        return instance.get('/projects.json', {
+            params: {
+                orderBy: '"projectId"',
+                equalTo: `"${projectId}"`
+            }
+        })
+            .then((res) => {
+                const { data } = res;
+                return data
+            });
+    }
 
 }
 

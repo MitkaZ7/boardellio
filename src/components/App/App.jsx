@@ -1,29 +1,24 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Layout from '../Layout'
-import {useEffect} from 'react'
-import ProjectsList from '../ProjectsList/ProjectsList'
-import Project from '../Project/Project'
-import { getAllTasks } from '../../store/slices/tasksSlice'
-
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react';
+import { Routes, Route, useParams } from 'react-router-dom';
+import Layout from '../Layout';
+import ProjectsList from '../ProjectsList/ProjectsList';
+import Project from '../Project/Project';
+import TaskPopup from '../Task/Task';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 function App() {
- 
-  const dispatch = useDispatch();
 
   return (
-
-      <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route index element={<ProjectsList />} />
-          <Route path='/projects' element={<Project />} />
-
-        </Route>
-
-      </Routes>
-
-
-
+    <DndProvider backend={HTML5Backend}>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<ProjectsList />} />
+        <Route path="/projects/" element={<ProjectsList />} />
+        <Route path="/projects/:projectTitle" element={<Project />} />
+          <Route path="/projects/:projectTitle/:taskId" element={<TaskPopup />} />
+      </Route>
+    </Routes>
+    </DndProvider>
   );
 }
 

@@ -17,7 +17,7 @@
 + Axios
 + GRID
 + BEM
-+ **[Back4App в качестве бэкенда](https://dashboard.back4app.com/)**
++ Realtime Database (Google Firebase)
 
 ### Возможности (планируемые или реализованные):
 + Добавление/удаление проекта

@@ -1,98 +1,146 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import Parse from 'parse/dist/parse.min.js';
-import api from '../../utils/api'
+import api from '../../utils/api';
 import { hideLoader, showLoader } from './loaderSlice';
-const initialState = {
-    tasks: [],
-    isLoad: false,
 
-}
-function isPendingAction(action) {
-    return action.type.endsWith('/pending')
-}
+const initialState = {
+    isLoad: false,
+    activeTaskId: null,
+    tasks: {
+        queue: [],
+        dev: [],
+        done: [],
+    },
+};
+
 export const getTasks = createAsyncThunk(
     'tasks/getTasksList',
-    async (_, { rejectWithValue, dispatch }) => {
-        dispatch(showLoader())
+    async (_, { rejectWithValue, dispatch, getState }) => {
+        dispatch(showLoader());
         try {
-            const tasksList = await api.getTasks();
-            console.log(tasksList)
-            dispatch(hideLoader())
-            return tasksList;
+            const currentProjectId = getState().projects.selectedProject.projectId;
+            const tasksList = await api.getProjectTasks(currentProjectId);
+            dispatch(hideLoader());
+            const categorizedTasks = categorizeTasks(tasksList);
+            const serializedTasks = serializeTasks(categorizedTasks);
+            return serializedTasks;
         } catch (error) {
-            return rejectWithValue((error.message))
+            return rejectWithValue(error.message);
         }
     }
-)
+);
 
-
-
+const categorizeTasks = (tasksList) => {
+    const categorizedTasks = {
+        queue: [],
+        dev: [],
+        done: [],
+    };
+    Object.entries(tasksList).map(([taskId, task])=>{
+        categorizedTasks[task.status].push({
+            ...task,
+            taskId,
+        })
+    })
+    
+    return categorizedTasks;
+};
+// сериализация для редакса
+const serializeTasks = (categorizedTasks) => {
+    const serializedTasks = {
+        queue: [],
+        dev: [],
+        done: [],
+    };
+    for (const [status, tasks] of Object.entries(categorizedTasks)) {
+        serializedTasks[status] = tasks.map((task) => ({
+            ...task,
+        }));
+    }
+    return serializedTasks;
+};
+//
 export const createTask = createAsyncThunk(
     'tasks/createTask',
-    async (data, {rejectWithValue,dispatch}) => {
+    async (data, { rejectWithValue, dispatch }) => {
         try {
-            const res = await api.createTask(data);
-            console.log(res);
-            // dispatch(addTask(res))
+            console.log(data);
+            await api.createTask(data);
+            console.log('Task created successfully.');
         } catch (error) {
-            return rejectWithValue((error.message))
+            console.error('Error creating task:', error);
+            return rejectWithValue(error.message);
         }
-
-        // try {
-        //     const Task = new Parse.Object('Task');
-        //     Task.set('title',data.title);
-        //     Task.set('isCompleted', data.isCompleted);
-        //     Task.set('status', 'queue');
-        //     Task.set('priority', data.priority)
-        //     Task.set('description', data.description)
-        //     await Task.save();
-        //     console.log('success');
-        //     return true;
-        // } catch (error) {
-        //     return rejectWithValue((error.message))
-        // }
     }
-)
+);
+
+
+
+
+export const deleteTask = createAsyncThunk(
+    'tasks/deleteTask',
+    async (taskId, { rejectWithValue, dispatch }) => {
+        try {
+            await api.deleteTask(taskId);
+            console.log(`Task with ID ${taskId} deleted.`);
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+export const updateTaskStatus = createAsyncThunk(
+    'tasks/updateTaskStatus',
+    async ({ taskId, previousStatus, newStatus }, { rejectWithValue, dispatch }) => {
+        try {
+            await api.updateTask(taskId, { status: newStatus });
+            console.log(`Task with ID ${taskId} status changed from ${previousStatus} to ${newStatus}.`);
+            return { taskId, newStatus };
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 
 export const taskSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        addTask(state,action) {
-            console.log(action.payload)
-            state.tasks.tasks.push(action.payload)
+        addTask(state, action) {
+            const { status } = action.payload;
+            state.tasks[status].push(action.payload);
         },
         removeTask(state, action) {
-
+            const taskId = action.payload;
+            state.tasks.queue = state.tasks.queue.filter((task) => task.objectId !== taskId);
+            state.tasks.dev = state.tasks.dev.filter((task) => task.objectId !== taskId);
+            state.tasks.done = state.tasks.done.filter((task) => task.objectId !== taskId);
         },
         updateTask(state, action) {
-
-        }
+            
+        },
     },
     extraReducers: (builder) => {
         builder
-            .addMatcher(isPendingAction, (state, action) =>{
-                state[action.meta.requestId] = 'pending'
+            .addCase(getTasks.pending, (state) => {
+                state.isLoad = true;
             })
-            .addMatcher(
-                // matcher can be defined inline as a type predicate function
-                (action) => action.type.endsWith('/rejected'),
-                (state, action) => {
-                    state[action.meta.requestId] = 'rejected'
+            .addCase(getTasks.fulfilled, (state, action) => {
+                state.tasks = action.payload;
+                state.isLoad = false;
+            })
+            .addCase(getTasks.rejected, (state) => {
+                state.isLoad = false;
+            })
+            .addCase(updateTaskStatus.fulfilled, (state, action) => {
+                const { taskId, previousStatus, newStatus } = action.meta.arg;
+                const task = state.tasks[previousStatus].find((task) => task.objectId === taskId);
+                if (task) {
+                    state.tasks[previousStatus] = state.tasks[previousStatus].filter((task) => task.objectId !== taskId);
+                    state.tasks[newStatus].push(task);
                 }
-            )
-            .addMatcher(
-                (action) => action.type.endsWith('/fulfilled'),
-                (state, action) => {
-                    state.tasks = action.payload;
-                    state[action.meta.requestId] = 'fulfilled'
-                    state.isLoad = true;
-                }
-            )
-    }
-   
-})
-export const { addTask, removeTask, updateTask} = taskSlice.actions;
-export default taskSlice.reducer;
+            });
+    },
+});
 
-   
+export const { addTask, removeTask, updateTask } = taskSlice.actions;
+export default taskSlice.reducer;

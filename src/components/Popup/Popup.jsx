@@ -1,13 +1,18 @@
 import React,{ useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { closePopup } from '../../store/slices/popupSlice';
+import { useForm } from 'react-hook-form'
 
-const Popup = ({children}) => {
-  const { isOpen } = useSelector((state) => state.popup)
+const Popup = ({ children, resetForm }) => {
+  const { isOpen } = useSelector((state) => state.popup);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
   const dispatch = useDispatch();
   function closePopupHandler() {
-    dispatch(closePopup())
+    dispatch(closePopup());
+   
   }
+
   
   const closeByOverlayClick = (evt) => {
     if (evt.target === evt.currentTarget) {
@@ -31,7 +36,7 @@ const Popup = ({children}) => {
     
     <div className={`popup ${isOpen ? 'popup_state_open' : ''}`} onClick={closeByOverlayClick}>
       <div className="popup__container">
-        <button className="popup__button-close button" type="button" onClick={closePopupHandler}></button>
+        <button className="popup__button-close button" type="reset" onClick={closePopupHandler}></button>
         {children}
       </div>
     </div>

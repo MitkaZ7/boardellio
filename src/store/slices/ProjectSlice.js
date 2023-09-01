@@ -1,72 +1,121 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { hideLoader, showLoader } from './loaderSlice';
-import api from '../../utils/api'
+import { closePopup } from './popupSlice';
+import api from '../../utils/api';
+
+const getInitialSelectedProject = () => {
+    const storedSelectedProject = localStorage.getItem('selectedProject');
+    if (storedSelectedProject) {
+        return JSON.parse(storedSelectedProject);
+    }
+    return { projectId: null, projectName: null };
+};
+
 const initialState = {
     projects: [],
     isLoad: false,
+    selectedProject: getInitialSelectedProject(),
 };
+
 function isPendingAction(action) {
-    return action.type.endsWith('/pending')
+    return action.type.endsWith('/pending');
 }
+
 export const getProjects = createAsyncThunk(
     'projects/getProjectsList',
-    async (_,{ rejectWithValue,dispatch}) => {
-        dispatch(showLoader())
+    async (_, thunkAPI) => {
+        const { dispatch, rejectWithValue } = thunkAPI;
         try {
+            dispatch(showLoader());
             const projectsList = await api.getProjects();
-            dispatch(hideLoader())
             // console.log(projectsList)
+            dispatch(hideLoader());
             return projectsList;
         } catch (error) {
-            return rejectWithValue((error.message))
+            return rejectWithValue(error.message);
         }
     }
-)
+);
+// export const getOneProject = createAsyncThunk(
+//     'projects/getOnePeoject',
+//     async (projectId, thunkAPI) => {
+//         const { dispatch, rejectWithValue } = thunkAPI;
+//         try {
+//             const project = await api.getProjectById(projectId);
+//             console.log(project)
+//             return project;
+//         } catch (error) {
+//             return rejectWithValue(error.message);
+//         }
+//     }
+// )
+
+export const createProject = createAsyncThunk(
+    'projects/createProject',
+    async (data, thunkAPI) => {
+        const { dispatch, rejectWithValue } = thunkAPI;
+        dispatch(showLoader());
+        try {
+            await api.createProject(data);
+            dispatch(hideLoader());
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
 const projectSlice = createSlice({
     name: 'projects',
     initialState,
     reducers: {
         addProject(state, action) {
-            state.projects.push(action.payload)
+            state.projects.push(action.payload);
         },
-        updateProject(state, action) {
-
+        updateProject(state, action) {},
+        selectProject(state,action) {
+            state.selectedProject = action.payload;
+            localStorage.setItem('selectedProject', JSON.stringify(action.payload))
         },
-       
+        resetSelectedProjectId: (state) => {
+            state.selectedProjectId = null;
+            localStorage.removeItem("selectedProjectId"); 
+        },
     },
     extraReducers: (builder) => {
         builder
-            .addMatcher(isPendingAction, (state, action) => {
-                state[action.meta.requestId] = 'pending';
-          
-            })
+            .addMatcher(
+                isPendingAction,
+                (state, action) => {
+                    state[action.meta.requestId] = 'pending';
+                }
+            )
             .addMatcher(
                 (action) => action.type.startsWith('projects'),
             )
-            // .addMatcher(
-            //     (action) => action.type.endsWith('pending'),
-            //     (state, action) => {
-            //         console.log(state)
-            //     }
-                
-            // )
             .addMatcher(
-                // matcher can be defined inline as a type predicate function
                 (action) => action.type.endsWith('/rejected'),
                 (state, action) => {
-                    state[action.meta.requestId] = 'rejected'
+                    state[action.meta.requestId] = 'rejected';
                 }
             )
             .addMatcher(
                 (action) => action.type.endsWith('/fulfilled'),
                 (state, action) => {
-                    state.projects = action.payload;
-                    state.isLoad = true;
-                    state[action.meta.requestId] = 'fulfilled'
-                   
+                    const { dispatch } = builder;
+                    if (action.type === createProject.fulfilled.toString()) {
+                        
+                        // state.projects.push(action.payload);
+                        // dispatch(closePopup());
+                      
+                    } else {
+                        state.projects = action.payload;
+                        state.isLoad = true;
+                    }
+                    state[action.meta.requestId] = 'fulfilled';
                 }
-            )
-    }
-})
-export const { addProject, updateProject } = projectSlice.actions;
+            );
+    },
+});
+
+export const { addProject, updateProject, selectProject, resetSelectedProjectId } = projectSlice.actions;
 export default projectSlice.reducer;

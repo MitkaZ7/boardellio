@@ -1,21 +1,26 @@
 import React, { useEffect  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TaskCard from '../TaskCard/TaskCard';
-import { getTasks, updateTaskStatus, setSelectedTaskStatus } from '../../store/slices/tasksSlice';
+import { getTasks, updateTaskStatus, setSelectedTaskStatus, getOneTask } from '../../store/slices/tasksSlice';
 import Loader from '../Loader/Loader';
-import { openTaskPopup } from '../../store/slices/popupSlice';
+import { openCustomPopup } from '../../store/slices/popupSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider, useDrop } from 'react-dnd';
 
-const TaskList = ({ onTaskClick, taskStatus }) => {
+const TaskList = ({ onClick, taskStatus }) => {
   const { isLoading } = useSelector((state) => state.loader);
   const dispatch = useDispatch();
- 
+  const openTaskPopupHandler = (taskId) => {
+    const popupData = { someKey: 'someValue' }; // Дополнительные данные, если нужны
+    openCustomPopup(dispatch, 'TaskPopup', popupData);
+  };
   
   const handleTaskClick = (taskId) => {
-    onTaskClick(taskId);
+    openTaskPopupHandler(taskId);
+    dispatch(getOneTask(taskId))
   };
+
 
   const { tasks } = useSelector((state) => state.tasks);
   const filteredTasks = tasks[taskStatus] || [];
@@ -35,7 +40,8 @@ const TaskList = ({ onTaskClick, taskStatus }) => {
             title={task.title}
             priority={task.priority}
             status={taskStatus}
-            onClick={() => handleTaskClick(task.id)}
+            taskId={task.taskId}
+            onClick={handleTaskClick}
           />
         ))}
         {/* {activeTaskId && <TaskPopup taskId={activeTaskId} />} */}

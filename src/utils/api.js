@@ -10,8 +10,16 @@ class Api {
     createTask(data) {
         console.log(JSON.stringify(data))
         return instance.post('/tasks.json' , data)
-
     }
+    getTaskById(taskId) {
+        return instance
+            .get(`/tasks/${taskId}.json`)
+            .then((res) => {
+                const task = res.data;
+                return task;
+            });
+    }
+
     updateTask(taskId,data) {
        return instance.put(`/classes/Task/${taskId}`, data)
     }
@@ -41,18 +49,18 @@ class Api {
     createProject(data) {
         return instance.post('/projects.json', data);
     }
-    getProjectById(projectId) {
-        return instance.get('/projects.json', {
-            params: {
-                orderBy: '"projectId"',
-                equalTo: `"${projectId}"`
-            }
-        })
-            .then((res) => {
-                const { data } = res;
-                return data
-            });
-    }
+    // getProjectById(projectId) {
+    //     return instance.get('/projects.json', {
+    //         params: {
+    //             orderBy: '"projectId"',
+    //             equalTo: `"${projectId}"`
+    //         }
+    //     })
+    //         .then((res) => {
+    //             const { data } = res;
+    //             return data
+    //         });
+    // }
 
 }
 

@@ -11,6 +11,20 @@ const initialState = {
         done: [],
     },
 };
+export const getOneTask = createAsyncThunk(
+    'tasks/getOneTask',
+    async (taskId, {rejectWithValue, dispatch}) => {
+        // dispatch(showLoader());
+        try {
+            const task = await api.getTaskById(taskId);
+            // dispatch(hideLoader());
+            console.log(task)
+            return task
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
 
 export const getTasks = createAsyncThunk(
     'tasks/getTasksList',

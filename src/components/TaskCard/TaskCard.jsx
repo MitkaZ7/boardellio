@@ -3,13 +3,15 @@ import { useDrag } from 'react-dnd';
 import { itemTypes } from '../../utils/constants';
 import { useDispatch } from 'react-redux';
 import { openTaskPopup } from '../../store/slices/popupSlice';
+import TaskPopup from '../TaskPopup/TaskPopup';
 import { Link } from 'react-router-dom';
-
-const TaskCard = ({ title, priority, link, id, status }) => {
+import { getOneTask } from '../../store/slices/tasksSlice';
+const TaskCard = ({ title, priority, link, taskId, status, onClick }) => {
   const dispatch = useDispatch();
-  const openTaskPopupHandler = () => {
-    dispatch(openTaskPopup(id));
-  };
+  // const openTaskPopupHandler = () => {
+  //   dispatch(getOneTask(taskId))
+  //   dispatch(openTaskPopup(taskId));
+  // };
 
   // const [{ isDragging }, drag] = useDrag(() => ({
   //   type: itemTypes.TASK,
@@ -21,7 +23,7 @@ const TaskCard = ({ title, priority, link, id, status }) => {
 
   return (
     <>
-      <li className="task-item" onClick={openTaskPopupHandler}>
+      <li className="task-item" onClick={onClick}>
         <a href={link} className="task-item__link">
           <span className="task-item__title">{title}</span>
           <span className="task-item__priotiry">{priority}</span>

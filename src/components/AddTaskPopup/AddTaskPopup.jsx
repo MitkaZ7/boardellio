@@ -30,7 +30,7 @@ const AddTaskPopup = () => {
   if (!isOpen || !isProjectsLoaded) return null; // Рендер попапа только если isOpen === true и список проектов загружен
 
   return (
-    <Popup onClose={onClose}>
+    <Popup>
       {/* Передаем список проектов в компонент Form */}
       <Form projects={projects} />
     </Popup>

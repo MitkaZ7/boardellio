@@ -4,14 +4,19 @@ import { itemTypes } from '../../utils/constants';
 import { useDispatch } from 'react-redux';
 import { openTaskPopup } from '../../store/slices/popupSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { getOneTask } from '../../store/slices/tasksSlice';
-const TaskCard = ({ title, priority, link, taskId, status, onClick }) => {
+import { getOneTask, selectTask } from '../../store/slices/tasksSlice';
+const TaskCard = ({ title, priority, link, onClick, taskId }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const openTaskPopupHandler = () => {
-  //   dispatch(getOneTask(taskId))
-  //   dispatch(openTaskPopup(taskId));
-  // };
+  const openTaskPopupHandler = () => {
+    onClick()
+    dispatch(selectTask(taskId))
+    // navigate(`/tasks/${taskId}`);
+    // dispatch(getOneTask(taskId))
+    
+  };
 
   // const [{ isDragging }, drag] = useDrag(() => ({
   //   type: itemTypes.TASK,
@@ -23,7 +28,7 @@ const TaskCard = ({ title, priority, link, taskId, status, onClick }) => {
 
   return (
     <>
-      <li className="task-item" onClick={onClick}>
+      <li className="task-item" onClick={openTaskPopupHandler}>
         <a href={link} className="task-item__link">
           <span className="task-item__title">{title}</span>
           <span className="task-item__priotiry">{priority}</span>

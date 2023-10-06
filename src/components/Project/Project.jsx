@@ -4,7 +4,7 @@ import AddTaskPopup from '../AddTaskPopup/AddTaskPopup';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
 import { useParams } from 'react-router-dom';
-import { getTasks,updateTaskStatus } from '../../store/slices/tasksSlice';
+import { getTasks, updateTaskStatus, getOneTask} from '../../store/slices/tasksSlice';
 import { selectProject } from '../../store/slices/projectSlice';
 import { DndProvider,useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -18,14 +18,18 @@ const Project = () => {
   const activePopup = useSelector(state => state.popup.activePopup);
   // const { selectedTaskId } = useSelector(state => state.popup);
   // const { activeTaskId, selectedTaskStatus } = useSelector(state => state.tasks);
+
   const dispatch = useDispatch();
 
   const openAddTaskPopupHandler = () => {
     openCustomPopup(dispatch, 'AddTaskPopup');
   };
-  const openTaskPopupHandler = (taskId) => {
-    const popupData = { someKey: 'someValue' };
-    openCustomPopup(dispatch, 'TaskPopup', popupData);
+  const openTaskPopupHandler = () => {
+    // console.log(selectedTaskId)
+    // dispatch(getOneTask(selectedTaskId))
+    // const popupData = { taskPopupData: 'someValue' };
+
+    openCustomPopup(dispatch, 'TaskPopup');
   };
 
 

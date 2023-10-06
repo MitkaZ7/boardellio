@@ -2,22 +2,33 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 import { hideLoader, showLoader } from './loaderSlice';
 
+const getInitialSelectedTask = () => {
+    showLoader();
+    const storedSelectedTask = localStorage.getItem('selectedTask');
+    if (storedSelectedTask) {
+        return JSON.parse(storedSelectedTask);
+    }
+    hideLoader();
+    return { taskData: null };
+};
 const initialState = {
     isLoad: false,
-    activeTaskId: null,
+    selectedTaskId: null,
+    selectedTaskData: getInitialSelectedTask(),
     tasks: {
         queue: [],
         dev: [],
         done: [],
     },
+    
 };
 export const getOneTask = createAsyncThunk(
     'tasks/getOneTask',
     async (taskId, {rejectWithValue, dispatch}) => {
-        // dispatch(showLoader());
+        dispatch(showLoader());
         try {
             const task = await api.getTaskById(taskId);
-            // dispatch(hideLoader());
+            dispatch(hideLoader());
             console.log(task)
             return task
         } catch (error) {
@@ -77,7 +88,6 @@ export const createTask = createAsyncThunk(
     'tasks/createTask',
     async (data, { rejectWithValue, dispatch }) => {
         try {
-            console.log(data);
             await api.createTask(data);
             console.log('Task created successfully.');
         } catch (error) {
@@ -132,6 +142,13 @@ export const taskSlice = createSlice({
         updateTask(state, action) {
             
         },
+        selectTask(state, action) {
+            state.selectedTaskId = action.payload;
+            localStorage.setItem('selectedTaskId', JSON.stringify(action.payload));
+        },
+        resetSelectedTaskData: (state) => {
+            state.selectedTaskData = getInitialSelectedTask(); // Сброс данных задачи
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -145,16 +162,22 @@ export const taskSlice = createSlice({
             .addCase(getTasks.rejected, (state) => {
                 state.isLoad = false;
             })
-            .addCase(updateTaskStatus.fulfilled, (state, action) => {
-                const { taskId, previousStatus, newStatus } = action.meta.arg;
-                const task = state.tasks[previousStatus].find((task) => task.objectId === taskId);
-                if (task) {
-                    state.tasks[previousStatus] = state.tasks[previousStatus].filter((task) => task.objectId !== taskId);
-                    state.tasks[newStatus].push(task);
-                }
-            });
+            // .addCase(updateTaskStatus.fulfilled, (state, action) => {
+            //     const { taskId, previousStatus, newStatus } = action.meta.arg;
+            //     const task = state.tasks[previousStatus].find((task) => task.objectId === taskId);
+            //     if (task) {
+            //         state.tasks[previousStatus] = state.tasks[previousStatus].filter((task) => task.objectId !== taskId);
+            //         state.tasks[newStatus].push(task);
+            //     }
+            // })
+            .addCase(getOneTask.fulfilled, (state, action) => {
+                state.selectedTaskData = action.payload;
+                // console.log(action.payload)
+            })
+            
+            ;
     },
 });
 
-export const { addTask, removeTask, updateTask } = taskSlice.actions;
+export const { addTask, removeTask, updateTask, selectTask, resetSelectedTaskData } = taskSlice.actions;
 export default taskSlice.reducer;

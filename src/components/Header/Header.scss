@@ -4,15 +4,16 @@
 
   border-bottom: 2px solid $accent-clr;
   justify-content: space-between;
-  max-height: 50px;
+  align-items: center;
+  min-height: 100px;
   &__logo {
-    width: 50px;
+    width:60px;
 
   }
   &__title {
-
+    font-size: 1.5em;
     color: $accent-clr;
-    text-transform: uppercase;
+    // text-transform: uppercase;
 
     }
 }

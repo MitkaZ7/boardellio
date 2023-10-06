@@ -1,50 +1,66 @@
-import React from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { removeTask } from '../../store/slices/tasksSlice';
-const Task = ({ taskId, title, status }) => {
-  const dispatch = useDispatch();
+import Upload from '../../assets/icons/upload.svg';
 
+const Task = ({ taskId }) => {
+  const dispatch = useDispatch();
+  const { selectedTaskData } = useSelector(state => state.tasks)
   const handleRemoveTask = () => {
     dispatch(removeTask(taskId));
   };
+
+  const { 
+    status, 
+    priority, 
+    title,
+    number,
+    description,
+  } = selectedTaskData;
+
   return (
     <li className='task'>
       <article className='task__content'>
-        <h3 className='task__header'>Do the project</h3>
-        <section className='task__metadata'>
+        <h3 className='task__header'>
+          <span className='task__metadata-item task__number'>№ {number}: </span>
+          {title}
           <div className='task__metadata-parametres'>
-            <span className='task__metadata-item task__number'>Number: 1</span>
-            <span className='task__metadata-item task__status'>Status: dev</span>
-            <span className='task__metadata-item task__priority'>Proirity: seriuosly</span>
+            <span className='task__metadata-item task__priority'>&nbsp;proirity: {priority}</span>
+
+            <span className='task__metadata-item task__status'>&nbsp;status: {status}</span>
           </div>
+        </h3>
+        <section className='task__metadata-block metadata-block'>
           <div className='task__metadata-dates'>
-            <span className='task__metadata-item task__creation-date'>Created: 27-11-2022</span>
+            <span className='task__metadata-item task__creation-date'>Created: 27-11-2022&nbsp;</span>
             <span className='task__metadata-item task__spent-time'>In work for: 1 day</span>
-            <span className='task__metadata-item task__finish-date'>Done: 02-12-2022</span>
+            <span className='task__metadata-item task__finish-date'>&nbsp;Done: 02-12-2022</span>
           </div>
         </section>
         <p className='task__text'>
-          Dont let your dreams be dreams.
-          Yesterday you said tomorrow. So just do it! Make your dreams come true. Just do it. Some people dream of success,
-          while you’re going to wake up and work hard at it. Nothing is impossible… You should get to the point where anyone else would quit and you’re not going to stop there.
-          NO! What are you waiting for?! DO IT! JUST DO IT! YES YOU CAN! JUST DO IT! If you are tired of starting over, stop giving up.
+          {description}
         </p>
 
-        <section className='task__subtasks subtasks'>
+        {/* <section className='task__subtasks subtasks'>
           <ul className='subtasks__list'>
-            {/* <Subtask/> */}
+            <Subtask/>
           </ul>
+        </section> */}
+        <section className="form__file-wrapper">
+          <label className="form__input-label" htmlFor="file">
+            <span className="form__input-icon-wrapper">
+              <img className="popup__form-load-icon" src={Upload} alt="select files"></img>
+            </span>
+            <span className="form__input-file-text">Upload files...</span>
+          </label>
+          <input className="form__input-file" id="file" name="file" type="file" multiple />
         </section>
-        <section className='task__files'>
-
-          <input type='file' id='file' name='file' multiple />
-        </section>
-        <section className='task__comments comments'>
+        {/* <section className='task__comments comments'>
           <ul className='comments__list'>
-            {/* <CommentItem /> */}
+            <CommentItem />
           </ul>
-        </section>
-        <button onClick={handleRemoveTask}>Remove task</button>
+        </section> */}
+        {/* <button onClick={handleRemoveTask}>Remove task</button> */}
       </article>
     </li>
   )

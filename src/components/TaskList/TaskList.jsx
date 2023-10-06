@@ -10,15 +10,18 @@ import { DndProvider, useDrop } from 'react-dnd';
 
 const TaskList = ({ onClick, taskStatus }) => {
   const { isLoading } = useSelector((state) => state.loader);
+  const { selectedTaskId } = useSelector(state => state.tasks)
   const dispatch = useDispatch();
-  const openTaskPopupHandler = (taskId) => {
-    const popupData = { someKey: 'someValue' }; // Дополнительные данные, если нужны
-    openCustomPopup(dispatch, 'TaskPopup', popupData);
+  const openTaskPopupHandler = () => {
+    // const popupData = { someKey: 'someValue' }; // Дополнительные данные, если нужны
+    openCustomPopup(dispatch, 'TaskPopup');
+    // dispatch(getOneTask(selectedTaskId))
   };
   
-  const handleTaskClick = (taskId) => {
-    openTaskPopupHandler(taskId);
-    dispatch(getOneTask(taskId))
+  const handleTaskClick = () => {
+    openTaskPopupHandler(selectedTaskId);
+    onClick()
+   
   };
 
 
@@ -26,7 +29,7 @@ const TaskList = ({ onClick, taskStatus }) => {
   const filteredTasks = tasks[taskStatus] || [];
   useEffect(() => {
     dispatch(getTasks());
-  }, []);
+  }, []); 
 
   
 

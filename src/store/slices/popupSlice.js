@@ -12,7 +12,12 @@ const initialState = {
         data: null,
     }
 }
+
+
 export const openCustomPopup = (dispatch, name, data = null) => {
+    if (name === 'TaskPopup') {
+        console.log('ssssfhg ')
+    }
     dispatch(openPopup({ name, data }));
 };
 const popupSlice = createSlice({
@@ -29,6 +34,7 @@ const popupSlice = createSlice({
             state.isOpen = false;
             state.activePopup = ''; // Сбрасывает имя активного попапа
             state.popupData = null; // Сбрасывает данные попапа
+            
         },
         openTaskPopup: (state, action) => {
             state.isOpen = true;

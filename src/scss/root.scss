@@ -8,17 +8,22 @@
       display: grid;
       //   grid-auto-columns: 1fr;
       //   grid-template-columns: 1fr;
-        grid-template-rows: min-content 1fr 50px;
+        grid-template-rows: max-content 1fr 50px;
       //   gap: 10px 0px;
         grid-template-areas:
           "header"
           "content"
           "footer";
           // justify-content: center;
-    background-color: $bg-clr;
+    // background-color: $bg-clr;
+    background-image: linear-gradient(45deg, hsl($hue, 50%, 20%), hsl($hue, 10%, 10%));
     color: $font-clr;
-
-
+    // 
+    position: absolute;
+    right: 0;
+    width: 100%;
+    min-height: 100vh;
+    // padding: 100px;
 
 }
 

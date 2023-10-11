@@ -1,11 +1,19 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import MenuToggler from '../MenuToggler/MenuToggler'
+import { useSelector, useDispatch } from 'react-redux';
+import { openMenu, closeMenu } from '../../store/slices/sideMenuSlice'
 const Navbar = () => {
-  const [isMenuOpen, setMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { isMenuOpen } = useSelector((state) => state.sideMenu)
+ 
   const activeMenuClassName = 'navbar_state_active';
-  function handleOpenMenu() {
-    setMenuOpen(!isMenuOpen);
+  function handleToggleMenu() {
+    if (isMenuOpen) {
+      dispatch(closeMenu());
+    } else {
+      dispatch(openMenu());
+    }
   }
   return (
     <div className='menu'>
@@ -15,7 +23,7 @@ const Navbar = () => {
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>Contact me</Link></li>
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>My github</Link></li>
       </ul>
-      <MenuToggler onClick={handleOpenMenu} isMenuOpen={isMenuOpen}/>
+      <MenuToggler onClick={handleToggleMenu} isMenuOpen={isMenuOpen}/>
     </div>
   )
 }

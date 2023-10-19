@@ -12,10 +12,11 @@
   }
   &__add-button {
     @include button-add;
+    
+   
   }
   &__list {
-    list-style: none;
-    padding: 0;
+    @include list;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min-content, 420px));
     grid-column-gap: 10px;

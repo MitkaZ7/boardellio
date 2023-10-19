@@ -1,0 +1,61 @@
+.intro {
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    align-items: center;
+    &__header {
+
+    }
+    &__title {
+        margin: 0;
+    }
+    &__subtitle {
+        margin: 0;
+    }
+    &__features {
+        @include list;
+        margin-top: 50px;
+    }
+    &__features-item {
+        margin: 15px 0 0 0;
+        position: relative;
+        left: 20px;
+        &::before {
+            content: '';
+            position: absolute;
+            height: 15px;
+            width: 10px;
+            left: -20px;
+            top: 0;
+            // background-color: red;
+            border: 2px solid $succes-clr;
+            border-radius: 3px;
+        }
+    }
+    &__tech-list {
+        @include list;
+       
+    }
+    &__tech-list-item {
+        margin: 10px;
+        min-width: 320px;
+    }
+    &__buttons {
+        margin-top: 100px;
+    }
+    &__link-btn {
+        @include action-button;
+        padding: 5px 10px;
+    }
+    &__link-btn_type_read-only {
+        color: $process-clr;
+        border-color: $process-clr;
+        margin-right: 15px;
+        &:hover {
+            background-color: $process-clr;
+            border-color: $process-clr;
+        }
+    }
+
+}

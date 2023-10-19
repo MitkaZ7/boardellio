@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+
+function addOutSideMenuClikListener () {
+    
+}
 const initialState = {
     isMenuOpen: false,
 }
@@ -12,6 +16,7 @@ const sideMenuSlice = createSlice({
         closeMenu: (state, action) => {
             state.isMenuOpen = false;
         },
+        
     }
 });
 

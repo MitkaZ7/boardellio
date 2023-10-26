@@ -1,14 +1,46 @@
-import React from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import React, { useEffect, useRef,useState } from 'react'
+import { Link } from 'react-router-dom';
+import { technologyScroll, buttonHoverAnimation, buttonHoverAnimationReverse } from '../../utils/animations.js'
+import technologies from '../../data/technologies.json';
+import FadeInAnimation from "../FadeInAnimtion/FadeInAnimation";
+import { gsap } from "gsap";
+import Hint from '../Hint/Hint.jsx';
 const Intro = () => {
+  const introRef = useRef();
+  const listRef = useRef(null);
+  const buttonsRefs = useRef({}); // Создаем объект для хранения рефов кнопок
+  const subItemButtonClass = '.intro__button-overlay'; // для передачи в функцию анимации ховера на кнопку
+  const overlayRef = useRef();
+  useEffect(() => {
+
+    const techList = listRef.current.children;
+    technologyScroll(techList);
+
+    
+  }, []);
+ 
+  
+  const handleButtonMouseEnter = (buttonType) => {
+    // Вызываем функцию для анимации кнопки при наведении
+    const buttonRef = buttonsRefs.current[buttonType];
+    if (buttonRef) {
+      buttonHoverAnimation(buttonRef, true, subItemButtonClass); 
+    }
+  };
+
+  const handleButtonMouseLeave = (buttonType) => {
+    const buttonRef = buttonsRefs.current[buttonType];
+    buttonHoverAnimation(buttonRef, false, subItemButtonClass); // Снятие наведения
+  };
+
   return (
-    <section className='intro'>  
-      <div>
+    <section className='intro' ref={introRef}>  
+      <FadeInAnimation wrapperElement="div" direction="left">
       <div className="intro__header">
-        <h1 className='intro__title'>Welcome to Dashboard</h1>
-        <p className='intro__subtitle'>- A single page application</p>
+          <h1 className='intro__title'>Welcome to Dashboard</h1>
+        <p className='intro__subtitle'>A single page application</p>
       </div>
-      <ul className="intro__features">
+        <ul className="intro__features">
         <li className="intro__features-item">Registration/Authorization</li>
         <li className="intro__features-item">Drag'n'Drop oparations</li>        
         <li className="intro__features-item">Task state managment</li>
@@ -19,29 +51,50 @@ const Intro = () => {
         <li className="intro__features-item">Actual React version</li>
         <li className="intro__features-item">And a litle bit of animations</li>
       </ul>
-        <div className="intro__buttons">
+        <div>
           <p className="intro__buttons-title">Choose mode & try it:</p>
-
-          {/* <Link className="intro__link-btn intro__link-btn_type_read-only" to='/registration'>Read only</Link> */}
-          <Link className="intro__link-btn" to='/registration'>Full access</Link>
-
+          <div className="intro__buttons">
+            <div className='intro__button-container'>
+              <Link
+                ref={(el) => (buttonsRefs.current['read-only'] = el)} 
+                onMouseEnter={() => handleButtonMouseEnter('read-only')}
+                onMouseLeave={() => handleButtonMouseLeave('read-only')}
+                className="intro__link intro__link_type_read-only" 
+                to='/projects'>
+                Read only
+                <div className='intro__button-overlay' ref={overlayRef}></div>
+            </Link>
+            </div>
+            {/* <div> */}
+            <Hint text='Go to registration'>
+                <div className='intro__button-container'>
+              <Link
+                ref={(el) => (buttonsRefs.current['full-access'] = el)} 
+                onMouseEnter={() => handleButtonMouseEnter('full-access')}
+                onMouseLeave={() => handleButtonMouseLeave('full-access')} 
+                className="intro__link intro__link_type_full-access" 
+                to='/registration'>
+                  Full access
+                  <div className='intro__button-overlay' ref={overlayRef}></div>
+              </Link>
+                </div>
+            </Hint>
+            {/* </div> */}
+          </div>
         </div> 
-      </div>
-      <div>
-      <ul className="intro__tech-list">
-        <li className="intro__tech-list-item">React 18</li>
-        <li className="intro__tech-list-item">Gsap</li>
-        <li className="intro__tech-list-item">Axios</li>
-        <li className="intro__tech-list-item">Redux</li>
-        <li className="intro__tech-list-item">React router dom v6</li>
-        <li className="intro__tech-list-item">JOI</li>
-        <li className="intro__tech-list-item">Google Firebase</li>
-        <li className="intro__tech-list-item">React D'n'D</li>
-
+      </FadeInAnimation>
+      <FadeInAnimation wrapperElement="div" direction="right">
+      <p className='intro__comment-about-stack'>developed with:</p>
+        <ul className="intro__tech-list" ref={listRef}>
+          {Object.entries(technologies).map(([techKey,techData]) => (
+            <li key={techKey} className="intro__tech-list-item">{techData.title}</li>
+          ))}
+        {/* <li className="intro__tech-list-item">Developed with:</li> */}
       </ul>
-      </div>
+      </FadeInAnimation>
       
     </section>
+    
   )
 }
 

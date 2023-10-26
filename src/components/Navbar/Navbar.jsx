@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import MenuToggler from '../MenuToggler/MenuToggler'
 import { useSelector, useDispatch } from 'react-redux';
 import { openMenu, closeMenu } from '../../store/slices/sideMenuSlice'
+import FadeInAnimation from "../FadeInAnimtion/FadeInAnimation";
 const Navbar = () => {
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state) => state.sideMenu)

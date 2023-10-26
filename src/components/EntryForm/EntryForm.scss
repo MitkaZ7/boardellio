@@ -70,7 +70,7 @@
         text-align: center;
         font-weight: 400;
         text-transform: uppercase;
-        line-height: 0.2;
+        // line-height: 0.2;
         }
     &__links {
         margin: 10px 0;
@@ -89,8 +89,12 @@
         position: relative;
         width: 80%;
         margin-top: 10px;
+        &:first-of-type {
+            margin-top: 0;
+        }
     }
     &__input {
+        box-sizing: border-box;
         display: block;
         align-self: center;
         margin-top: 20px;
@@ -99,7 +103,7 @@
         border: none;
         border-bottom: 2px solid $process-clr;
         color: $succes-clr;
-        transition: 200ms all  ease-out;
+        // transition: 200ms all  ease-out;
         &:focus {
             outline: none;
             border-color: $succes-clr;
@@ -166,8 +170,8 @@
     border-color: $succes-clr;
     // border: 2px solid $succes-clr;
    
-        top: 7px;
-            font-size: 12px;
+        top: 0;
+        //     font-size: 12px;
             color: $succes-clr;
             transition: 0.3s;
 }

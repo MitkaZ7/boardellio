@@ -15,13 +15,13 @@ function App() {
     <DndProvider backend={HTML5Backend}>
     <Routes>
       <Route path="/" element={<Layout />}>
-          <Route index element={<Intro />} />
-          <Route element={<Login />} path='/login'/>
-          <Route element={<Registration />} path='/registration' />
+        <Route index element={<Intro />} />
+        <Route element={<Login />} path='/login'/>
+        <Route element={<Registration />} path='/registration' />
         <Route index element={<ProjectsList />} />
         <Route path="/projects/" element={<ProjectsList />} />
         <Route path="/projects/:projectTitle" element={<Project />} />
-          <Route path="/projects/:projectTitle/:taskId" element={<TaskPopup />} />
+        <Route path="/projects/:projectTitle/:taskId" element={<TaskPopup />} />
       </Route>
     </Routes>
     </DndProvider>

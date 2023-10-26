@@ -26,20 +26,20 @@
 }
 
 @mixin action-button {
-    background-color: $bg-clr;
-    color: $succes-clr;
+    background-color: transparent;
+    color: $font-clr;
     max-height: 30px;
     outline: none;
     border-radius: 5px;
-    border: 2px solid $succes-clr;
-    text-transform: uppercase;
+    border: 2px solid $process-clr;
+    // text-transform: uppercase;
     font-weight: 700;
     transition: all .2s linear;
-        
+    text-align: center; 
     &:hover {
         cursor: pointer;
-        background-color: $succes-clr;
-        border-color: $succes-clr;
-        color: $font-clr;
+        // background-color: $succes-clr;
+        // border-color: $succes-clr;
+        // color: $font-clr;
     }
 }

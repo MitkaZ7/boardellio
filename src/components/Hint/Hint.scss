@@ -1,0 +1,35 @@
+.hint {
+    display: flex;
+    position: relative;
+ 
+    &__text{
+       
+        position: absolute;
+        width: 100px;
+        // width: 100%;
+            padding: 4px 12px;
+            margin-left: calc(100%);
+            top: -55px;
+            left: -50px;
+            justify-content: center;
+            color: #FFFFFF;
+            background-color: $subtitle-clr;
+            border-radius: 5px;
+            text-align: center;
+            white-space: pre-line;
+            font-weight: 700;
+            pointer-events: none;
+            &::after {
+                    content: '';
+                   
+                    height: 10px;
+                    left: 10%;
+                    bottom: -25px;
+               
+                    position: absolute;
+                    border: 5px solid transparent;
+                    border-top: 12px solid $subtitle-clr;
+                }
+           
+     }
+}

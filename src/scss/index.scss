@@ -1,21 +1,27 @@
 @import '../vendor/normalize';
 // @import '../vendor/fonts/fonts';
 @import './colors';
+@import './animations';
 
 // mixins
 @import './mixins/main';
 @import './mixins/links';
 @import './mixins/buttons';
+@import './mixins/lists';
 // root and elements
 @import './root';
 @import '../components/Form/Form';
 @import '../components/Popup/Popup';
+@import '../components/EntryForm/EntryForm';
 // popups
 @import '../components/AddProjectPopup/AddProjectPopup';
 @import '../components/AddTaskPopup/AddTaskPopup';
 @import '../components/TaskPopup/TaskPopup';
 //components
 @import '../components/App/App';
+@import '../components/intro/Intro';
+@import '../components/Login/login';
+@import '../components/Registration/Registration';
 @import '../components/Header/Header';
 @import '../components/Navbar/Navbar';
 @import '../components/Footer/Footer';
@@ -26,5 +32,7 @@
 @import '../components/TaskCard/TaskCard';
 @import '../components/Task/Task';
 @import '../components/Loader/Loader';
+@import '../components/MenuToggler/MenuToggler';
+@import '../components/Hint/Hint';
 
 

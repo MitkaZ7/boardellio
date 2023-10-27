@@ -2,12 +2,12 @@ import React,{useEffect} from 'react'
 import Popup from '../Popup/Popup'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
-// import { openPopup, closePopup, openTaskPopup, closeTaskPopup, popupReducer } from '../../store/slices/popupSlice';
-import { closeAddProjectPopup, setAddProjectPopupData } from '../../store/slices/popupSlice';
+import { openPopup, closePopup, openTaskPopup, closeTaskPopup, popupReducer } from '../../store/slices/popupSlice';
+// import { closeAddProjectPopup, setAddProjectPopupData } from '../../store/slices/popupSlice';
 import { createProject } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
 import { getProjects } from '../../store/slices/projectSlice';
-import { closePopup } from '../../store/slices/popupSlice';
+// import { closePopup } from '../../store/slices/popupSlice';
 
 
 const AddProjectPopup = () => {
@@ -24,7 +24,7 @@ const AddProjectPopup = () => {
   };
 
   const closePopupHandler = () => {
-    dispatch(closeAddProjectPopup());
+    dispatch(closePopup());
     reset()
   };
   

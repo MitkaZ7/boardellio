@@ -78,7 +78,7 @@ const projectSlice = createSlice({
         },
         resetSelectedProjectId: (state) => {
             state.selectedProjectId = null;
-            localStorage.removeItem("selectedProjectId"); 
+            localStorage.removeItem('selectedProjectId'); 
         },
     },
     extraReducers: (builder) => {

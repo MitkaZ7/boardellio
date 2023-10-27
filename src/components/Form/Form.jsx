@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Upload from '../../assets/icons/upload.svg';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closePopup } from '../../store/slices/popupSlice';
 import { createTask } from '../../store/slices/tasksSlice';
 
@@ -9,7 +9,9 @@ import { createTask } from '../../store/slices/tasksSlice';
 const Form = ({ projects }) => {
     const dispatch = useDispatch();
     const { register, handleSubmit, reset } = useForm();
-    const [selectedProject, setSelectedProject] = useState(null);
+    const {selectedProject}= useSelector(state => state.projects)
+    console.log(selectedProject.projectName)
+    const [reselectedProject, setReselectedProject] = useState(null);
     const onSubmit = async (data) => {
         dispatch(
             createTask({
@@ -18,7 +20,7 @@ const Form = ({ projects }) => {
                 status: 'dev',
                 description: data.description,
                 priority: data.priority,
-                projectId: selectedProject,
+                projectId: selectedProject.projectId,
             })
         );
 
@@ -32,11 +34,18 @@ const Form = ({ projects }) => {
             <fieldset className="form__fieldset">
                 <input className="form__input" {...register('title')} placeholder="Add task title" />
 
-                <select className="form__select" {...register('project')} onChange={(e) => setSelectedProject(e.target.value)}>
-                    <option value="noNameProject">Select a project</option>
+                <select 
+                className="form__select" 
+                {...register('project')} 
+                // onChange={(e) => setReselectedProject(e.target.value)} 
+                value={selectedProject.projectName}
+                >
+                    
+                    {/* <option value="noNameProject">Select a project</option> */}
                     {Object.entries(projects).map(([projectId, projectData]) => (
+                        
                         <option key={projectId} value={projectId}>
-                            {projectData.title} {/* Ваше свойство для имени проекта */}
+                            {projectData.title}
                         </option>
                     ))}
                 </select>

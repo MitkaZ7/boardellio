@@ -16,21 +16,20 @@ const AddTaskPopup = () => {
   };
 
   useEffect(() => {
-    // if (isOpen && projects.length) {
-      
-    //   // Если попап открывается и список проектов еще не загружен, получаем список проектов с бекенда
-    //   dispatch(getProjects()).then(() => {
+    const loadProjects = async () => {
+      if (isOpen && !isProjectsLoaded) {
+        await dispatch(getProjects());
         setIsProjectsLoaded(true);
-    //     console.log(projects) // Устанавливаем флаг, что список проектов загружен
-    //   });
-      
-    // }
-  }, []);
+      }
+    };
+
+    loadProjects();
+  }, [isOpen, isProjectsLoaded, dispatch]);
 
   if (!isOpen || !isProjectsLoaded) return null; // Рендер попапа только если isOpen === true и список проектов загружен
 
   return (
-    <Popup onClose={onClose}>
+    <Popup>
       {/* Передаем список проектов в компонент Form */}
       <Form projects={projects} />
     </Popup>

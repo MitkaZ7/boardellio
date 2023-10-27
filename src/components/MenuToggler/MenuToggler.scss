@@ -1,0 +1,40 @@
+.menu-toggler {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    // margin-right: 20xp;
+}
+
+// @media screen and (max-width: 768px) {
+//     .menu-toggler {
+//         display: block;
+//     }
+// }
+
+
+.menu-toggler__bar {
+    display: block;
+    width: 33px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    background-color: $succes-clr;
+    border-radius: 1px;
+}
+.menu-toggler__bar_state_active:nth-of-type(1) {
+    transform: translateY(8px) rotate(45deg);
+    background-color: $queue-clr;
+    // height: 4px;
+    // height: 5px;
+}
+
+.menu-toggler__bar_state_active:nth-of-type(2) {
+    opacity: 0;
+}
+
+.menu-toggler__bar_state_active:nth-of-type(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: $queue-clr
+    // height: 4px;
+}

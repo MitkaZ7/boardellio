@@ -3,12 +3,19 @@ import { useDrag } from 'react-dnd';
 import { itemTypes } from '../../utils/constants';
 import { useDispatch } from 'react-redux';
 import { openTaskPopup } from '../../store/slices/popupSlice';
+import TaskPopup from '../TaskPopup/TaskPopup';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
-const TaskCard = ({ title, priority, link, id, status }) => {
+import { getOneTask, selectTask } from '../../store/slices/tasksSlice';
+const TaskCard = ({ title, priority, link, onClick, taskId }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const openTaskPopupHandler = () => {
-    dispatch(openTaskPopup(id));
+    onClick()
+    dispatch(selectTask(taskId))
+    // navigate(`/tasks/${taskId}`);
+    // dispatch(getOneTask(taskId))
+    
   };
 
   // const [{ isDragging }, drag] = useDrag(() => ({

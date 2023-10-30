@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-
-import { useForm } from 'react-hook-form'
+import Joi from 'joi'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-const EntryForm = ({ buttonText, onSubmit, formTitle, linkText, linkTitle, linkTo, children, }) => {
+const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, children, }) => {
     const filledInputLabelClass = 'entryForm__input_state_filled';
     const { register, handleSubmit } = useForm();
     const [filledInput, setFilledInput] = useState(false);
@@ -16,22 +16,6 @@ const EntryForm = ({ buttonText, onSubmit, formTitle, linkText, linkTitle, linkT
         setPassword(evt.target.value);
     }
     
-    // function handleFocusInput(e) {
-    //     if (e.currentTarget === e.target) {
-    //         console.log('focused input');
-    //         e.currentTarget.classList.add(filledInputLabelClass)
-    //         setFilledInput(true);
-    //         console.log(filledInput)
-    //         console.log(e.currentTarget);
-    //     }
-    // }
-    // function handleUnfocusInput(e) {
-    //     if (e.currentTarget === e.target) {
-    //         console.log('unfocused input');
-    //         console.log(e.currentTarget);
-    //         setFilledInput(false);
-    //     }
-    // }
 
 
     const handleLogin = (evt) => {
@@ -45,10 +29,12 @@ const EntryForm = ({ buttonText, onSubmit, formTitle, linkText, linkTitle, linkT
         return authData;
     }
 
+    const onSubmit = (data) => console.log(data)
+
     return (
         <div className='entryForm-container'>
 
-            <form className='entryForm' onSubmit={onSubmit}>
+            <form className='entryForm' onSubmit={handleSubmit(onSubmit)}>
                 <h3 className="entryForm__title">{formTitle}</h3>
                 <fieldset className='entryForm__fieldset'>
                     <div className='entryForm__input-container'>
@@ -61,7 +47,8 @@ const EntryForm = ({ buttonText, onSubmit, formTitle, linkText, linkTitle, linkT
                             placeholder='email'
                             onChange={handleChangeEmail}
                             value={email}
-                            required
+                            {...register('email')}
+                            // required
                         />
                         <label
                             className={`entryForm__label ${email ? 'entryForm__input_state_filled' : ''}`} 
@@ -79,6 +66,7 @@ const EntryForm = ({ buttonText, onSubmit, formTitle, linkText, linkTitle, linkT
                             placeholder='password'
                             onChange={handleChangePassword}
                             value={password}
+                            {...register('password')}
                         />
                         <label
                             className={`entryForm__label ${password ? 'entryForm__input_state_filled' : ''}`} 

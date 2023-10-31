@@ -89,19 +89,28 @@
         position: relative;
         width: 80%;
         margin-top: 10px;
+        
         &:first-of-type {
             margin-top: 0;
         }
+        &:focus-within label{
+            color: $succes-clr;
+            border-color: $succes-clr;
+            transform: translate(0, -22px) scale(0.95);
+        }
     }
     &__input {
+        position: relative;
         box-sizing: border-box;
-        display: block;
         align-self: center;
-        margin-top: 20px;
+        margin-top: 5px;
         width: 100%;
         background: none;
-        border: none;
-        border-bottom: 2px solid $process-clr;
+        height: 30px;
+        // border: none;
+        // border: 1px solid #ddd;
+        border-radius: 4px;
+        border: 2px solid $process-clr;
         color: $succes-clr;
         // transition: 200ms all  ease-out;
         &:focus {
@@ -112,37 +121,51 @@
         &::placeholder {
             color: transparent
         }
-        &:focus ~ label {
-                top: 7px;
-                font-size: 12px;
-                color: $succes-clr;
-                transition: 0.3s;
+        &:focus &:not(:placeholder-shown) {
+            outline: none;
+            border-color: $succes-clr;
+        }
+        &:not(:placeholder-shown) + .entryForm__label {
+    
+    transform: translate(0, -22px) scale(0.95);
+  
+    color: $succes-clr;
+        }
+        // &:focus ~ label {
+        //         top: 7px;
+        //         font-size: 12px;
+        //         color: $succes-clr;
+        //         transition: 0.3s;
                 
-            }
+        //     }
         
            
     }
+    &__input-error {
+        color: red;
+        position: relative;
+    }
     &__label {
+        // padding: 0 10px;
+        // font-size: 0.8em;
         position: absolute;
-        pointer-events: none;
-        left: 0;
-        top: 20px;
-        transition: 0.2s ease all;
+        // transform: translate(0, 26px) scale(1);
+        // pointer-events: none;
+        z-index: 999;
+        left: 5px;
+        // top: 20%;
+        top: 50%;
+        background-color: $bg-clr;
+            transform: translateY(-50%);
+        // transition: 0.2s ease all;
+        transition: all 0.2s ease-out;
         color: $process-clr;
-            &::after {
-                // content: '';
-                // top: 30%;
-                // right:-10px;
-                // position: absolute;
-                // width: 5px;
-                // height: 5px;
-                // background-color: aqua;
-            }
+           
             &:focus {
-                // top: 16px;
-                //     font-size: 12px;
-                //     color: #4caf50;
-                    // transition: 0.3s;
+                top: 16px;
+                    font-size: 12px;
+                    color: #4caf50;
+                    transition: 0.3s;
             }
        
         }

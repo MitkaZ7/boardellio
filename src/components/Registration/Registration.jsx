@@ -30,7 +30,7 @@ const Registration = () => {
           linkText='Already have an account?'
           linkTitle='login'
           linkTo='/login'
-        //   isRegistration={true}
+          isRegistration={true}
       > 
          
       </EntryForm>

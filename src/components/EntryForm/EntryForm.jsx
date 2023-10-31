@@ -1,59 +1,74 @@
-import React, { useState } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import React, { useState,useEffect } from 'react'
+
+import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { loginSchema, registrationSchema } from '../../utils/validation'
 const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, children, isRegistration }) => {
-    // const filledInputLabelClass = 'entryForm__input_state_filled';
+    const filledInputLabelClass = 'entryForm__input_state_filled';
     const { register, handleSubmit, formState: { errors, isValid } } = useForm();
     const [filledInput, setFilledInput] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
-    const [showError, setShowError] = useState(false)
+    const [showValidationError, setShowValidationError] = useState(false)
+    const [showConfirmation, setShowConfirmation] = useState(false);
     let navigate = useNavigate();
-    function handleChangeEmail(evt) {
-        console.log(evt)
-        setEmail(evt.target.value);
-    }
-    function handleChangePassword(evt) {
-        setPassword(evt.target.value);
-    }
-    function handleChangeConfirmedPassword(evt) {
-        setConfirmedPassword(evt.target.value);
-    }
-
-
+    useEffect(() => {
+        // Используйте useEffect для слежения за изменениями в поле "пароль"
+        if (isValid) {
+            setShowConfirmation(true); // Показать поле "подтверждение пароля"
+        } else {
+            setShowConfirmation(false); // Скрыть поле "подтверждение пароля"
+        }
+    }, [isValid]);
     
 
+    // function handleFocusInput(e) {
+    //     if (e.currentTarget === e.target) {
+    //         console.log('focused input');
+    //         e.currentTarget.classList.add(filledInputLabelClass)
+    //         setFilledInput(true);
+    //         console.log(filledInput)
+    //         console.log(e.currentTarget);
+    //     }
+    // }
+    // function handleUnfocusInput(e) {
+    //     if (e.currentTarget === e.target) {
+    //         console.log('unfocused input');
+    //         console.log(e.currentTarget);
+    //         setFilledInput(false);
+    //     }
+    // }
 
-    const handleLogin = (evt) => {
-        evt.preventDefault();
-        const authData = {
-            email,
-            password
-        }
-        // dispatch(authorizeUser(authData));
-        navigate('/tasks');
-        return authData;
-    }
 
+    // const handleLogin = (evt) => {
+    //     evt.preventDefault();
+    //     const authData = {
+    //         email,
+    //         password
+    //     }
+    //     // dispatch(authorizeUser(authData));
+    //     navigate('/tasks');
+    //     return authData;
+    // }
     const onSubmit = (data) => {
-        
+        console.log(data);
         if (isRegistration) {
             const { error } = registrationSchema.validate(data);
             if (error) {
-                setShowError(true);
-                console.log('Validation registration err: ' + error);
+                setShowValidationError(true);
+                console.log('Validation err: ' + error);
                 return;
             }
         } else {
-            const {error} = loginSchema.validate(data);
-            setShowError(true);
+            const { error } = loginSchema.validate(data);
+            setShowValidationError(true);
 
-            console.log('Validation login err: ' + error);
+            console.log('Validation err: ' + error);
         }
-        console.log(data);
-        setShowError(false); 
+     
+        
+        setShowValidationError(false);
     }
 
     return (
@@ -64,48 +79,53 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, childre
                 <fieldset className='entryForm__fieldset'>
                     <div className='entryForm__input-container'>
                         <input
-                    
-                            className={`entryForm__input ${email ? 'entryForm__input_state_filled' : ''}`}
+                            className='entryForm__input'
+
+                            // className={`entryForm__input ${isValid ? 'entryForm__input_state_filled' : ''}`}
                             id='input-email'
                             type='email'
                             name='email'
-                            placeholder='email'
-                            onChange={handleChangeEmail}
-                            // value={email}
+                            // placeholder='email'
                             {...register('email')}
-                            // required
+                            required
+                            // onChange={(e) => {
+                            //    console.log(e.target.value)
+                            // }}
                         />
                         <label
-                            className={`entryForm__label ${email ? 'entryForm__input_state_filled' : ''}`} 
+                            className='entryForm__label'
+                            // className={`entryForm__label ${isValid ? 'entryForm__input_state_filled' : ''}`}
                             htmlFor='input-email'>
                             email
                         </label>
-                        {showError && errors.email && (
+                        {errors.email && 
                             <span className='entryForm__input-error'>{errors.email.message}</span>
-                        )}
+                        }
                     </div>
                     <div className='entryForm__input-container'>
                         <input
-                    
+
                             className='entryForm__input'
                             id='input-password'
                             type='password'
                             name='password'
                             placeholder='password'
-                            onChange={handleChangePassword}
-                            value={password}
-                            // {...register('password')}
+                            {...register('password')}
+                            // onChange={(e) => {
+                            //     console.log(e.target.value)
+                            // }}
                         />
                         <label
-                            className={`entryForm__label ${password ? 'entryForm__input_state_filled' : ''}`} 
+                            className='entryForm__label'
+                            // className={`entryForm__label ${password ? 'entryForm__input_state_filled' : ''}`}
                             htmlFor='input-password'>
                             password
                         </label>
-                        {showError && errors.password && (
+                        {showValidationError && errors.password && (
                             <span className='entryForm__input-error'>{errors.password.message}</span>
                         )}
                     </div>
-                    {isRegistration && isValid && ( // Показать только при регистрации и валидном пароле
+                    {showConfirmation && isRegistration && ( // Показать только при регистрации и валидном пароле
                         <div className='entryForm__input-container'>
                             <input
                                 className='entryForm__input'
@@ -113,16 +133,16 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, childre
                                 type='password'
                                 name='confirmedPassword'
                                 placeholder='confirm password'
-                                onChange={handleChangeConfirmedPassword}
-                                value={confirmedPassword}
-                                // {...register('confirmedPassword')}
+                                {...register('confirmedPassword')}
+                                required
                             />
                             <label
-                                className={`entryForm__label ${confirmedPassword ? 'entryForm__input_state_filled' : ''}`}
+                                className='entryForm__label'
+                                // className={`entryForm__label ${confirmedPassword ? 'entryForm__input_state_filled' : ''}`}
                                 htmlFor='input-confirmed-password'>
                                 confirm password
                             </label>
-                            {showError && errors.confirmedPassword && (
+                            {errors.confirmedPassword && (
                                 <span className='entryForm__input-error'>{errors.confirmedPassword.message}</span>
                             )}
                         </div>

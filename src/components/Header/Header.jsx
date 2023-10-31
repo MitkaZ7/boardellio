@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import logo from '../../assets/icons/logo.svg'
 import Navbar from '../Navbar/Navbar'
 import FadeInAnimation from "../FadeInAnimtion/FadeInAnimation";
-// import MenuToggler from '../MenuToggler/MenuToggler'
+
 const Header = () => {
  
 

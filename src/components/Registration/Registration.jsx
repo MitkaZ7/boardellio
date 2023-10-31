@@ -29,35 +29,10 @@ const Registration = () => {
           formTitle='Registration'
           linkText='Already have an account?'
           linkTitle='login'
-        //   onSubmit={handleRegistration}
           linkTo='/login'
+        //   isRegistration={true}
       > 
-          {/* <label className="entryForm__label">email</label>
-          <input
-              className="entryForm__input"
-              id="inputEmail"
-              type="email"
-              name="email"
-              placeholder="email"
-              onChange={handleChangeEmail}
-              value={email}
-              required
-          />
-          <span className="form__input-error"></span>
-          <span className="entryForm__input-border"></span>
-
-          <label className="entryForm__label">password</label>
-          <input
-              className="entryForm__input"
-              id="input-password"
-              type="password"
-              name="password"
-              placeholder="password"
-              onChange={handleChangePassword}
-              value={password}
-
-          />
-          <span className="entryForm__input-border"></span> */}
+         
       </EntryForm>
   )
 }

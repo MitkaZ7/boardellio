@@ -12,6 +12,7 @@ const Login = () => {
           linkTitle='Registrate'
         //   onSubmit={handleLogin}
           linkTo='/registration'
+      // isRegistration={false}
       >
           
       </EntryForm>

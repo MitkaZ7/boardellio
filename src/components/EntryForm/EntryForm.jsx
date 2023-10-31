@@ -1,19 +1,28 @@
 import React, { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, children, }) => {
-    const filledInputLabelClass = 'entryForm__input_state_filled';
-    const { register, handleSubmit } = useForm();
+import { loginSchema, registrationSchema } from '../../utils/validation'
+const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, children, isRegistration }) => {
+    // const filledInputLabelClass = 'entryForm__input_state_filled';
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm();
     const [filledInput, setFilledInput] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmedPassword, setConfirmedPassword] = useState('');
+    const [showError, setShowError] = useState(false)
     let navigate = useNavigate();
     function handleChangeEmail(evt) {
+        console.log(evt)
         setEmail(evt.target.value);
     }
     function handleChangePassword(evt) {
         setPassword(evt.target.value);
     }
+    function handleChangeConfirmedPassword(evt) {
+        setConfirmedPassword(evt.target.value);
+    }
+
+
     
 
 
@@ -28,7 +37,24 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, childre
         return authData;
     }
 
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = (data) => {
+        
+        if (isRegistration) {
+            const { error } = registrationSchema.validate(data);
+            if (error) {
+                setShowError(true);
+                console.log('Validation registration err: ' + error);
+                return;
+            }
+        } else {
+            const {error} = loginSchema.validate(data);
+            setShowError(true);
+
+            console.log('Validation login err: ' + error);
+        }
+        console.log(data);
+        setShowError(false); 
+    }
 
     return (
         <div className='entryForm-container'>
@@ -45,7 +71,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, childre
                             name='email'
                             placeholder='email'
                             onChange={handleChangeEmail}
-                            value={email}
+                            // value={email}
                             {...register('email')}
                             // required
                         />
@@ -54,6 +80,9 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, childre
                             htmlFor='input-email'>
                             email
                         </label>
+                        {showError && errors.email && (
+                            <span className='entryForm__input-error'>{errors.email.message}</span>
+                        )}
                     </div>
                     <div className='entryForm__input-container'>
                         <input
@@ -65,15 +94,39 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, childre
                             placeholder='password'
                             onChange={handleChangePassword}
                             value={password}
-                            {...register('password')}
+                            // {...register('password')}
                         />
                         <label
                             className={`entryForm__label ${password ? 'entryForm__input_state_filled' : ''}`} 
                             htmlFor='input-password'>
                             password
                         </label>
-
+                        {showError && errors.password && (
+                            <span className='entryForm__input-error'>{errors.password.message}</span>
+                        )}
                     </div>
+                    {isRegistration && isValid && ( // Показать только при регистрации и валидном пароле
+                        <div className='entryForm__input-container'>
+                            <input
+                                className='entryForm__input'
+                                id='input-confirmed-password'
+                                type='password'
+                                name='confirmedPassword'
+                                placeholder='confirm password'
+                                onChange={handleChangeConfirmedPassword}
+                                value={confirmedPassword}
+                                // {...register('confirmedPassword')}
+                            />
+                            <label
+                                className={`entryForm__label ${confirmedPassword ? 'entryForm__input_state_filled' : ''}`}
+                                htmlFor='input-confirmed-password'>
+                                confirm password
+                            </label>
+                            {showError && errors.confirmedPassword && (
+                                <span className='entryForm__input-error'>{errors.confirmedPassword.message}</span>
+                            )}
+                        </div>
+                    )}
                 </fieldset>
                 <button type='submit' className='entryForm__btn-submit'>{buttonText}</button>
                 <span className='entryForm__links'>{linkText}&nbsp;<Link className='entryForm__link' to={linkTo}>{linkTitle}</Link></span>

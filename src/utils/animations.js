@@ -22,7 +22,7 @@ export const buttonHoverAnimation = (buttonTarget, isHovered, subItemClass) => {
         // Анимация при наведении
         btnTL.to(buttonTarget, {
             scale: 1.2,
-            color: "#fff",
+            color: "#1beb9e",
             // transformOrigin: "left center"
         })
         // btnTL.from(overlayBg, {

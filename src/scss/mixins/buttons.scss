@@ -10,7 +10,7 @@
     font-weight: 700;
     margin-left: 10px;
     transition: all .2s linear;
-    &:hover {
+    &:hover:enabled {
         cursor: pointer;
         background-color: $succes-clr;
         border-color: $succes-clr;
@@ -22,6 +22,10 @@
     }
     &:active {
         color: green;
+    }
+    &:disabled {
+            color: $inactive-btn-clr;
+            border-color: $inactive-btn-clr;
     }
 }
 

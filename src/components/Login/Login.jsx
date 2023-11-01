@@ -10,9 +10,8 @@ const Login = () => {
           formTitle='Login'
           linkText='Don`t have an account?'
           linkTitle='Registrate'
-        //   onSubmit={handleLogin}
           linkTo='/registration'
-      // isRegistration={false}
+          isRegistration={false}
       >
           
       </EntryForm>

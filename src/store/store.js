@@ -5,6 +5,7 @@ import projectSlice from './slices/projectSlice'
 import popupSlice from './slices/popupSlice'
 import loaderSlice from './slices/loaderSlice';
 import sideMenuSlice from './slices/sideMenuSlice';
+import userSlice from './slices/userSlice';
 
 export default configureStore ({
     reducer: {
@@ -13,6 +14,7 @@ export default configureStore ({
         projects: projectSlice,
         loader: loaderSlice,
         sideMenu: sideMenuSlice,
+        user: userSlice,
 
     }
        

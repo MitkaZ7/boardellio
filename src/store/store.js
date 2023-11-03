@@ -6,6 +6,7 @@ import popupSlice from './slices/popupSlice'
 import loaderSlice from './slices/loaderSlice';
 import sideMenuSlice from './slices/sideMenuSlice';
 import userSlice from './slices/userSlice';
+import themeSlice from './slices/themeSlice';
 
 export default configureStore ({
     reducer: {
@@ -15,6 +16,7 @@ export default configureStore ({
         loader: loaderSlice,
         sideMenu: sideMenuSlice,
         user: userSlice,
+        theme: themeSlice,
 
     }
        

@@ -7,7 +7,10 @@
   // display: flex;
   // justify-content: center;
   // align-items: center;
-  z-index: 999;
+  z-index: 100;
+  display: flex;
+  flex-flow: column wrap;
+ 
 }
 .navbar {
   position: absolute;
@@ -27,17 +30,18 @@
     font-size: 1.4em;
   }
   &__link:hover {
-    color: $inverted-font-clr;
+    color: $additional-color;
     text-decoration: underline;
   }
   &__link:visited {
-    color: $inverted-font-clr;
+    color: $additional-color;
     
   }
     &__link:hover:visited {
-      color: $inverted-font-clr;
+      color: $additional-color;
     }
   &_state_active {
+    align-self: center;
     position: absolute;
     max-width: 375px;
     height: 100%;
@@ -49,6 +53,7 @@
     background: $popup-bg-clr; 
     display: flex;
     flex-direction: column;
+ 
     // width: 200px;
     // z-index: 1;
     margin: 0;

@@ -1,7 +1,7 @@
 $succes-clr: #1beb9e;
 $hover-bg-clr: #4caf50;
 $queue-clr: #FC2847;
-$accent-clr: #1beb9e;
+$accent-clr: $succes-clr;
 $font-clr: #fff;
 $popup-bg-clr: #f6f4f4;
 $subtitle-clr: #3b3c67;
@@ -10,6 +10,7 @@ $process-clr: #FEB64D;
 $border-clr: #fff;
 // $bg-clr: #191921;
 $bg-clr: #223;
+$inactive-btn-clr: #676767;
 
 $inverted-font-clr:$bg-clr;
 $additional-color: #6667AB;

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import EntryForm from '../EntryForm/EntryForm'
+import { loginSchema } from '../../utils/validation'
 const Login = () => {
 
   return (
@@ -10,12 +11,12 @@ const Login = () => {
           formTitle='Login'
           linkText='Don`t have an account?'
           linkTitle='Registrate'
-        //   onSubmit={handleLogin}
           linkTo='/registration'
-      // isRegistration={false}
-      >
+          isRegistration={false}
+          validationSchema={loginSchema}
+      />
           
-      </EntryForm>
+     
   )
 }
 

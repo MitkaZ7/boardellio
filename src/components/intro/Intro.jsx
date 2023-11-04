@@ -49,6 +49,7 @@ const Intro = () => {
         <li className="intro__features-item">File uploadind</li>
         <li className="intro__features-item">Form validation</li>
         <li className="intro__features-item">Actual React version</li>
+        <li className="intro__features-item">Re-usable components</li>
         <li className="intro__features-item">And a litle bit of animations</li>
       </ul>
         <div>

@@ -19,6 +19,7 @@ const Navbar = () => {
     }
   }
   return (
+  
     <div className='menu'>
       {/* <div> */}
         <ul className={`navbar ${isMenuOpen ? activeMenuClassName : ''}`}>
@@ -28,7 +29,7 @@ const Navbar = () => {
           <li className='navbar__item'><Link to='tasks' className='navbar__link'>My github</Link></li>
          
         </ul>
-  
+      <ThemeSwitcher />
       {isMenuOpen && <OptionsPanel/>}
       
       <MenuToggler onClick={handleToggleMenu} isMenuOpen={isMenuOpen}/>

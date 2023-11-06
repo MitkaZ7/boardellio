@@ -1,19 +1,62 @@
-$succes-clr: #1beb9e;
-$hover-bg-clr: #4caf50;
-$queue-clr: #FC2847;
-$accent-clr: $succes-clr;
-$font-clr: #fff;
-$popup-bg-clr: #f6f4f4;
-$subtitle-clr: #3b3c67;
-$font-minor-clr: #ff9528;
-$process-clr: #FEB64D;
-$border-clr: #fff;
-// $bg-clr: #191921;
-$bg-clr: #223;
-$inactive-btn-clr: #676767;
+ $succes-clr: #1beb9e;
+         $hover-bg-clr: #4caf50;
+         $queue-clr: #FC2847;
+         $accent-clr: $succes-clr;
+         $font-clr: #fff;
+         $popup-bg-clr: #f6f4f4;
+         $subtitle-clr: #3b3c67;
+         $font-minor-clr: #ff9528;
+         $process-clr: #FEB64D;
+         $border-clr: #fff;
+         // $bg-clr: #191921;
+         $bg-clr: #223;
+         $inactive-btn-clr: #676767;
 
-$inverted-font-clr:$bg-clr;
-$additional-color: #6667AB;
+         $inverted-font-clr: $bg-clr;
+         $additional-color: #6667AB;
+
+// :root[data-theme="light"] {
+//     $succes-clr: #1beb9e;
+//         $hover-bg-clr: #4caf50;
+//         $queue-clr: #FC2847;
+//         $accent-clr: $succes-clr;
+//         $font-clr: #fff;
+//         $popup-bg-clr: #f6f4f4;
+//         $subtitle-clr: #3b3c67;
+//         $font-minor-clr: #ff9528;
+//         $process-clr: #FEB64D;
+//         $border-clr: #fff;
+//         // $bg-clr: #191921;
+//         $bg-clr: #223;
+//         $inactive-btn-clr: #676767;
+    
+//         $inverted-font-clr: $bg-clr;
+//         $additional-color: #6667AB;
+// }
+
+// :root[data-theme="dark"] {
+//     $succes-clr: #FF725E;
+//         $hover-bg-clr: #296e6b;
+//         $queue-clr: #FF5722;
+//         $accent-clr: $succes-clr;
+//         $font-clr: #296e6b;
+//         $popup-bg-clr: #fff;
+//         $subtitle-clr: #2B4A4A;
+//         $font-minor-clr: #ff9528;
+//         $process-clr: #FFC107;
+//         $border-clr: #FF725E;
+//         $bg-clr: #fff;
+//         $inactive-btn-clr: #ccc;
+//         $inverted-font-clr: $bg-clr;
+//         $additional-color: #333;
+// }
+
+
+
+
+
+
+
 // :root[data-theme="light"] {
 //   --main-bg-color: #fff;
 //   --text-color: #296e6b;

@@ -24,8 +24,9 @@ const Switcher = () => {
           id="toggler"
           type="checkbox"
           onClick={hadleThemeChange}
-          // checked={value}
+          checked={theme === 'dark' ? true : false}
           readOnly
+          // checked={true}
         />
         <span className="switcher__slider" />
 

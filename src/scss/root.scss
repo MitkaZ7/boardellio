@@ -1,5 +1,6 @@
 
 #root {
+  @include apply-theme('light');
   overflow: hidden;
   font-family: 'IBM Plex Mono', 'Helvetica', 'Arial', sans-serif;
   font-weight: 500;

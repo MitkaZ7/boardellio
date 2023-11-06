@@ -17,6 +17,7 @@
     &__subtitle {
         margin: 0;
         position: relative;
+        color: var(--subtitle-clr);
         &::after {
             content: '';
             background-image: url('../../assets/icons/arrow-ru.svg');
@@ -43,7 +44,7 @@
             width: 6px;
             left: -15px;
             top: -2px;
-            border: 2px solid $subtitle-clr;
+            border: 2px solid var(--subtitle-clr);
             border-radius: 3px;
         }
     }
@@ -62,7 +63,7 @@
         top: 0;
         left: 0;
         // margin: 0;
-        color: $process-clr;
+        color: var(--process-clr);
         // min-width: 320px;
         font-size: 5em;
         // line-height: 20%;
@@ -77,6 +78,9 @@
     }
     &__buttons-title {
         margin-top: 60px;
+        border-bottom: 2px solid var(--process-clr);
+        padding-bottom: 5px;
+        max-width: 44%;
     }
     &__button-container {
             overflow: hidden;
@@ -88,15 +92,15 @@
         display: block;
         overflow: hidden;
         z-index: 3;
-        color: $process-clr;
+        color: var(--process-clr);
     }
     &__link_type_read-only {
-        // color: $process-clr;
-        // border-color: $process-clr;
+        // color: var(--process-clr);
+        // border-color: var(--process-clr);
 
         // &:hover {
-        //     background-color: $process-clr;
-        //     border-color: $process-clr;
+        //     background-color: var(--process-clr);
+        //     border-color: var(--process-clr);
         // }
     }
     &__link_type_full-access {
@@ -113,11 +117,11 @@
         height: 100%;
         bottom: 0;
         left: -100px;
-        background-color: $process-clr;
+        background-color: var(--process-clr);
         z-index: -1;
     }
     &__comment-about-stack {
-        color: $subtitle-clr;
+        color: var(--subtitle-clr);
         position: relative;
         &::after {
             content: '';

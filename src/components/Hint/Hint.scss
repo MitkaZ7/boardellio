@@ -13,7 +13,7 @@
             left: -50px;
             justify-content: center;
             color: #FFFFFF;
-            background-color: $subtitle-clr;
+            background-color: var(--subtitle-clr);
             border-radius: 5px;
             text-align: center;
             white-space: pre-line;
@@ -28,7 +28,7 @@
                
                     position: absolute;
                     border: 5px solid transparent;
-                    border-top: 12px solid $subtitle-clr;
+                    border-top: 12px solid var(--subtitle-clr);
                 }
            
      }

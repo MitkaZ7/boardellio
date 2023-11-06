@@ -15,50 +15,41 @@ export const buttonHoverAnimation = (buttonTarget, isHovered, subItemClass) => {
     let button = gsap.utils.selector(buttonTarget);
     let overlayBg = button(subItemClass)
     console.log(button)
-    const btnTL = gsap.timeline().timeScale(3.5);
+    const btnTL = gsap.timeline({
+        speed: 20,
+    }).timeScale(3.5);
     if (isHovered) {
         // Анимация при наведении
-        btnTL.from(overlayBg, {
-           x: 0,
+        btnTL.to(buttonTarget, {
+            scale: 1.2,
+            color: "#1beb9e",
+            // transformOrigin: "left center"
+        })
+        // btnTL.from(overlayBg, {
+        //    x: 0,
            
-        })
-            .to(buttonTarget, {
-                color: 'white'
-        })
-        .to(overlayBg, {
-           x: 100,
+        // })
+        //     .to(buttonTarget, {
+        //         color: 'white'
+        // })
+        // .to(overlayBg, {
+        //    x: 100,
           
-        });
+        // });
     
     } else {
         // Анимация при снятии наведения
-        
         btnTL.to(overlayBg, {
             x: 0,
+          
         })
             .to(buttonTarget, {
-                clearProps: 'color'
+                color: '#FEB64D',
+                scale: 1,
         })
        
     }
 };
-
-// export const buttonHoverAnimation = (buttonTarget, isHovered) => {
-//     if (isHovered) {
-//         // Анимация при наведении
-//         gsap.to(buttonTarget, {
-//             background: 'linear-gradient(to left, red, green)',
-//             duration: 0.3,
-//         });
-//     } else {
-//         // Анимация при снятии наведения
-//         gsap.to(buttonTarget, {
-//             background: 'linear-gradient(to left, red, green)',
-//             duration: 0.3,
-//             clearProps: 'background',
-//         });
-//     }
-// };
 
     
 export const technologyScroll = (arrayElements) => {
@@ -76,6 +67,23 @@ export const technologyScroll = (arrayElements) => {
     }
 };
 
+export const fadeInAnimation = (element) => {
+    let tl = gsap.timeline().timeScale(0.5)
+    
+    tl.from(element, {
+        opacity: 0,
+        // scale: 0,
+        ease: 'power1.out',
+    })
+    .to(element, {
+        opacity: 1,
+   
+       
+       
+
+    })
+
+}
 
 
 

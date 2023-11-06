@@ -1,94 +1,107 @@
-import React, { useState } from 'react'
-
+import React, { useState,useEffect,useRef } from 'react'
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-const EntryForm = ({ buttonText, onSubmit, formTitle, linkText, linkTitle, linkTo, children, }) => {
-    const filledInputLabelClass = 'entryForm__input_state_filled';
-    const { register, handleSubmit } = useForm();
-    const [filledInput, setFilledInput] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    let navigate = useNavigate();
-    function handleChangeEmail(evt) {
-        setEmail(evt.target.value);
-    }
-    function handleChangePassword(evt) {
-        setPassword(evt.target.value);
-    }
+import { fadeInAnimation } from '../../utils/animations'
+// import { loginSchema, registrationSchema } from '../../utils/validation'
+const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegistration, validationSchema }) => {
+    const formRef = useRef()
+    const { register, 
+        handleSubmit,
+        reset, 
+        formState: { 
+            errors, 
+            isValid, 
+            isDirty 
+        } 
+    } = useForm({
+        mode: 'all',
+        resolver: joiResolver(validationSchema),
+    }); 
+
+
+  
+    // let navigate = useNavigate();
+    useEffect(() => {
+        console.log(formRef.current)
+        fadeInAnimation(formRef.current)
+    }, []);
     
-    // function handleFocusInput(e) {
-    //     if (e.currentTarget === e.target) {
-    //         console.log('focused input');
-    //         e.currentTarget.classList.add(filledInputLabelClass)
-    //         setFilledInput(true);
-    //         console.log(filledInput)
-    //         console.log(e.currentTarget);
-    //     }
-    // }
-    // function handleUnfocusInput(e) {
-    //     if (e.currentTarget === e.target) {
-    //         console.log('unfocused input');
-    //         console.log(e.currentTarget);
-    //         setFilledInput(false);
-    //     }
-    // }
+
+    
+    const onSubmit = (data) => {
+        console.log(data);
+       
 
 
-    const handleLogin = (evt) => {
-        evt.preventDefault();
-        const authData = {
-            email,
-            password
-        }
-        // dispatch(authorizeUser(authData));
-        navigate('/tasks');
-        return authData;
+        reset();
     }
 
     return (
         <div className='entryForm-container'>
-
-            <form className='entryForm' onSubmit={onSubmit}>
+            <form className='entryForm' onSubmit={handleSubmit(onSubmit)} ref={formRef}>
                 <h3 className="entryForm__title">{formTitle}</h3>
                 <fieldset className='entryForm__fieldset'>
                     <div className='entryForm__input-container'>
-                        <input
-                    
-                            className={`entryForm__input ${email ? 'entryForm__input_state_filled' : ''}`}
-                            id='input-email'
-                            type='email'
-                            name='email'
-                            placeholder='email'
-                            onChange={handleChangeEmail}
-                            value={email}
-                            required
-                        />
+                            <input
+                                className='entryForm__input'
+                                id='email'
+                                type='email'           
+                                placeholder='Email'
+                                {...register('email')}
+                                onChange={e=> console.log(isValid)}
+                            />
+                        
                         <label
-                            className={`entryForm__label ${email ? 'entryForm__input_state_filled' : ''}`} 
-                            htmlFor='input-email'>
+                            className='entryForm__label'
+                            htmlFor='email'>
                             email
                         </label>
+                        <div className='entryForm__input-error'>
+                            {errors?.email && <span>{errors.email.message}</span>}
+                        </div>
                     </div>
                     <div className='entryForm__input-container'>
-                        <input
-                    
-                            className='entryForm__input'
-                            id='input-password'
-                            type='password'
-                            name='password'
-                            placeholder='password'
-                            onChange={handleChangePassword}
-                            value={password}
-                        />
+                            <input
+                                className='entryForm__input'
+                                id='password'
+                                type='password'
+                                placeholder='Password'
+                                {...register('password')}
+                            />
                         <label
-                            className={`entryForm__label ${password ? 'entryForm__input_state_filled' : ''}`} 
+                            className='entryForm__label'
                             htmlFor='input-password'>
                             password
                         </label>
-
+                        <div className='entryForm__input-error'>
+                            {errors?.password && <span>{errors.password.message}</span>}
+                        </div>
                     </div>
+                    {isRegistration && ( 
+                        <div className='entryForm__input-container'>
+                            
+                            <input
+                                className='entryForm__input'
+                                id='confirmpassword'
+                                type='password'
+                         
+                                placeholder='Confirm password'
+                                {...register('confirmPassword')}
+                                required
+                            />
+                            <label
+                                className='entryForm__label'
+                                htmlFor='confirmsspassword'>
+                                confirm password
+                            </label>
+                            <div className='entryForm__input-error'>
+                            {errors?.confirmPassword && <span>{errors.confirmPassword.message}</span>}
+                            </div>
+                        </div>
+                    )}
                 </fieldset>
-                <button type='submit' className='entryForm__btn-submit'>{buttonText}</button>
+                <button disabled={!isValid} type='submit' className='entryForm__btn-submit'>{buttonText}</button>
                 <span className='entryForm__links'>{linkText}&nbsp;<Link className='entryForm__link' to={linkTo}>{linkTitle}</Link></span>
 
             </form>

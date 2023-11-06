@@ -29,22 +29,22 @@
   }
   &__button-add-task {
     @include button-add;
-    // background-color: $bg-clr;
-    // color: $succes-clr;
+    // background-color: var(--bg-clr);
+    // color: var(--succes-clr);
     // max-height: 30px;
     // max-width: 100px;
     // outline: none;
     // border-radius: 5px;
-    // border: 2px solid $succes-clr;
+    // border: 2px solid var(--succes-clr);
     // text-transform: uppercase;
     // font-weight: 700;
     // margin-left: 10px;
     // transition: all .2s linear;
     // &:hover {
     //     cursor: pointer;
-    //     background-color: $succes-clr;
-    //     border-color: $succes-clr;
-    //     color: $font-clr;
+    //     background-color: var(--succes-clr);
+    //     border-color: var(--succes-clr);
+    //     color: var(--font-clr);
 
     //   }
     // &:focus {
@@ -72,7 +72,7 @@
 
   }
   &__tasks-section {
-    border: 2px solid $border-clr;
+    border: 2px solid var(--border-clr);
     border-radius: 5px;
 
 
@@ -88,12 +88,12 @@
 
   }
   &__queue-tasks {
-    @include task-section-colors($queue-clr, $queue-clr);
+    @include task-section-colors(var(--queue-clr), var(--queue-clr));
   }
   &__dev-tasks {
-    @include task-section-colors($font-minor-clr, $font-minor-clr);
+    @include task-section-colors(var(--font-minor-clr), var(--font-minor-clr));
   }
   &__done-tasks {
-    @include task-section-colors($accent-clr, $accent-clr);
+    @include task-section-colors(var(--accent-clr), var(--accent-clr));
   }
 }

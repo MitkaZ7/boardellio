@@ -1,20 +1,20 @@
 @mixin button-add {
-    background-color: $bg-clr;
-    color: $succes-clr;
+    background-color: var(--bg-clr);
+    color: var(--succes-clr);
     max-height: 30px;
        
     outline: none;
     border-radius: 5px;
-    border: 2px solid $succes-clr;
+    border: 2px solid var(--succes-clr);
     text-transform: uppercase;
     font-weight: 700;
     margin-left: 10px;
     transition: all .2s linear;
-    &:hover {
+    &:hover:enabled {
         cursor: pointer;
-        background-color: $succes-clr;
-        border-color: $succes-clr;
-        color: $font-clr;
+        background-color: var(--succes-clr);
+        border-color: var(--succes-clr);
+        color: var(--font-clr);
     }
     
     &:focus {
@@ -23,23 +23,27 @@
     &:active {
         color: green;
     }
+    &:disabled {
+            color: var(--inactive-btn-clr);
+            border-color: var(--inactive-btn-clr);
+    }
 }
 
 @mixin action-button {
     background-color: transparent;
-    color: $font-clr;
+    color: var(--font-clr);
     max-height: 30px;
     outline: none;
     border-radius: 5px;
-    border: 2px solid $process-clr;
+    border: 2px solid var(--process-clr);
     // text-transform: uppercase;
     font-weight: 700;
     transition: all .2s linear;
     text-align: center; 
     &:hover {
         cursor: pointer;
-        // background-color: $succes-clr;
-        // border-color: $succes-clr;
-        // color: $font-clr;
+        // background-color: var(--succes-clr);
+        // border-color: va(--succes-clr);
+        // color: var(--font-clr);
     }
 }

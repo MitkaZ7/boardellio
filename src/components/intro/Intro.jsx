@@ -8,7 +8,7 @@ import Hint from '../Hint/Hint.jsx';
 const Intro = () => {
   const introRef = useRef();
   const listRef = useRef(null);
-  const buttonsRefs = useRef({}); // Создаем объект для хранения рефов кнопок
+  const buttonsRefs = useRef({}); // объект для хранения рефов кнопок
   const subItemButtonClass = '.intro__button-overlay'; // для передачи в функцию анимации ховера на кнопку
   const overlayRef = useRef();
   useEffect(() => {
@@ -49,6 +49,7 @@ const Intro = () => {
         <li className="intro__features-item">File uploadind</li>
         <li className="intro__features-item">Form validation</li>
         <li className="intro__features-item">Actual React version</li>
+        <li className="intro__features-item">Re-usable components</li>
         <li className="intro__features-item">And a litle bit of animations</li>
       </ul>
         <div>

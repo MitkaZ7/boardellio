@@ -1,10 +1,11 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,useRef } from 'react'
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { fadeInAnimation } from '../../utils/animations'
 // import { loginSchema, registrationSchema } from '../../utils/validation'
 const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegistration, validationSchema }) => {
-
+    const formRef = useRef()
     const { register, 
         handleSubmit,
         reset, 
@@ -16,49 +17,29 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
     } = useForm({
         mode: 'all',
         resolver: joiResolver(validationSchema),
-        // reValidateMode: 'onChange'
     }); 
 
 
-    // const [showValidationError, setShowValidationError] = useState(false)
   
-    let navigate = useNavigate();
-    // useEffect(() => {
-    //     console.log(isValid)
-    //     // Используйте useEffect для слежения за изменениями в formState.isValid
-    //     if (isValid) {
-    //         setShowConfirmation(true); // Показать поле "подтверждение пароля"
-    //     } else {
-    //         setShowConfirmation(false); // Скрыть поле "подтверждение пароля"
-    //     }
-    // }, [showConfirmation]);
+    // let navigate = useNavigate();
+    useEffect(() => {
+        console.log(formRef.current)
+        fadeInAnimation(formRef.current)
+    }, []);
     
 
     
     const onSubmit = (data) => {
         console.log(data);
-        // if (isRegistration) {
-        //     const { error } = registrationSchema.validate(data);
-        //     if (error) {
-               
-        //         setShowValidationError(true);
-        //         console.log('Validation err: ' + error);
-        //         return;
-        //     }
-        // } else {
-        //     const { error } = loginSchema.validate(data);
-        //     setShowValidationError(true);
+       
 
-        //     console.log('Validation err: ' + error);
-        // }
-     
-        // setShowValidationError(false);
-        // reset();
+
+        reset();
     }
 
     return (
         <div className='entryForm-container'>
-            <form className='entryForm' onSubmit={handleSubmit(onSubmit)}>
+            <form className='entryForm' onSubmit={handleSubmit(onSubmit)} ref={formRef}>
                 <h3 className="entryForm__title">{formTitle}</h3>
                 <fieldset className='entryForm__fieldset'>
                     <div className='entryForm__input-container'>

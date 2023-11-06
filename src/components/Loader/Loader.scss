@@ -28,19 +28,19 @@
 .loader div:nth-child(1) {
     left: 8px;
     animation-delay: -0.24s;
-    background-color: $queue-clr;
+    background-color: var(--queue-clr);
 }
 
 .loader div:nth-child(2) {
     left: 32px;
     animation-delay: -0.12s;
-    background-color: $process-clr;
+    background-color: var(--process-clr);
 }
 
 .loader div:nth-child(3) {
     left: 56px;
     animation-delay: 0;
-    background-color:$succes-clr;
+    background-color:var(--succes-clr);
 }
 
 @keyframes loader {

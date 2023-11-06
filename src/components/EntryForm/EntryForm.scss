@@ -44,7 +44,7 @@
             height: 200%;
             background-repeat: no-repeat;
             background-position: 0 0;
-            background-image: conic-gradient(transparent,$process-clr, $succes-clr, transparent 25%);
+            background-image: conic-gradient(transparent,var(--process-clr), var(--succes-clr), transparent 25%);
             animation: rotateBorder 10s linear infinite;
         }
         &::after {
@@ -55,7 +55,7 @@
             top: 3px;
             width: calc(100% - 5px);
             height: calc(100% - 5px);
-            background-image: linear-gradient(45deg, hsl($hue, 50%, 20%), hsl($hue, 10%, 10%));
+            background-image: var(--special-bg-clr);
             border-radius: 5px;
         }
     &__fieldset {
@@ -70,7 +70,7 @@
             margin-bottom: 0px;
         }
     &__title {
-        color: $succes-clr;
+        color: var(--succes-clr);
         text-align: center;
         font-weight: 400;
         text-transform: uppercase;
@@ -80,13 +80,13 @@
         margin: 10px 0;
         padding: 0;
         text-align: center;
-        color: $process-clr;
+        color: var(--process-clr);
     }
     &__link {
         margin: 0;
         padding: 0;
         text-decoration: underline;
-        color: $additional-color;
+        color: var(--additional-color);
     }
     &__input-container {
         // padding-bottom: 10px;
@@ -100,8 +100,8 @@
         }
 
         &:focus-within label{
-            color: $succes-clr;
-            // border-color: $succes-clr;
+            color: var(--succes-clr);
+            // border-color: var(succes-clr);
             // transform: translate(0, -25px) scale(0.95);
         }
     }
@@ -113,12 +113,12 @@
         background: none;
         height: 30px;
         border-radius: 5px;
-        border: 2px solid $additional-color;
-        color: $succes-clr;
+        border: 2px solid var(--additional-color);
+        color: var(succes-clr);
         width: 100%;
         &:focus {
             outline: none;
-            border-color: $succes-clr;
+            border-color: var(--succes-clr);
         }
         &::placeholder {
             color: transparent;
@@ -126,17 +126,17 @@
      
         // &:focus &:not(:placeholder-shown) {
         //     outline: none;
-        //     border-color: $succes-clr;
+        //     border-color: (succes-clr;
         // }
         // &:not(:placeholder-shown) + .entryForm__label {
         //     // transform: translate(0, -25px) scale(0.95);
-        //     // color: $succes-clr;
+        //     // color: (succes-clr;
         // }     
     }
     &__input-error {
         position: relative;
         top: -15px;
-        color: $queue-clr;
+        color: var(--queue-clr);
         height: 20px;
         font-size: 0.9em;
     }
@@ -147,10 +147,10 @@
      
         bottom: 40px;
         font-size: 0.9em;
-        background-color: $bg-clr;
+        background-color: var(--bg-clr);
         transform: translateY(-50%);
         transition: all 0.2s ease-out;
-        color: $additional-color;
+        color: var(--additional-color);
        
     }
    
@@ -168,12 +168,12 @@
 }
 .entryForm__input_state_filled {
     // outline: none;
-    border-color: $succes-clr;
-    // border: 2px solid $succes-clr;
+    border-color: var(--succes-clr);
+    // border: 2px solid (succes-clr;
    
         top: 0;
         //     font-size: 12px;
-            color: $succes-clr;
+            color: var(--succes-clr);
             transition: 0.3s;
 }
 @media(max-width: 768px) {

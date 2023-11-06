@@ -7,6 +7,7 @@ const options = {
         'any.only': 'Passwords do not match',
         'any.required': 'Confirm password is required',
     }),
+
 }
 
 
@@ -21,12 +22,3 @@ export const registrationSchema = Joi.object({
     password: options.password,
     confirmPassword:  options.confirmPassword,
 });
-
-// export const schema = Joi.object({
-//     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'ru'] } }).min(6).max(20),
-//     password: Joi.string().min(6).max(30),
-//     // confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
-//     //     'any.only': 'Passwords do not match',
-//     //     'any.required': 'Confirm password is required',
-//     // }),
-// })

@@ -67,6 +67,23 @@ export const technologyScroll = (arrayElements) => {
     }
 };
 
+export const fadeInAnimation = (element) => {
+    let tl = gsap.timeline().timeScale(0.5)
+    
+    tl.from(element, {
+        opacity: 0,
+        // scale: 0,
+        ease: 'power1.out',
+    })
+    .to(element, {
+        opacity: 1,
+   
+       
+       
+
+    })
+
+}
 
 
 

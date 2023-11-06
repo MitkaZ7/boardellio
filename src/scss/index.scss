@@ -4,6 +4,7 @@
 @import './animations';
 
 // mixins
+// @import './mixins/themes';
 @import './mixins/main';
 @import './mixins/links';
 @import './mixins/buttons';
@@ -34,5 +35,7 @@
 @import '../components/Loader/Loader';
 @import '../components/MenuToggler/MenuToggler';
 @import '../components/Hint/Hint';
+@import '../components/ThemeSwitcher/ThemeSwitcher';
+@import '../components//OptionsPanel/OptionsPanel';
 
 

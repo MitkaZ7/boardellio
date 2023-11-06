@@ -20,8 +20,8 @@
     &__container {
         max-width: 600px;
         width: 100%;
-        background-color: $font-clr;
-        color: $bg-clr;
+        background-color: var(--font-clr);
+        color: var(--bg-clr);
         border-radius: 5px;
         margin: 0 auto;
         padding-bottom: 20px;

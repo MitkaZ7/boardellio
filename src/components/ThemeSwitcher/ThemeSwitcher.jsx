@@ -12,7 +12,7 @@ const Switcher = () => {
   }, [ theme ]);
 
   const hadleThemeChange = () => {
-    const toggledTheme = theme === 'dark' ? 'light' : 'dark'
+    const toggledTheme = theme === 'light' ? 'dark' : 'light'
     dispatch(setTheme(toggledTheme))
   }
 

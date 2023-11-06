@@ -1,11 +1,11 @@
 .switcher {
    
    
-    border: 2px solid $additional-color;
+    border: 2px solid var(--additional-color);
     border-radius:15px;
     width: 38px;
     height: 18px;
-    background-color: $bg-clr;
+    background-color: var(--bg-clr);
     &__checkbox {
         display: none;
         &:checked+.switcher__slider {
@@ -13,7 +13,7 @@
                 &:before,
                 &:after {
                     transform: translateX(20px);
-                    background-color: $succes-clr;
+                    background-color: var(--succes-clr);
                 
                 }
         }
@@ -33,7 +33,7 @@
         
             width: 18px;
             height: 18px;
-            background-color: $process-clr;
+            background-color: var(--process-clr);
             border-radius: 50%;
         }
         

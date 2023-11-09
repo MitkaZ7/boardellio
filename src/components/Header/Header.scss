@@ -1,11 +1,14 @@
 .header {
   padding: 0 20px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 60px 1fr 40px;
+  align-items: center;
 
   border-bottom: 2px solid var(--accent-clr);
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
   // min-height: 100px;
+  // position: relative;
   &__logo {
     width:60px;
 
@@ -14,6 +17,6 @@
     font-size: 1.5em;
     color: var(--accent-clr);
     // text-transform: uppercase;
-
+    text-align: center;
     }
 }

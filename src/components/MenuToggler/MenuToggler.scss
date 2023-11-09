@@ -1,8 +1,10 @@
 .menu-toggler {
     display: block;
     cursor: pointer;
-    position: relative;
+    position: absolute;
+    right: 20px;
     // margin-right: 20xp;
+    z-index: 999;
 }
 
 // @media screen and (max-width: 768px) {
@@ -19,7 +21,7 @@
     margin: 5px auto;
     -webkit-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
-    background-color: var(--succes-clr);
+    background-color: var(--accent-clr);
     border-radius: 1px;
 }
 .menu-toggler__bar_state_active:nth-of-type(1) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="382px" height="514px" viewBox="0 0 382 514" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>moon-svgrepo-com</title>
+<svg width="381px" height="514px" viewBox="0 0 381 514" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Path</title>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="moon-svgrepo-com" transform="translate(24.000000, 24.000000)" stroke="#222223" stroke-width="48">
+        <g id="moon-svgrepo-com" transform="translate(24.000000, 24.000000)" stroke="#4672BE" stroke-width="48">
             <path d="M0,233.01332 C-0.131778928,187.291349 12.5580548,142.44807 36.6327087,103.57158 C59.9747702,65.8130925 94.1115818,35.9228986 134.633936,17.7659138 C174.17728,0.141470015 218.286007,-4.51926209 260.639843,4.45238926 L266.70038,5.85030934 C239.934115,23.7087383 217.306997,47.0876203 200.334162,74.4149608 C176.258509,113.291451 163.568009,158.13473 163.704538,203.856702 C163.394851,264.869256 186.215107,323.735005 227.573282,368.611568 C255.901301,399.212704 292.537585,420.900436 333,431.018714 C298.977739,453.734916 258.99817,465.903477 218.082879,466 C159.428861,465.647192 103.565355,440.927305 63.8718292,397.768187 C22.5146526,352.891624 -0.305270147,294.025875 0,233.01332 Z" id="Path"></path>
         </g>
     </g>

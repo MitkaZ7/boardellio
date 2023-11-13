@@ -3,9 +3,12 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { fadeInAnimation } from '../../utils/animations'
+import { createUser, authorizeUser } from '../../store/slices/userSlice';
+import { useDispatch } from 'react-redux';
 // import { loginSchema, registrationSchema } from '../../utils/validation'
 const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegistration, validationSchema }) => {
-    const formRef = useRef()
+    const dispatch = useDispatch();
+    const formRef = useRef();
     const { register, 
         handleSubmit,
         reset, 
@@ -23,17 +26,18 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
   
     // let navigate = useNavigate();
     useEffect(() => {
-        console.log(formRef.current)
+        // console.log(formRef.current)
         fadeInAnimation(formRef.current)
     }, []);
     
 
     
     const onSubmit = (data) => {
-        console.log(data);
-       
-
-
+        if (isRegistration) {
+            dispatch(createUser(data));
+        } else {
+            dispatch(authorizeUser(data));
+        }
         reset();
     }
 

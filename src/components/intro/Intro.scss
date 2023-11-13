@@ -1,13 +1,18 @@
 .intro {
+    box-sizing: border-box;
     position: relative;
     // padding: 20px;
     grid-area: 'content';
     display: grid;
-
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+    
+    // grid-template-columns: 1fr 1fr;
     justify-items: center;
     margin: 0;
     align-items: center;
+    padding-top: calc(5% + 10px);
+        /* Пример: 5% от высоты контейнера + 10px отступ сверху */
+        padding-bottom: calc(5% + 10px);
     &__header {
 
     }
@@ -55,7 +60,7 @@
         position: relative;
         // top: 50%;
         // right: 50%;
-        min-width: 375px;
+        min-width: 300px;
         // border: 1px solid red;
     }
     &__tech-list-item {
@@ -135,4 +140,12 @@
         }
     }
 
+}
+@media screen and (max-width: 768px) {
+    .intro {
+     &__comment-about-stack{ 
+        align-self: center;
+        justify-content: center;
+     }
+    }
 }

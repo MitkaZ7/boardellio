@@ -23,7 +23,8 @@
 
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(3, minmax(min-content, 400px));
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 375px));
+    // grid-template-columns: repeat(3, minmax(min-content, 400px));
       padding: 0 20px;
       gap: 10px;
   }
@@ -96,4 +97,8 @@
   &__done-tasks {
     @include task-section-colors(var(--accent-clr), var(--accent-clr));
   }
+}
+
+@media screen and (max-width: 768px){
+  
 }

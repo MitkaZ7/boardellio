@@ -1,48 +1,55 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-// import * as authApi from '../../utils/Auth'
-
-// const getToken = () => {
-//   const token = localStorage.getItem('jwt');
-//   if (token) {
-//     authApi.checkToken(token)
-//   }
-// }
+import * as authApi from '../../utils/Auth'
+import { firebaseApp } from '../../utils/firebase';
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "firebase/auth";
+const auth = getAuth();
+const getToken = () => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    authApi.checkToken(token)
+  }
+}
 
 export const createUser = createAsyncThunk(
   'user/createUser',
   async (regData, { rejectWithValue, dispatch}) => {
     const { email, password } = regData;
     try {
-//       const newUser = await authApi.register(email, password);
-//       dispatch(setUser(newUser))
-//       if (newUser) {
-//         console.log('COOL')
-//       }
+      const userCredential = await createUserWithEmailAndPassword(auth, email,password);
+      const user = userCredential.user;
+      console.log('DONE');
+      console.log(user)
     } catch (error) {
-//       console.log(error)
-//       return rejectWithValue((error.message))
+      console.log(error)
+      return rejectWithValue((error.message))
     }
 
   });
-// export const authorizeUser = createAsyncThunk(
-//   'user/authorizeUser',
-//   async (authData, { rejectWithValue, dispatch}) => {
-//     const { email, password } = authData;
-//     try {
-//       const userData = await authApi.authorize(authData);
-//       if (userData.accessToken) {
-//         console.log('TOKEN IS HERE BITCH')
-//         localStorage.setItem('jwt', userData.accessToken)
-//       }
+export const authorizeUser = createAsyncThunk(
+  'user/authorizeUser',
+  async (authData, { rejectWithValue, dispatch}) => {
+    const { email, password } = authData;
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email,password);
+      const user = userCredential.user;
+      // const userData = await authApi.authorize(authData);
+      // if (userData.accessToken) {
+      //   console.log('TOKEN IS HERE BITCH')
+      //   localStorage.setItem('jwt', userData.accessToken)
+      // }
+      // dispatch(setUser(userData))
+      console.log(user)
+    } catch (error) {
+      return rejectWithValue((error.message))
+    }
+  }
+)
 
-
-//       dispatch(setUser(userData))
-//       // console.log(userData)
-//     } catch (error) {
-//       return rejectWithValue((error.message))
-//     }
-//   }
-// )
 
 const initialState = {
   email: null,

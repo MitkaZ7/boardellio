@@ -14,7 +14,7 @@ const tl = gsap.timeline({
 export const buttonHoverAnimation = (buttonTarget, isHovered, subItemClass) => {
     let button = gsap.utils.selector(buttonTarget);
     let overlayBg = button(subItemClass)
-    console.log(button)
+
     const btnTL = gsap.timeline({
         speed: 20,
     }).timeScale(3.5);

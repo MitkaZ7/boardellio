@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as authApi from '../../utils/Auth'
-import { firebaseApp } from '../../utils/firebase';
+import { app } from '../../utils/firebase';
+import { hideLoader, showLoader } from './loaderSlice';
 import { 
   getAuth, 
   createUserWithEmailAndPassword,
@@ -20,10 +21,10 @@ export const createUser = createAsyncThunk(
   async (regData, { rejectWithValue, dispatch}) => {
     const { email, password } = regData;
     try {
+      // dispatch(showLoader());
       const userCredential = await createUserWithEmailAndPassword(auth, email,password);
       const user = userCredential.user;
-      console.log('DONE');
-      console.log(user)
+      // dispatch(hideLoader());
     } catch (error) {
       console.log(error)
       return rejectWithValue((error.message))
@@ -35,15 +36,17 @@ export const authorizeUser = createAsyncThunk(
   async (authData, { rejectWithValue, dispatch}) => {
     const { email, password } = authData;
     try {
+      // dispatch(showLoader());
       const userCredential = await signInWithEmailAndPassword(auth, email,password);
       const user = userCredential.user;
+      // dispatch(hideLoader());
       // const userData = await authApi.authorize(authData);
       // if (userData.accessToken) {
       //   console.log('TOKEN IS HERE BITCH')
       //   localStorage.setItem('jwt', userData.accessToken)
       // }
       // dispatch(setUser(userData))
-      console.log(user)
+      // console.log(user)
     } catch (error) {
       return rejectWithValue((error.message))
     }

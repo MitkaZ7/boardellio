@@ -1,10 +1,11 @@
 import React from 'react'
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
+import LangSelect from '../LangSelect/LangSelect'
 const OptionsPanel = () => {
   return (
     <div className='optionsPanel'>
         <ThemeSwitcher/>
-          {/* <ThemeSwitcher /> */}
+        <LangSelect/>
     </div>
   )
 }

@@ -4,11 +4,15 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { fadeInAnimation } from '../../utils/animations'
 import { createUser, authorizeUser } from '../../store/slices/userSlice';
+import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { useDispatch } from 'react-redux';
+import Popup from '../Popup/Popup';
+
 // import { loginSchema, registrationSchema } from '../../utils/validation'
 const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegistration, validationSchema }) => {
     const dispatch = useDispatch();
     const formRef = useRef();
+    const navigate = useNavigate();
     const { register, 
         handleSubmit,
         reset, 
@@ -35,9 +39,12 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
     const onSubmit = (data) => {
         if (isRegistration) {
             dispatch(createUser(data));
+            navigate(linkTo);
         } else {
             dispatch(authorizeUser(data));
+            navigate('/projects');
         }
+       
         reset();
     }
 

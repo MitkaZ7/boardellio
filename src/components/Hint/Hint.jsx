@@ -7,7 +7,7 @@ const Hint = ({children,text}) => {
       refSetTimeout.current = setTimeout(() => {
         setIsVisible(true)
       }, 300);
-      console.log('eee')  
+
     }
     const onMouseLeaveHandler = () => {
         clearTimeout(refSetTimeout.current);

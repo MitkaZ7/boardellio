@@ -1,10 +1,11 @@
 .switcher {
-   
+    box-sizing: border-box;
     position: relative;
-    border: 2px solid var(--additional-color);
-    border-radius:15px;
-    width: 35px;
-    height: 15px;
+    @include round-borders;
+    // border: 2px solid var(--additional-color);
+    // border-radius:15px;
+    width: 40px;
+    height: 20px;
     background-color: var(--bg-clr);
     &::before {
         content: '';
@@ -67,10 +68,10 @@
             content: "";
             position: absolute;
         
-            width: 15px;
-            height: 15px;
+            width: 16px;
+            height: 16px;
             background-color: var(--process-clr);
-            border-radius: 50%;
+            border-radius: 3px;
             z-index: 100;
         }
         

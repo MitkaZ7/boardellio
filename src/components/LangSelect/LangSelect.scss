@@ -1,0 +1,27 @@
+.langSelect {
+    max-width: 40px;
+    max-height: 20px;
+    @include round-borders;
+    background-color: var(--bg-clr);
+    color: var(--font-clr);
+    text-align: right;
+    // appearance: none;
+  
+ 
+    // padding: 0 1em 0 0;
+    // font-size: 0.1rem;
+    padding: 0;
+    cursor: pointer;
+    &::after {
+        // content: '';
+        // clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+        // width: 0.8em;
+        // height: 0.5em;
+        // position: absolute;
+        // right: 5px;
+        // top: 3px
+    }
+    &__lang {
+     
+    }
+}

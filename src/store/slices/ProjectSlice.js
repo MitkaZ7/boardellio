@@ -26,16 +26,22 @@ export const getProjects = createAsyncThunk(
     async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
         try {
-            dispatch(showLoader());
-            const projectsList = await api.getProjects();
-            // console.log(projectsList)
-            dispatch(hideLoader());
+            // dispatch(showLoader());
+            const projects = await api.getProjects();
+            const projectsList = Object.keys(projects).map((id) => ({
+                id,
+                ...projects[id],
+            }));
+            console.log('Projects loaded:', projectsList); // Добавлено логирование
+            // dispatch(hideLoader());
             return projectsList;
         } catch (error) {
+            console.error('Error loading projects:', error); // Добавлено логирование ошибки
             return rejectWithValue(error.message);
         }
     }
 );
+
 // export const getOneProject = createAsyncThunk(
 //     'projects/getOnePeoject',
 //     async (projectId, thunkAPI) => {
@@ -83,34 +89,41 @@ const projectSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addMatcher(
-                isPendingAction,
-                (state, action) => {
-                    state[action.meta.requestId] = 'pending';
-                }
-            )
-            .addMatcher(
-                (action) => action.type.startsWith('projects'),
-            )
-            .addMatcher(
-                (action) => action.type.endsWith('/rejected'),
-                (state, action) => {
-                    state[action.meta.requestId] = 'rejected';
-                }
-            )
+            .addCase(getProjects.fulfilled, (state, action) => {
+                console.log('Projects loaded:', action.payload);
+                state.projects = action.payload;
+            })
+
+            .addCase(getProjects.rejected, (state, action) => {
+                state.error = action.payload;
+            })
+            // .addMatcher(
+            //     isPendingAction,
+            //     (state, action) => {
+            //         state[action.meta.requestId] = 'pending';
+            //     }
+            // )
+            
+            // .addMatcher(
+            //     (action) => action.type.startsWith('projects'),
+            // )
+            // .addMatcher(
+            //     (action) => action.type.endsWith('/rejected'),
+            //     (state, action) => {
+            //         state[action.meta.requestId] = 'rejected';
+            //     }
+            // )
             .addMatcher(
                 (action) => action.type.endsWith('/fulfilled'),
                 (state, action) => {
-                    const { dispatch } = builder;
-                    if (action.type === createProject.fulfilled.toString()) {
-                        
-                        // state.projects.push(action.payload);
-                        // dispatch(closePopup());
+                    // const { dispatch } = builder;
+                    // if (action.type === createProject.fulfilled.toString()) {
+
                       
-                    } else {
-                        state.projects = action.payload;
-                        state.isLoad = true;
-                    }
+                    // } else {
+                    //     // state.projects = action.payload;
+                    //     // state.isLoad = true;
+                    // }
                     state[action.meta.requestId] = 'fulfilled';
                 }
             );

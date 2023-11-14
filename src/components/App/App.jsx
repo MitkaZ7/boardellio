@@ -11,6 +11,8 @@ import TaskPopup from '../Task/Task';
 import Intro from '../intro/Intro';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { getProjects } from '../../store/slices/projectSlice';
+
 function App() {
   const theme = useSelector(state => state.theme);
   
@@ -23,6 +25,10 @@ function App() {
       document.documentElement.dataset.theme = theme; // В противном случае используем текущую тему из Redux
     }
   }, [theme]);
+  // useEffect(() => {
+  //   dispatch(getProjects());
+  // }, [])
+  
 
 
   

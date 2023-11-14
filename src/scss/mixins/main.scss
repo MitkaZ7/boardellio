@@ -2,3 +2,8 @@
   color: $text-color;
   border-color: $border-color;
 }
+
+@mixin round-borders() {
+    border: 2px solid var(--additional-color);
+    border-radius: 5px;
+}

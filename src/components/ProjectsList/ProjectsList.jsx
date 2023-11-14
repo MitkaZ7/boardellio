@@ -10,30 +10,24 @@ import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const ProjectsList = () => {
-  const { projects } = useSelector(state => state.projects);
+  const { projects, isLoad } = useSelector(state => state.projects);
   const { isLoading } = useSelector(state => state.loader);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getProjects());
-
-  }, [dispatch]);
-
- 
+      dispatch(getProjects());
+  }, []);
 
   const openPopupHandler = () => {
     openCustomPopup(dispatch, 'addProjectPopup')
   };
 
-  // Проверяем, что projects - это массив перед его использованием
-  // if (!Array.isArray(projects) || projects.length === 0) {
-  //   return null;
-  // }
+
 
   return (
     <>
-      {isLoading && <Loader />}
+      
       <section className="projects-list">
         <header className="projects-list__header">
           <h2 className="projects-list__title">Current projects</h2>
@@ -41,15 +35,22 @@ const ProjectsList = () => {
             Create project
           </button>
         </header>
+
         <ul className="projects-list__list">
-          {Object.entries(projects).map(([projectId, projectData]) => (
+          { 
+            projects?.map((projectItem) => <ProjectCard key={projectItem.id} projectName={projectItem.title} projectId={projectItem.id} />)
+          }
+          
+
+          {/* {Object.entries(projects).map(([projectId, projectData]) => (
             <ProjectCard key={projectId} projectName={projectData.title} projectId={projectId} />
-          ))}
+          ))} */}
         </ul>
       </section>
       <AddProjectPopup />
     </>
   );
+
 };
 
 export default ProjectsList;

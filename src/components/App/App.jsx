@@ -12,22 +12,30 @@ import Intro from '../intro/Intro';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { getProjects } from '../../store/slices/projectSlice';
-
+import { useTranslation } from 'react-i18next';
 function App() {
   const theme = useSelector(state => state.theme);
-  
+  const {i18n} = useTranslation();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme'); // Получаем значение темы из локального хранилища
+  useEffect(() => {   
+    const storedLanguage = localStorage.getItem('i18nextLng');
+    if (storedLanguage) {
+      i18n.changeLanguage(storedLanguage);
+      console.log(storedLanguage)
+    } else {
+      // i18n.changeLanguage('en');
+    }
+
+
+
+    const storedTheme = localStorage.getItem('theme'); // Получаем значение темы из локального хранилища  
     if (storedTheme) {
       document.documentElement.dataset.theme = storedTheme; // Если оно есть, устанавливаем его
     } else {
       document.documentElement.dataset.theme = theme; // В противном случае используем текущую тему из Redux
     }
-  }, [theme]);
-  // useEffect(() => {
-  //   dispatch(getProjects());
-  // }, [])
+  }, [theme, i18n]);
+
   
 
 

@@ -32,11 +32,10 @@ export const getProjects = createAsyncThunk(
                 id,
                 ...projects[id],
             }));
-            console.log('Projects loaded:', projectsList); // Добавлено логирование
+           
             // dispatch(hideLoader());
             return projectsList;
         } catch (error) {
-            console.error('Error loading projects:', error); // Добавлено логирование ошибки
             return rejectWithValue(error.message);
         }
     }
@@ -90,29 +89,14 @@ const projectSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getProjects.fulfilled, (state, action) => {
-                console.log('Projects loaded:', action.payload);
+                // console.log('Projects loaded:', action.payload);
                 state.projects = action.payload;
             })
 
             .addCase(getProjects.rejected, (state, action) => {
                 state.error = action.payload;
             })
-            // .addMatcher(
-            //     isPendingAction,
-            //     (state, action) => {
-            //         state[action.meta.requestId] = 'pending';
-            //     }
-            // )
-            
-            // .addMatcher(
-            //     (action) => action.type.startsWith('projects'),
-            // )
-            // .addMatcher(
-            //     (action) => action.type.endsWith('/rejected'),
-            //     (state, action) => {
-            //         state[action.meta.requestId] = 'rejected';
-            //     }
-            // )
+
             .addMatcher(
                 (action) => action.type.endsWith('/fulfilled'),
                 (state, action) => {

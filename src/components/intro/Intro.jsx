@@ -5,18 +5,17 @@ import technologies from '../../data/technologies.json';
 import FadeInAnimation from "../FadeInAnimtion/FadeInAnimation";
 import { gsap } from "gsap";
 import Hint from '../Hint/Hint.jsx';
+import { useTranslation } from 'react-i18next';
 const Intro = () => {
+  const { t } = useTranslation();
   const introRef = useRef();
   const listRef = useRef(null);
   const buttonsRefs = useRef({}); // объект для хранения рефов кнопок
   const subItemButtonClass = '.intro__button-overlay'; // для передачи в функцию анимации ховера на кнопку
   const overlayRef = useRef();
   useEffect(() => {
-
     const techList = listRef.current.children;
     technologyScroll(techList);
-
-    
   }, []);
  
   
@@ -35,37 +34,40 @@ const Intro = () => {
 
   return (
     <section className='intro' ref={introRef}>  
-      <FadeInAnimation wrapperElement="div" direction="left">
+      <div>
       <div className="intro__header">
-          <h1 className='intro__title'>Welcome to Dashboard</h1>
-        <p className='intro__subtitle'>A single page application</p>
+          <h1 className='intro__title'>{t('intro-title')}</h1>
+          <p className='intro__subtitle'>{t('intro-subtitle')}</p>
       </div>
         <ul className="intro__features">
-        <li className="intro__features-item">Registration/Authorization</li>
-        <li className="intro__features-item">Drag'n'Drop oparations</li>        
-        <li className="intro__features-item">Task state managment</li>
-        <li className="intro__features-item">Projects managment</li>
-        <li className="intro__features-item">Сommenting</li>
-        <li className="intro__features-item">File uploadind</li>
-        <li className="intro__features-item">Form validation</li>
-        <li className="intro__features-item">Actual React version</li>
-        <li className="intro__features-item">Re-usable components</li>
-        <li className="intro__features-item">And a litle bit of animations</li>
+          <li className="intro__features-item">{t('features.Registration/Authorization')}</li>
+          <li className="intro__features-item">{t(`features.Drag'n'Drop oparations`)}</li>        
+          <li className="intro__features-item">{t('features.Task state managment')}</li>
+          <li className="intro__features-item">{t('features.Projects managment')}</li>
+          <li className="intro__features-item">{t('features.Сommenting')}</li>
+          <li className="intro__features-item">{t('features.File uploadind')}</li>
+          <li className="intro__features-item">{t('features.Form validation')}</li>
+          <li className="intro__features-item">{t('features.Actual React version')}</li>
+          <li className="intro__features-item">{t('features.Re-usable components')}</li>
+          <li className="intro__features-item">{t('features.And a litle bit of animations')}</li>
+          <li className="intro__features-item">{t('features.Theme changing')}</li>
+          <li className="intro__features-item">{t('features.internationalization')}</li>
+
       </ul>
         <div>
-          <p className="intro__buttons-title">Choose mode & try it:</p>
+          <p className="intro__buttons-title">{t('intro-access-choice-title')}</p>
           <div className="intro__buttons">
-            <div className='intro__button-container'>
+            {/* <div className='intro__button-container'>
               <Link
                 ref={(el) => (buttonsRefs.current['read-only'] = el)} 
                 onMouseEnter={() => handleButtonMouseEnter('read-only')}
                 onMouseLeave={() => handleButtonMouseLeave('read-only')}
                 className="intro__link intro__link_type_read-only" 
                 to='/projects'>
-                Read only
+                {t('intro-btn-readonly')}
                 <div className='intro__button-overlay' ref={overlayRef}></div>
             </Link>
-            </div>
+            </div> */}
             {/* <div> */}
             <Hint text='Go to registration'>
                 <div className='intro__button-container'>
@@ -75,7 +77,7 @@ const Intro = () => {
                 onMouseLeave={() => handleButtonMouseLeave('full-access')} 
                 className="intro__link intro__link_type_full-access" 
                 to='/registration'>
-                  Full access
+                  {t('intro-btn-fullaccess')}
                   <div className='intro__button-overlay' ref={overlayRef}></div>
               </Link>
                 </div>
@@ -83,16 +85,16 @@ const Intro = () => {
             {/* </div> */}
           </div>
         </div> 
-      </FadeInAnimation>
-      <FadeInAnimation wrapperElement="div" direction="right">
-      <p className='intro__comment-about-stack'>developed with:</p>
+      </div>
+      <div>
+        <p className='intro__comment-about-stack'>{t('intro-tech-title')}</p>
         <ul className="intro__tech-list" ref={listRef}>
           {Object.entries(technologies).map(([techKey,techData]) => (
             <li key={techKey} className="intro__tech-list-item">{techData.title}</li>
           ))}
         {/* <li className="intro__tech-list-item">Developed with:</li> */}
       </ul>
-      </FadeInAnimation>
+      </div>
       
     </section>
     

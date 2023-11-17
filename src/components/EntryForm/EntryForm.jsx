@@ -101,7 +101,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                             />
                         <label
                             className='entryForm__label'
-                            htmlFor='input-password'>
+                            htmlFor='password'>
                             password
                         </label>
                         <div className='entryForm__input-error'>
@@ -122,7 +122,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                             />
                             <label
                                 className='entryForm__label'
-                                htmlFor='confirmsspassword'>
+                                htmlFor='confirmpassword'>
                                 confirm password
                             </label>
                             <div className='entryForm__input-error'>

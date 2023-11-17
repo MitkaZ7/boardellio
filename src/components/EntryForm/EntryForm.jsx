@@ -43,12 +43,12 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
     const onSubmit = (data) => {
         if (isRegistration) {
             try {
-                dispatch(createUserSaga(data));
+                dispatch(createUser(data))
             } catch (error) {
                 console.log(error)
             }
         } else {
-            dispatch(authorizeUserSaga(data));
+            dispatch(authorizeUser(data));
         }
 
         // try {

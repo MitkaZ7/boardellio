@@ -57,7 +57,7 @@ export const userSlice = createSlice({
       state.email = email;
       state.idToken = idToken;
       state.userId = localId;
-      state.registered = true;
+      // state.registered = true;
     },
     removeUser(state) {
 

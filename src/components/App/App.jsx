@@ -21,13 +21,7 @@ function App() {
     const storedLanguage = localStorage.getItem('i18nextLng');
     if (storedLanguage) {
       i18n.changeLanguage(storedLanguage);
-      console.log(storedLanguage)
-    } else {
-      // i18n.changeLanguage('en');
-    }
-
-
-
+    } 
     const storedTheme = localStorage.getItem('theme'); // Получаем значение темы из локального хранилища  
     if (storedTheme) {
       document.documentElement.dataset.theme = storedTheme; // Если оно есть, устанавливаем его

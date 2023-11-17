@@ -1,32 +1,25 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import * as authApi from '../../utils/Auth'
+import authApi from '../../utils/authApi'
 import { app } from '../../utils/firebase';
 import { hideLoader, showLoader } from './loaderSlice';
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged
-} from "firebase/auth";
-const auth = getAuth();
-const getToken = () => {
-  const token = localStorage.getItem('jwt');
-  if (token) {
-    authApi.checkToken(token)
-  }
-}
 
+// const getToken = () => {
+//   const token = localStorage.getItem('jwt');
+//   if (token) {
+//     authApi.checkToken(token)
+//   }
+// }
 export const createUser = createAsyncThunk(
   'user/createUser',
   async (regData, { rejectWithValue, dispatch}) => {
     const { email, password } = regData;
     try {
-      // dispatch(showLoader());
-      const userCredential = await createUserWithEmailAndPassword(auth, email,password);
-      const user = userCredential.user;
-      // dispatch(hideLoader());
+      const res = await authApi.register(regData);
+      console.log('User created successfully');
+      console.log(res.data)
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
+      dispatch(setError(error.message))
       return rejectWithValue((error.message))
     }
 
@@ -36,17 +29,9 @@ export const authorizeUser = createAsyncThunk(
   async (authData, { rejectWithValue, dispatch}) => {
     const { email, password } = authData;
     try {
-      // dispatch(showLoader());
-      const userCredential = await signInWithEmailAndPassword(auth, email,password);
-      const user = userCredential.user;
-      // dispatch(hideLoader());
-      // const userData = await authApi.authorize(authData);
-      // if (userData.accessToken) {
-      //   console.log('TOKEN IS HERE BITCH')
-      //   localStorage.setItem('jwt', userData.accessToken)
-      // }
-      // dispatch(setUser(userData))
-      // console.log(user)
+      const res = await authApi.authorize(authData);
+      console.log('User authorized successfully');
+      dispatch(setUser(res.data))
     } catch (error) {
       return rejectWithValue((error.message))
     }
@@ -56,21 +41,31 @@ export const authorizeUser = createAsyncThunk(
 
 const initialState = {
   email: null,
-  // accessToken: getToken(),
-  // refreshToken: null,
-  id: null,
-  isActivated: false,
+  accessToken: null,
+  idToken: null,
+  refreshToken: null,
+  userId: null,
+  registered: false,
+  error: null,
 }
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser(state, action) {
-
+      const {email, idToken, localId} = action.payload;
+      state.email = email;
+      state.idToken = idToken;
+      state.userId = localId;
+      state.registered = true;
     },
     removeUser(state) {
 
-    }
+    },
+    setError(state, action) {
+      state.error = action.payload;
+      console.log(action.payload)
+    },
     // setUser(state, action){
     //   const userData = action.payload;
     //   state.email = userData.user.email;
@@ -88,8 +83,26 @@ export const userSlice = createSlice({
     //   state.id = null;
     //   state.isActivated = false;
     // },
-  }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createUser.rejected, (state,action) => {
+        state.error = action.payload;
+        console.log(action.payload)
+      })
+      .addCase(authorizeUser.rejected, (state, action) => {
+        state.error = action.payload;
+        console.log(action.payload)
+      })
+      .addMatcher(
+        (action) => action.type.endsWith('/fulfilled'),
+        (state, action) => {
+          state.error = null;
+          // state[action.meta.requestId] = 'fulfilled';
+        }
+      );
+  } 
 })
 
-export const { setUser, removeUser  } = userSlice.actions;
+export const { setUser, removeUser, setError  } = userSlice.actions;
 export default userSlice.reducer;

@@ -23,16 +23,16 @@
         margin: 0;
         position: relative;
         color: var(--subtitle-clr);
-        &::after {
-            content: '';
-            background-image: url('../../assets/icons/arrow-ru.svg');
-            background-position: top center;
-            background-repeat: no-repeat;
+        // &::after {
+        //     content: '';
+        //     background-image: url('../../assets/icons/arrow-ru.svg');
+        //     background-position: top center;
+        //     background-repeat: no-repeat;
             
-            width: 35px;
-            height: 20px;
-            position: absolute;
-        }
+        //     width: 35px;
+        //     height: 20px;
+        //     position: absolute;
+        // }
     }
     &__features {
         @include list;
@@ -61,7 +61,6 @@
         // top: 50%;
         // right: 50%;
         min-width: 300px;
-        // border: 1px solid red;
     }
     &__tech-list-item {
         position: absolute;

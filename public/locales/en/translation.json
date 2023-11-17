@@ -1,7 +1,7 @@
 {   
-    "project-title": "My Dashboard",
-    "intro-title": "Welcome to Dashboard",
-    "intro-subtitle": "A single page application",
+    "project-title": "Boardellio",
+    "intro-title": "A single page application",
+    "intro-subtitle": "- Dashboard tool for project and task managment",
     "features": {
         "Registration/Authorization":"Registration/Authorization",
         "Drag'n'Drop oparations": "Drag'n'Drop oparations",

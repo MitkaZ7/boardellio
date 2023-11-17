@@ -1,7 +1,7 @@
 {   
-    "project-title": "Дашборд",
-    "intro-title": "Привет! Это дашборд!)",
-    "intro-subtitle": "одностраниченое приложение",
+    "project-title": "Boardellio",
+    "intro-title": "- Одностраниченое приложение",
+    "intro-subtitle": " - для управления проектами и задачами",
     "features": {
         "Registration/Authorization": "Регистрация/авторизация",
         "Drag'n'Drop oparations": "Перетаскивание элементов",

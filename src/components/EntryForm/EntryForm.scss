@@ -140,6 +140,10 @@
         height: 20px;
         font-size: 0.9em;
     }
+    &__submit-error {
+        color: var(--queue-clr);
+        text-align: center;
+    }
     &__label {
         position: relative;
     

@@ -5,21 +5,25 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { fadeInAnimation } from '../../utils/animations'
 import { createUser, authorizeUser } from '../../store/slices/userSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { createUserSaga, authorizeUserSaga } from '../../store/sagas/userSagas';
+
 import Popup from '../Popup/Popup';
 
 // import { loginSchema, registrationSchema } from '../../utils/validation'
 const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegistration, validationSchema }) => {
     const dispatch = useDispatch();
+    const { error } = useSelector((state) => state.user);
     const formRef = useRef();
     const navigate = useNavigate();
     const { register, 
         handleSubmit,
-        reset, 
+        reset,
+        setError, 
         formState: { 
             errors, 
             isValid, 
-            isDirty 
         } 
     } = useForm({
         mode: 'all',
@@ -38,20 +42,35 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
     
     const onSubmit = (data) => {
         if (isRegistration) {
-            dispatch(createUser(data));
-            navigate(linkTo);
+            try {
+                dispatch(createUserSaga(data));
+            } catch (error) {
+                console.log(error)
+            }
         } else {
-            dispatch(authorizeUser(data));
-            navigate('/projects');
+            dispatch(authorizeUserSaga(data));
         }
-       
-        reset();
-    }
+
+        // try {
+        //     if (isRegistration) {
+        //         await dispatch(createUser(data));
+        //     } else {
+        //         await dispatch(authorizeUser(data));
+        //     }
+
+        //     // dispatch(setError(null)); // Сброс ошибки при успешной отправке
+        //     reset();
+        //     navigate(isRegistration ? linkTo : '/projects');
+        // } catch (error) {
+        //     dispatch(setError(error.message));
+        // }
+    };
 
     return (
         <div className='entryForm-container'>
             <form className='entryForm' onSubmit={handleSubmit(onSubmit)} ref={formRef}>
                 <h3 className="entryForm__title">{formTitle}</h3>
+                
                 <fieldset className='entryForm__fieldset'>
                     <div className='entryForm__input-container'>
                             <input
@@ -60,7 +79,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                                 type='email'           
                                 placeholder='Email'
                                 {...register('email')}
-                                onChange={e=> console.log(isValid)}
+
                             />
                         
                         <label
@@ -112,7 +131,12 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                         </div>
                     )}
                 </fieldset>
+                {/* <div className='entryForm__submit-error'>
+                    {error && <span>{error}</span>}
+                </div> */}
                 <button disabled={!isValid} type='submit' className='entryForm__btn-submit'>{buttonText}</button>
+                
+               
                 <span className='entryForm__links'>{linkText}&nbsp;<Link className='entryForm__link' to={linkTo}>{linkTitle}</Link></span>
 
             </form>

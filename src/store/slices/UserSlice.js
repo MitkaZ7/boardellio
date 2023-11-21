@@ -26,17 +26,33 @@ export const createUser = createAsyncThunk(
   });
 export const authorizeUser = createAsyncThunk(
   'user/authorizeUser',
-  async (authData, { rejectWithValue, dispatch}) => {
+  async (authData, { rejectWithValue, dispatch }) => {
     const { email, password } = authData;
     try {
       const res = await authApi.authorize(authData);
       console.log('User authorized successfully');
-      dispatch(setUser(res.data))
+      dispatch(setUser(res.data));
+      console.log(res.data);
     } catch (error) {
-      return rejectWithValue((error.message))
+      if (error.response && error.response.data && error.response.data.error) {
+        // Обработка ошибки от сервера
+        const errorMessage = error.response.data.error.message;
+        console.log('Firebase error message:', errorMessage);
+        dispatch(setError(errorMessage));
+      } else if (error.message) {
+        // Обработка других ошибок
+        console.log('Error message:', error.message);
+        dispatch(setError(error.message));
+      } else {
+        // Обработка других случаев
+        console.log('Unexpected error:', error);
+        dispatch(setError('Unexpected error occurred'));
+      }
+      return rejectWithValue(error.message);
     }
   }
-)
+);
+
 
 
 const initialState = {
@@ -56,6 +72,7 @@ export const userSlice = createSlice({
       const {email, idToken, localId} = action.payload;
       state.email = email;
       state.idToken = idToken;
+      localStorage.setItem('idToken', idToken);
       state.userId = localId;
       // state.registered = true;
     },

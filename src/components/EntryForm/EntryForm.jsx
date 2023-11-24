@@ -7,7 +7,6 @@ import { createUser, authorizeUser } from '../../store/slices/userSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createUserSaga, authorizeUserSaga } from '../../store/sagas/userSagas';
 
 import Popup from '../Popup/Popup';
 
@@ -40,31 +39,34 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
     
 
     
-    const onSubmit = (data) => {
-        if (isRegistration) {
-            try {
-                dispatch(createUser(data))
-            } catch (error) {
-                console.log(error)
-            }
+   const onSubmit = (data) => {
+  if (isRegistration) {
+    dispatch(createUser(data))
+      .then((resultAction) => {
+        if (createUser.fulfilled.match(resultAction)) {
+          // Успешная регистрация
+          reset();
+          navigate(linkTo);
         } else {
-            dispatch(authorizeUser(data));
+          // Ошибка при регистрации
+          // Можно не выполнять редирект, так как произошла ошибка
         }
+      });
+  } else {
+    dispatch(authorizeUser(data))
+      .then((resultAction) => {
+        if (authorizeUser.fulfilled.match(resultAction)) {
+          // Успешная авторизация
+          reset();
+          navigate('/projects');
+        } else {
+          // Ошибка при авторизации
+          // Можно не выполнять редирект, так как произошла ошибка
+        }
+      });
+  }
+};
 
-        // try {
-        //     if (isRegistration) {
-        //         await dispatch(createUser(data));
-        //     } else {
-        //         await dispatch(authorizeUser(data));
-        //     }
-
-        //     // dispatch(setError(null)); // Сброс ошибки при успешной отправке
-        //     reset();
-        //     navigate(isRegistration ? linkTo : '/projects');
-        // } catch (error) {
-        //     dispatch(setError(error.message));
-        // }
-    };
 
     return (
         <div className='entryForm-container'>

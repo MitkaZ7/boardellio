@@ -34,7 +34,13 @@
     "project-page-done-section-title": "done",
     "task-priority-usual": "usual",
     "task-priority-seriously": "seriously",
-    "task-priority-critical": "critical"
+    "task-priority-critical": "critical",
+    "unauthorized-title": "Unauthorized",
+    "unauthorized-subtitle": "You do not have access to the requested page.",
+    "unauthorized-button": "Go Back and authorize",
+    "user-greeting": "Hi!",
+    "exit-btn": "exit",
+    "user-profile-link": "profile"
 
 
 }

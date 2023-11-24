@@ -10,13 +10,43 @@
   z-index: 100;
   display: flex;
   flex-flow: column wrap;
+  &__user-container {
+
+        margin-top: 5px;
+        align-items: center;
+        display: flex;
+        color: var(--additional-color);
+  }
+  &__user-link{
+    margin-left: 20px;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+     
+    }
+  }
+  &__logout-btn {
+    box-sizing: border-box;
+    @include action-button;
+    margin-left: 5px;
+    border: none;
+    border-radius: 0;
+    height: 15px;
+    //   right: -20px;
+      width: 15px;
+      background-image: url(../../assets/icons/exit.svg);
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+  }
   &_state_active {
     // display: flex;
     // flex-direction: column;
     //   justify-content: space-between;
     //   align-items: center;
     display: grid;
-    grid-template-rows: 1fr min-content;
+    grid-template-rows: 60px 1fr 40px;
     height: 100%;
     position: absolute;
     max-width: 375px;

@@ -1,0 +1,46 @@
+.dropdown-menu {
+        display: grid;
+        grid-template-rows: repeat(auto-fill);
+        // z-index: 121;
+        max-width: 80px;
+        // overflow: hidden;
+        background-color: var(--popup-bg-clr);
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        @include small-shadow;
+        
+        padding: 0;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        height: 50px;
+        &::after {
+                content: '';
+                clip: rect(0, auto, 5em, -2em);
+                left: 5px;
+                top: -5px;
+                transform: scale(0.8, 1) rotate(135deg);
+                width: 10px;
+                height: 10px;
+                @include small-shadow;
+                position: absolute;
+                background-color:var(--popup-bg-clr);
+
+                
+            }
+    &__list {
+        @include list;
+        margin: 0;
+        z-index: 999;
+      
+      
+    }
+    &__list-item{
+        margin: 5px
+    }
+    &_state_dropped {
+        
+        
+    }
+}

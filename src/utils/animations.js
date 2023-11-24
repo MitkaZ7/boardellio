@@ -85,6 +85,21 @@ export const fadeInAnimation = (element) => {
 
 }
 
-
+export const fadeInToDown = (element) => {
+    let tl = gsap.timeline().timeScale(2.5)
+    tl.from(element, {
+  
+        y: -100
+    })
+    .to(element, {
+        ease: 'none',
+        
+        y: 100
+    })
+    .to(element, {
+        delay: 3,
+        y: -100
+    })
+}
 
 

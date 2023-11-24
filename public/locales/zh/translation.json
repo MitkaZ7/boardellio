@@ -34,7 +34,10 @@
     "project-page-done-section-title": "完畢",
     "task-priority-usual": "通常",
     "task-priority-seriously": "嚴重地",
-    "task-priority-critical": "批判的"
+    "task-priority-critical": "批判的",
+    "unauthorized-title": "未经授权",
+    "unauthorized-subtitle": "您无权访问所请求的页面。",
+    "unauthorized-button": "回去授权"
 
 
 }

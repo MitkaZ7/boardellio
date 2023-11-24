@@ -29,10 +29,10 @@ export const authorizeUser = createAsyncThunk(
   async (authData, { rejectWithValue, dispatch }) => {
     const { email, password } = authData;
     try {
-      const res = await authApi.authorize(authData);
+      const userData = await authApi.authorize(authData);
       console.log('User authorized successfully');
-      dispatch(setUser(res.data));
-      console.log(res.data);
+      dispatch(setUser(userData.data));
+      console.log(userData.data);
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         // Обработка ошибки от сервера
@@ -43,6 +43,7 @@ export const authorizeUser = createAsyncThunk(
         // Обработка других ошибок
         console.log('Error message:', error.message);
         dispatch(setError(error.message));
+        
       } else {
         // Обработка других случаев
         console.log('Unexpected error:', error);
@@ -57,11 +58,19 @@ export const authorizeUser = createAsyncThunk(
 
 const initialState = {
   email: null,
+  name: null,
+  user: {
+    email: '',
+    name: '',
+    role: 'user',
+    avatar: null,
+  },
   accessToken: null,
   idToken: null,
   refreshToken: null,
   userId: null,
   registered: false,
+  isAuthorized: false,
   error: null,
 }
 export const userSlice = createSlice({
@@ -70,56 +79,58 @@ export const userSlice = createSlice({
   reducers: {
     setUser(state, action) {
       const {email, idToken, localId} = action.payload;
-      state.email = email;
+      state.user.email = email;
       state.idToken = idToken;
       localStorage.setItem('idToken', idToken);
       state.userId = localId;
       // state.registered = true;
+      
+    },
+    setAuthorizationStatus(state, action) {
+      state.isAuthorized = action.payload;
     },
     removeUser(state) {
-
+        localStorage.removeItem('idToken');
+        state.email = null;
+        state.idToken = null;
+        state.isAuthorized = false;
+        state.userId = null;
+        state.user = {};
     },
     setError(state, action) {
       state.error = action.payload;
       console.log(action.payload)
     },
-    // setUser(state, action){
-    //   const userData = action.payload;
-    //   state.email = userData.user.email;
-    //   state.id = userData.user.id;
-    //   state.isActivated = userData.user.isActivated;
-    //   state.accessToken = userData.accessToken;
-    //   state.refreshToken = userData.refreshToken;
-
-    // },
-    // removeUser(state){
-    //   state.email = null;
-    //   state.accessToken = null;
-    //   state.refreshToken = null;
-    //   state.name = null;
-    //   state.id = null;
-    //   state.isActivated = false;
-    // },
+    resetError(state, action) {
+      state.error = null
+    }
   },
   extraReducers: (builder) => {
     builder
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.isAuthorized = true; 
+      })
+      .addCase(authorizeUser.fulfilled, (state, action) => {
+        state.isAuthorized = true; 
+      })
       .addCase(createUser.rejected, (state,action) => {
         state.error = action.payload;
         console.log(action.payload)
       })
       .addCase(authorizeUser.rejected, (state, action) => {
-        state.error = action.payload;
-        console.log(action.payload)
+        // state.error = action.payload;
+        // console.log(action.payload)
       })
       .addMatcher(
         (action) => action.type.endsWith('/fulfilled'),
         (state, action) => {
           state.error = null;
           // state[action.meta.requestId] = 'fulfilled';
+
         }
       );
   } 
 })
 
-export const { setUser, removeUser, setError  } = userSlice.actions;
+export const { setUser, removeUser, setError, resetError, setAuthorizationStatus  } = userSlice.actions;
 export default userSlice.reducer;

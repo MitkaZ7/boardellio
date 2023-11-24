@@ -3,14 +3,12 @@ import TaskList from '../TaskList/TaskList';
 import AddTaskPopup from '../AddTaskPopup/AddTaskPopup';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
-import { useParams } from 'react-router-dom';
 import { getTasks, updateTaskStatus, getOneTask} from '../../store/slices/tasksSlice';
 import { selectProject } from '../../store/slices/projectSlice';
 import { DndProvider,useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { itemTypes } from '../../utils/constants';
-import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 const Project = () => {
   const { projectId, projectName } = useSelector(state => state.projects.selectedProject);

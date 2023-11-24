@@ -17,7 +17,7 @@
         "internationalization": "Смена языка"
     },
     "intro-tech-title": "Разработано с помощью:",
-    "intro-access-choice-title": "Выбери режим для ознакомления:",
+    "intro-access-choice-title": "Выбери режим доступа для ознакомления:",
     "intro-hint": "Потребуется регистрация",
     "intro-btn-readonly": "чтение",
     "intro-btn-fullaccess": "полный",
@@ -34,7 +34,13 @@
     "project-page-done-section-title": "завершенные",
     "task-priority-usual": "обычная",
     "task-priority-seriously": "серьезная",
-    "task-priority-critical": "критическая"
+    "task-priority-critical": "критическая",
+    "unauthorized-title": "Нет доступа",
+    "unauthorized-subtitle": "Нужно авторизоваться",
+    "unauthorized-button": "Вернуться назад",
+    "user-greeting": "Привет!",
+    "exit-btn": "выйти",
+    "user-profile-link": "профиль"
 
 
 }

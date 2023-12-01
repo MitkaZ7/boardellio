@@ -91,11 +91,10 @@ export const userSlice = createSlice({
       state.isAuthorized = action.payload;
     },
     removeUser(state) {
-        localStorage.removeItem('idToken');
-        state.email = null;
-        state.idToken = null;
+        localStorage.removeItem('userData');
+      
         state.isAuthorized = false;
-        state.userId = null;
+        // state.userId = null;
         state.user = {};
     },
     setError(state, action) {

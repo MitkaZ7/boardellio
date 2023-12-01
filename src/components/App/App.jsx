@@ -10,7 +10,7 @@ import TaskPopup from '../Task/Task';
 import Intro from '../intro/Intro';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { setAuthorizationStatus } from '../../store/slices/userSlice'
+import { setAuthorizationStatus, setUser } from '../../store/slices/userSlice'
 import { useTranslation } from 'react-i18next';
 import UserProfile from '../UserProfile/UserProfile';
 function App() {
@@ -31,6 +31,7 @@ function App() {
     };
     if (user.idToken) {
       dispatch(setAuthorizationStatus(true));
+      dispatch(setUser(user))
     } 
   }, [theme, i18n, dispatch]);
 

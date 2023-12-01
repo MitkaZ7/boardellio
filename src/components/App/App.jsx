@@ -19,7 +19,8 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {   
     const storedLanguage = localStorage.getItem('i18nextLng');
-    const { user } = JSON.parse(localStorage.getItem('userData'));
+    const userData = localStorage.getItem('userData');
+    
     if (storedLanguage) {
       i18n.changeLanguage(storedLanguage);
     } 
@@ -29,10 +30,14 @@ function App() {
     } else {
       document.documentElement.dataset.theme = theme;
     };
-    if (user.idToken) {
+    if (userData) {
+      const {user} = JSON.parse(userData);
+      if (user.idToken) {
       dispatch(setAuthorizationStatus(true));
       dispatch(setUser(user))
     } 
+    }
+    
   }, [theme, i18n, dispatch]);
 
   

@@ -22,7 +22,7 @@ export default configureStore ({
 
     },
     middleware: (getDefaultMiddleware) => 
-        getDefaultMiddleware().concat(rejectionMiddleware, localStorageMiddleware),
+        getDefaultMiddleware().concat(localStorageMiddleware, rejectionMiddleware, ),
     
        
 })

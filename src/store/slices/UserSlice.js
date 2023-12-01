@@ -32,6 +32,7 @@ export const authorizeUser = createAsyncThunk(
       const userData = await authApi.authorize(authData);
       console.log('User authorized successfully');
       dispatch(setUser(userData.data));
+
       console.log(userData.data);
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
@@ -57,19 +58,18 @@ export const authorizeUser = createAsyncThunk(
 
 
 const initialState = {
-  email: null,
-  name: null,
+  // email: null,
+  // name: null,
   user: {
     email: '',
     name: '',
     role: 'user',
     avatar: null,
   },
-  accessToken: null,
-  idToken: null,
+  // accessToken: null,
+  // idToken: null,
   refreshToken: null,
-  userId: null,
-  registered: false,
+  // userId: null,
   isAuthorized: false,
   error: null,
 }
@@ -78,12 +78,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
-      const {email, idToken, localId} = action.payload;
-      state.user.email = email;
-      state.idToken = idToken;
-      localStorage.setItem('idToken', idToken);
-      state.userId = localId;
-      // state.registered = true;
+      state.user = action.payload;
+      // const {email, idToken, localId} = action.payload;
+      // state.user.email = email;
+      // state.idToken = idToken;
+      // localStorage.setItem('idToken', idToken);
+      // state.userId = localId;
+ 
       
     },
     setAuthorizationStatus(state, action) {

@@ -19,7 +19,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {   
     const storedLanguage = localStorage.getItem('i18nextLng');
-    const storedToken = localStorage.getItem('idToken');
+    const { user } = JSON.parse(localStorage.getItem('userData'));
     if (storedLanguage) {
       i18n.changeLanguage(storedLanguage);
     } 
@@ -29,10 +29,9 @@ function App() {
     } else {
       document.documentElement.dataset.theme = theme;
     };
-    if (storedToken) {
+    if (user.idToken) {
       dispatch(setAuthorizationStatus(true));
-    }
-
+    } 
   }, [theme, i18n, dispatch]);
 
   

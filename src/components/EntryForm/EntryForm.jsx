@@ -19,7 +19,6 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
     const { register, 
         handleSubmit,
         reset,
-        setError, 
         formState: { 
             errors, 
             isValid, 

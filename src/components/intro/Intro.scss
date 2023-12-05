@@ -1,13 +1,18 @@
 .intro {
+    box-sizing: border-box;
     position: relative;
     // padding: 20px;
     grid-area: 'content';
     display: grid;
-
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+    
+    // grid-template-columns: 1fr 1fr;
     justify-items: center;
     margin: 0;
     align-items: center;
+    padding-top: calc(5% + 10px);
+        /* Пример: 5% от высоты контейнера + 10px отступ сверху */
+        padding-bottom: calc(5% + 10px);
     &__header {
 
     }
@@ -18,16 +23,16 @@
         margin: 0;
         position: relative;
         color: var(--subtitle-clr);
-        &::after {
-            content: '';
-            background-image: url('../../assets/icons/arrow-ru.svg');
-            background-position: top center;
-            background-repeat: no-repeat;
+        // &::after {
+        //     content: '';
+        //     background-image: url('../../assets/icons/arrow-ru.svg');
+        //     background-position: top center;
+        //     background-repeat: no-repeat;
             
-            width: 35px;
-            height: 20px;
-            position: absolute;
-        }
+        //     width: 35px;
+        //     height: 20px;
+        //     position: absolute;
+        // }
     }
     &__features {
         @include list;
@@ -55,8 +60,7 @@
         position: relative;
         // top: 50%;
         // right: 50%;
-        min-width: 375px;
-        // border: 1px solid red;
+        min-width: 300px;
     }
     &__tech-list-item {
         position: absolute;
@@ -73,14 +77,15 @@
         
         display: flex;
         align-items: center;
-        max-width: 200px;
-        justify-content: space-between;
+        gap: 5px;
+        max-width: 250px;
+        justify-content: left;
     }
     &__buttons-title {
         margin-top: 60px;
         border-bottom: 2px solid var(--process-clr);
         padding-bottom: 5px;
-        max-width: 44%;
+        max-width: 135px;
     }
     &__button-container {
             overflow: hidden;
@@ -135,4 +140,12 @@
         }
     }
 
+}
+@media screen and (max-width: 768px) {
+    .intro {
+     &__comment-about-stack{ 
+        align-self: center;
+        justify-content: center;
+     }
+    }
 }

@@ -14,7 +14,7 @@ const tl = gsap.timeline({
 export const buttonHoverAnimation = (buttonTarget, isHovered, subItemClass) => {
     let button = gsap.utils.selector(buttonTarget);
     let overlayBg = button(subItemClass)
-    console.log(button)
+
     const btnTL = gsap.timeline({
         speed: 20,
     }).timeScale(3.5);
@@ -85,6 +85,21 @@ export const fadeInAnimation = (element) => {
 
 }
 
-
+export const fadeInToDown = (element) => {
+    let tl = gsap.timeline().timeScale(2.5)
+    tl.from(element, {
+  
+        y: -100
+    })
+    .to(element, {
+        ease: 'none',
+        
+        y: 100
+    })
+    .to(element, {
+        delay: 3,
+        y: -100
+    })
+}
 
 

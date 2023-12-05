@@ -2,3 +2,12 @@
   color: $text-color;
   border-color: $border-color;
 }
+
+@mixin round-borders() {
+    border: 2px solid var(--additional-color);
+    border-radius: 5px;
+}
+
+@mixin small-shadow() {
+  box-shadow: 0px 0px 6px 0px rgba(34, 60, 80, 0.2);
+}

@@ -6,10 +6,11 @@ const Switcher = () => {
   const theme = useSelector(state => state.theme);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem('theme', theme)
-  }, [ theme ]);
+  // useEffect(()=>{
+  //   document.documentElement.dataset.theme = theme;
+  //   console.log(document.documentElement.dataset.theme)
+  //   localStorage.getItem('theme', theme)
+  // }, [ theme ]);
 
   const hadleThemeChange = () => {
     const toggledTheme = theme === 'light' ? 'dark' : 'light'

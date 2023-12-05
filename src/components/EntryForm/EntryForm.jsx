@@ -3,16 +3,25 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { fadeInAnimation } from '../../utils/animations'
+import { createUser, authorizeUser } from '../../store/slices/userSlice';
+import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
+
+import Popup from '../Popup/Popup';
+
 // import { loginSchema, registrationSchema } from '../../utils/validation'
 const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegistration, validationSchema }) => {
-    const formRef = useRef()
+    const dispatch = useDispatch();
+    const { error } = useSelector((state) => state.user);
+    const formRef = useRef();
+    const navigate = useNavigate();
     const { register, 
         handleSubmit,
-        reset, 
+        reset,
         formState: { 
             errors, 
             isValid, 
-            isDirty 
         } 
     } = useForm({
         mode: 'all',
@@ -23,24 +32,46 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
   
     // let navigate = useNavigate();
     useEffect(() => {
-        console.log(formRef.current)
+        // console.log(formRef.current)
         fadeInAnimation(formRef.current)
     }, []);
     
 
     
-    const onSubmit = (data) => {
-        console.log(data);
-       
+   const onSubmit = (data) => {
+  if (isRegistration) {
+    dispatch(createUser(data))
+      .then((resultAction) => {
+        if (createUser.fulfilled.match(resultAction)) {
+          // Успешная регистрация
+          reset();
+          navigate(linkTo);
+        } else {
+          // Ошибка при регистрации
+          // Можно не выполнять редирект, так как произошла ошибка
+        }
+      });
+  } else {
+    dispatch(authorizeUser(data))
+      .then((resultAction) => {
+        if (authorizeUser.fulfilled.match(resultAction)) {
+          // Успешная авторизация
+          reset();
+          navigate('/projects');
+        } else {
+          // Ошибка при авторизации
+          // Можно не выполнять редирект, так как произошла ошибка
+        }
+      });
+  }
+};
 
-
-        reset();
-    }
 
     return (
         <div className='entryForm-container'>
             <form className='entryForm' onSubmit={handleSubmit(onSubmit)} ref={formRef}>
                 <h3 className="entryForm__title">{formTitle}</h3>
+                
                 <fieldset className='entryForm__fieldset'>
                     <div className='entryForm__input-container'>
                             <input
@@ -49,7 +80,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                                 type='email'           
                                 placeholder='Email'
                                 {...register('email')}
-                                onChange={e=> console.log(isValid)}
+
                             />
                         
                         <label
@@ -71,7 +102,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                             />
                         <label
                             className='entryForm__label'
-                            htmlFor='input-password'>
+                            htmlFor='password'>
                             password
                         </label>
                         <div className='entryForm__input-error'>
@@ -92,7 +123,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                             />
                             <label
                                 className='entryForm__label'
-                                htmlFor='confirmsspassword'>
+                                htmlFor='confirmpassword'>
                                 confirm password
                             </label>
                             <div className='entryForm__input-error'>
@@ -101,7 +132,12 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                         </div>
                     )}
                 </fieldset>
+                {/* <div className='entryForm__submit-error'>
+                    {error && <span>{error}</span>}
+                </div> */}
                 <button disabled={!isValid} type='submit' className='entryForm__btn-submit'>{buttonText}</button>
+                
+               
                 <span className='entryForm__links'>{linkText}&nbsp;<Link className='entryForm__link' to={linkTo}>{linkTitle}</Link></span>
 
             </form>

@@ -1,12 +1,38 @@
-import React, {useState} from 'react'
-import { useDispatch } from 'react-redux'
+import React, {useState, useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import EntryForm from '../EntryForm/EntryForm'
 import { loginSchema } from '../../utils/validation'
+import Tooltip from '../Tooltip/Tooltip'
+import { resetError } from '../../store/slices/userSlice'
 const Login = () => {
+  const dispatch = useDispatch();
+  const [isShown, setIsShown] = useState(false);
+  const authError = useSelector(state => state.user.error)
+  useEffect(() => {
+    let timeoutId;
+
+    if (authError) {
+      setIsShown(true);
+    
+      timeoutId = setTimeout(() => {
+        setIsShown(false);
+        dispatch(resetError())
+      }, 2000);
+    } else {
+      setIsShown(false);
+    }
+
+    return () => {
+      // Очищаем таймер при размонтировании компонента
+      clearTimeout(timeoutId);
+    };
+  }, [authError]);
 
   return (
-      <EntryForm
+      <>
+      {authError && <Tooltip isShown={isShown} messageText={authError} messageType={'Error'}/>}
+        <EntryForm
           buttonText='Login'
           formTitle='Login'
           linkText='Don`t have an account?'
@@ -14,8 +40,8 @@ const Login = () => {
           linkTo='/registration'
           isRegistration={false}
           validationSchema={loginSchema}
-      />
-          
+        />
+    </>    
      
   )
 }

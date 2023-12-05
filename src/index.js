@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import store from './store/store'
 import './scss/index.scss'
 import App from './components/App/App.jsx'
+import i18n from './utils/i18n.js';
 
 // import parseDb from './utils/parseDatabase'
 
@@ -19,5 +20,4 @@ root.render(
 
 
 );
-
 

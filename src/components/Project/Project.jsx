@@ -3,22 +3,19 @@ import TaskList from '../TaskList/TaskList';
 import AddTaskPopup from '../AddTaskPopup/AddTaskPopup';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
-import { useParams } from 'react-router-dom';
 import { getTasks, updateTaskStatus, getOneTask} from '../../store/slices/tasksSlice';
 import { selectProject } from '../../store/slices/projectSlice';
 import { DndProvider,useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { itemTypes } from '../../utils/constants';
-import { useLocation } from 'react-router-dom';
-
-
+import { useTranslation } from 'react-i18next';
 const Project = () => {
   const { projectId, projectName } = useSelector(state => state.projects.selectedProject);
   const activePopup = useSelector(state => state.popup.activePopup);
   // const { selectedTaskId } = useSelector(state => state.popup);
   // const { activeTaskId, selectedTaskStatus } = useSelector(state => state.tasks);
-
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const openAddTaskPopupHandler = () => {
@@ -75,15 +72,15 @@ const Project = () => {
         </div>
         <section className='project__content'>
           <section className='project__tasks-section project__queue-tasks'>
-            <h3 className='project__tasks-section-header'>queue</h3>
+            <h3 className='project__tasks-section-header'>{t('project-page-queue-section-title')}</h3>
             <TaskList onClick={openTaskPopupHandler} taskStatus="queue" />
           </section>
           <section className='project__tasks-section project__dev-tasks'>
-            <h3 className='project__tasks-section-header'>development</h3>
+            <h3 className='project__tasks-section-header'>{t('project-page-dev-section-title')}</h3>
             <TaskList onClick={openTaskPopupHandler} taskStatus="dev" />
           </section>
           <section className='project__tasks-section project__done-tasks'>
-            <h3 className='project__tasks-section-header'>done</h3>
+            <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')}</h3>
             <TaskList onClick={openTaskPopupHandler} taskStatus="done" />
           </section>
         </section>

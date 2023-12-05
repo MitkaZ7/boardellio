@@ -7,7 +7,9 @@ import loaderSlice from './slices/loaderSlice';
 import sideMenuSlice from './slices/sideMenuSlice';
 import userSlice from './slices/userSlice';
 import themeSlice from './slices/themeSlice';
-
+import errorTransformMiddleware from './middlewares/errorTransformMiddleware';
+import localStorageMiddleware from './middlewares/localStorageMiddleware';
+import rejectionMiddleware from './middlewares/rejectionMiddleware'
 export default configureStore ({
     reducer: {
         tasks: tasksSlice,
@@ -18,6 +20,9 @@ export default configureStore ({
         user: userSlice,
         theme: themeSlice,
 
-    }
+    },
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware().concat(localStorageMiddleware, rejectionMiddleware, ),
+    
        
 })

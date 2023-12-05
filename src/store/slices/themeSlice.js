@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 const getTheme = () => {
-  const theme = `${window?.localStorage?.getItem('theme')}`
+  const userMedia = window.matchMedia('(prefers-color-scheme: dark');
+  if (userMedia.matches) return 'dark';
+  const theme = `${window?.localStorage?.getItem('theme')}`;
   if (['light', 'dark'].includes(theme)) return theme;
-  const userMedia = window.matchMedia('(prefers-color-scheme: light');
-  if (userMedia.matches) return 'light'
-  return 'dark'
+  return 'light'; 
+  
 }
 
 const initialState = getTheme()
@@ -13,7 +14,10 @@ const themeSlice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    setTheme: (state, action) => action.payload,
+    setTheme: (state, action) => {
+      localStorage.setItem('theme', action.payload); // Сохраняем выбранную тему в локальное хранилище
+      return action.payload;
+    },
   },
 })
 export const { setTheme } = themeSlice.actions;

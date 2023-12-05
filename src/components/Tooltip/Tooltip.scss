@@ -1,0 +1,38 @@
+.tooltip {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    justify-self: center;
+    // margin: 0 auto;
+    // top: -10px;
+    // left: 0;
+    // bottom: 0;
+    // right: 0;
+    max-height: fit-content;
+
+    &_state_open {
+        // top: 30px;
+        // display: flex;
+        // transition: all 1.0s ease-in-out;
+        // opacity: 1;
+    }
+    &__container {
+        max-width: 375px;
+            // width: 100%;
+            background-color: var(--queue-clr);
+            color: var(--bg-clr);
+            border-radius: 5px;
+            margin: 0 auto;
+            padding: 10px;
+            // z-index: 101;
+            // position: relative;
+            text-align: center;
+            // justify-content: center;
+        
+    }
+    &__message {
+
+    }
+}

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 
 const Popup = ({ children, resetForm }) => {
   const { isOpen } = useSelector((state) => state.popup);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  // const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   const dispatch = useDispatch();
   function closePopupHandler() {

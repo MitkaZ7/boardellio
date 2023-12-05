@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../Layout';
@@ -15,49 +15,49 @@ import { useTranslation } from 'react-i18next';
 import UserProfile from '../UserProfile/UserProfile';
 function App() {
   const theme = useSelector(state => state.theme);
-  const {i18n} = useTranslation();
+  const { i18n } = useTranslation();
   const dispatch = useDispatch();
-  useEffect(() => {   
+  useEffect(() => {
     const storedLanguage = localStorage.getItem('i18nextLng');
     const userData = localStorage.getItem('userData');
-    
+
     if (storedLanguage) {
       i18n.changeLanguage(storedLanguage);
-    } 
-    const storedTheme = localStorage.getItem('theme');   
+    }
+    const storedTheme = localStorage.getItem('theme');
     if (storedTheme) {
       document.documentElement.dataset.theme = storedTheme;
     } else {
       document.documentElement.dataset.theme = theme;
     };
     if (userData) {
-      const {user} = JSON.parse(userData);
+      const { user } = JSON.parse(userData);
       if (user.idToken) {
-      dispatch(setAuthorizationStatus(true));
-      dispatch(setUser(user))
-    } 
+        dispatch(setAuthorizationStatus(true));
+        dispatch(setUser(user))
+      }
     }
-    
+
   }, [theme, i18n, dispatch]);
 
-  
 
 
-  
+
+
   return (
     <DndProvider backend={HTML5Backend}>
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Intro />} />
-        <Route element={<Login />} path='/login'/>
-        <Route element={<Registration />} path='/registration' />
-        <Route element={<UserProfile />} path='users/me'/>
-        <Route index element={<ProjectsList />} />
-        <Route path="/projects/" element={<ProjectsList />} />
-        <Route path="/projects/:projectTitle" element={<Project />} />
-        <Route path="/projects/:projectTitle/:taskId" element={<TaskPopup />} />
-      </Route>
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Intro />} />
+          <Route element={<Login />} path='/login' />
+          <Route element={<Registration />} path='/registration' />
+          <Route element={<UserProfile />} path='users/me' />
+          <Route index element={<ProjectsList />} />
+          <Route path="/projects/" element={<ProjectsList />} />
+          <Route path="/projects/:projectTitle" element={<Project />} />
+          <Route path="/projects/:projectTitle/:taskId" element={<TaskPopup />} />
+        </Route>
+      </Routes>
     </DndProvider>
   );
 }

@@ -1,6 +1,5 @@
 import React, {useState,useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import MenuToggler from '../MenuToggler/MenuToggler';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +19,7 @@ const Navbar = () => {
   function useOutsideСlick(ref) {
     useEffect(() => {
       function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
+        if (ref.current && !ref.current.contains(event.target) && isMenuOpen) {
           dispatch(closeMenu())
         }
       }
@@ -36,7 +35,7 @@ const Navbar = () => {
   
 
   const handleExitClick = () => {
-  
+
     dispatch(removeUser()); // Пример действия для удаления пользователя из Redux-хранилища
     navigate('/login'); // Редирект на главную страницу
   

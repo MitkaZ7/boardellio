@@ -13,6 +13,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { setAuthorizationStatus, setUser } from '../../store/slices/userSlice'
 import { useTranslation } from 'react-i18next';
 import UserProfile from '../UserProfile/UserProfile';
+import Unauthorized from '../Unauthorized/Unauthorized';
+import RequireAuth from '../hoc/RequireAuth';
 function App() {
   const theme = useSelector(state => state.theme);
   const { i18n } = useTranslation();
@@ -49,13 +51,32 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Intro />} />
-          <Route element={<Login />} path='/login' />
-          <Route element={<Registration />} path='/registration' />
-          <Route element={<UserProfile />} path='users/me' />
-          <Route index element={<ProjectsList />} />
-          <Route path="/projects/" element={<ProjectsList />} />
-          <Route path="/projects/:projectTitle" element={<Project />} />
-          <Route path="/projects/:projectTitle/:taskId" element={<TaskPopup />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/registration' element={<Registration />} />
+          <Route path='/unauthorized' element={<Unauthorized />} />
+          {/* Private routes */}
+          <Route path='users/me' element={
+            <RequireAuth>
+              <UserProfile />
+            </RequireAuth>
+          } />
+          <Route path="/projects/" element={
+            <RequireAuth>
+              <ProjectsList />
+            </RequireAuth>
+          } />
+          <Route path="/projects/:projectTitle" element={
+            <RequireAuth>
+              <Project />
+            </RequireAuth>
+          } />
+          <Route path="/projects/:projectTitle/:taskId" element={
+            <RequireAuth>
+              <TaskPopup />
+            </RequireAuth>
+          } />
+          
+  
         </Route>
       </Routes>
     </DndProvider>

@@ -1,11 +1,16 @@
 .section-unauthorized {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     &__title {
-
+        margin: 0;
     }
     &__subtitle {
 
     }
     &__button {
-        
+        @include button-add;
+    
     }
 }

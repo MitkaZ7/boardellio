@@ -37,10 +37,11 @@
     "task-priority-critical": "critical",
     "unauthorized-title": "Unauthorized",
     "unauthorized-subtitle": "You do not have access to the requested page.",
-    "unauthorized-button": "Go Back and authorize",
+    "unauthorized-button": "Please sign in",
     "user-greeting": "Hi!",
     "exit-btn": "exit",
-    "user-profile-link": "profile"
-
+    "user-profile-link": "profile",
+    "log-in": "Log in",
+    "sign-up": "Sign up"
 
 }

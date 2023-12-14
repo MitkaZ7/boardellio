@@ -11,6 +11,6 @@
     }
     &__button {
         @include button-add;
-    
+        margin: 0;
     }
 }

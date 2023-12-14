@@ -53,11 +53,11 @@ const Navbar = () => {
           (isMenuOpen && !isAuthorized) && (
             <div className="menu__entrance-buttons entrance-buttons" onClick={()=>dispatch(closeMenu())}>
               <button className='entrance-buttons__button'>
-                <Link to='/login'>Log in</Link>
+                <Link to='/login'>{t('log-in')}</Link>
               </button>
-              <span className="">or</span>
+              {/* <span className="">or</span> */}
               <button className='entrance-buttons__button'>
-                <Link to='/registration'>Sign up</Link>
+                <Link to='/registration'>{t('sign-up')}</Link>
               </button>
             </div>  
           )
@@ -69,7 +69,7 @@ const Navbar = () => {
         {isAuthorized && 
           <>
             <li className='navbar__item'><Link to='/projects' className='navbar__link'>{t('menu-item-projects-list')}</Link></li>
-            <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-project-tasks')}</Link></li>
+            {/* <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-project-tasks')}</Link></li> */}
           </>
         }
         

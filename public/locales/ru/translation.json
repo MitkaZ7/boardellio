@@ -35,12 +35,14 @@
     "task-priority-usual": "обычная",
     "task-priority-seriously": "серьезная",
     "task-priority-critical": "критическая",
-    "unauthorized-title": "Нет доступа",
+    "unauthorized-title": "Нет доступа к этой странице",
     "unauthorized-subtitle": "Нужно авторизоваться",
-    "unauthorized-button": "Вернуться назад",
+    "unauthorized-button": "Войти",
     "user-greeting": "Привет!",
     "exit-btn": "выйти",
-    "user-profile-link": "профиль"
+    "user-profile-link": "профиль",
+    "log-in": "Войти",
+    "sign-up": "Зарегистрироваться"
 
 
 }

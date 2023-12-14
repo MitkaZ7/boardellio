@@ -24,7 +24,10 @@ const Header = () => {
   
   return (
     <header className='header'>
-      <img src={theme === 'dark' ? logo : logoMonochrome } className='header__logo'></img>
+      <Link to='/'>
+        <img src={theme === 'dark' ? logo : logoMonochrome} className='header__logo'></img>
+      </Link>
+      
       <Link to='/'>
         <h3 className='header__title'>{t('project-title')}</h3>
       </Link>

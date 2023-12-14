@@ -140,3 +140,25 @@
     //   transition: transform 2.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
   }
 }
+.entrance-buttons {
+  margin-left: 20px;
+  
+  &__button {
+    @include action-button;
+    color: var(--subtitle-clr);
+    padding: 0;
+    font-weight: 100;
+    &:hover {
+     
+    }
+    &:first-of-type{
+      // margin-right: 10px;
+      border: none;
+    }
+    &:nth-of-type(2) {
+      margin-left: 10px;
+      padding:  0 5px;
+   
+    }
+  }
+}

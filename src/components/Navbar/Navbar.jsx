@@ -1,6 +1,5 @@
 import React, {useState,useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import MenuToggler from '../MenuToggler/MenuToggler';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -17,29 +16,11 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state) => state.sideMenu)
 
-  function useOutsideСlick(ref) {
-    useEffect(() => {
-      function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          dispatch(closeMenu())
-        }
-      }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
-  }
-  useOutsideСlick(menuRef);
-
- 
   
 
   const handleExitClick = () => {
-  
-    dispatch(removeUser()); // Пример действия для удаления пользователя из Redux-хранилища
-    navigate('/login'); // Редирект на главную страницу
-  
+    dispatch(removeUser()); 
+    navigate('/login');
     dispatch(closeMenu())
   };
 
@@ -68,12 +49,30 @@ const Navbar = () => {
             <button className='menu__logout-btn' onClick={handleExitClick}></button>
           </>
         )}
+        {
+          (isMenuOpen && !isAuthorized) && (
+            <div className="menu__entrance-buttons entrance-buttons" onClick={()=>dispatch(closeMenu())}>
+              <button className='entrance-buttons__button'>
+                <Link to='/login'>{t('log-in')}</Link>
+              </button>
+              {/* <span className="">or</span> */}
+              <button className='entrance-buttons__button'>
+                <Link to='/registration'>{t('sign-up')}</Link>
+              </button>
+            </div>  
+          )
+        }
       </div>
         
         
-        <ul className={`navbar ${isMenuOpen ? activeMenuClassName : ''}`}>
-        <li className='navbar__item'><Link to='/projects' className='navbar__link'>{t('menu-item-projects-list')}</Link></li>
-        <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-project-tasks')}</Link></li>
+        <ul className={`navbar ${isMenuOpen ? activeMenuClassName : ''}`} onClick={(()=>dispatch(closeMenu()))}>
+        {isAuthorized && 
+          <>
+            <li className='navbar__item'><Link to='/projects' className='navbar__link'>{t('menu-item-projects-list')}</Link></li>
+            {/* <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-project-tasks')}</Link></li> */}
+          </>
+        }
+        
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-contacts')}</Link></li>
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-github')}</Link></li>
          

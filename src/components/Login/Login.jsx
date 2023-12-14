@@ -6,9 +6,13 @@ import { loginSchema } from '../../utils/validation'
 import Tooltip from '../Tooltip/Tooltip'
 import { resetError } from '../../store/slices/userSlice'
 const Login = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [isShown, setIsShown] = useState(false);
   const authError = useSelector(state => state.user.error)
+  const fromPage = location.state?.from?.pathname || '/';
+
+
   useEffect(() => {
     let timeoutId;
 

@@ -37,7 +37,8 @@
     "task-priority-critical": "批判的",
     "unauthorized-title": "未经授权",
     "unauthorized-subtitle": "您无权访问所请求的页面。",
-    "unauthorized-button": "回去授权"
-
+    "unauthorized-button": "回去授权",
+    "log-in": "进入",
+    "sign-up": "登记册"
 
 }

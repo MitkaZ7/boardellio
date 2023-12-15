@@ -17,6 +17,7 @@
     --inverted-font-clr: var(--bg-clr);
     --additional-color: #6667AB;
     --special-bg-clr: linear-gradient(45deg, hsl(var(--hue), 50%, 20%), hsl(var(--hue), 10%, 10%));
+    --text-shadow: #1beb9e;
 }
 
 :root[data-theme="light"] {
@@ -37,6 +38,7 @@
     --inverted-font-clr: var(--bg-clr);
     --additional-color: #4672be;
     --special-bg-clr: linear-gradient(45deg, hsl(var(--hue), 10%, 100%), hsl(var(--hue), 0%, 94%));
+    --text-shadow: #fff;
 }
 
 

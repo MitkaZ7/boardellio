@@ -6,3 +6,11 @@
     margin: 5px 5px 0px 3px;
 
 }
+
+.task-list-container {
+    border: 2px dashed red;
+    overflow-y: hidden;
+    min-height: 100px;
+        // padding: 10px;
+        // min-height: 100px;
+}

@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
 import { getTasks, updateTaskStatus, getOneTask} from '../../store/slices/tasksSlice';
 import { selectProject } from '../../store/slices/projectSlice';
-import { DndProvider,useDrop } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskPopup from '../TaskPopup/TaskPopup';
-import { itemTypes } from '../../utils/constants';
+
 import { useTranslation } from 'react-i18next';
 const Project = () => {
   const { projectId, projectName } = useSelector(state => state.projects.selectedProject);
@@ -62,7 +62,7 @@ const Project = () => {
   
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <>
       <article className='project'>
         <div className='project__header'>
           <h3 className='project__title'>{projectName}</h3>
@@ -88,7 +88,7 @@ const Project = () => {
       {/* {selectedTaskId && <TaskPopup taskId={selectedTaskId} />} */}
       {activePopup === 'AddTaskPopup' && <AddTaskPopup />}
       {activePopup === 'TaskPopup' && <TaskPopup />}
-    </DndProvider>
+    </>
   );
 };
 

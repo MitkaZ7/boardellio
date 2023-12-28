@@ -10,27 +10,26 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskPopup from '../TaskPopup/TaskPopup';
 
 import { useTranslation } from 'react-i18next';
+
 const Project = () => {
   const { projectId, projectName } = useSelector(state => state.projects.selectedProject);
   const activePopup = useSelector(state => state.popup.activePopup);
-  // const { selectedTaskId } = useSelector(state => state.popup);
-  // const { activeTaskId, selectedTaskStatus } = useSelector(state => state.tasks);
+  const { tasks } = useSelector((state) => state.tasks);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const openAddTaskPopupHandler = () => {
     openCustomPopup(dispatch, 'AddTaskPopup');
   };
-  const openTaskPopupHandler = () => {
-    // console.log(selectedTaskId)
-    // dispatch(getOneTask(selectedTaskId))
-    // const popupData = { taskPopupData: 'someValue' };
 
+  const openTaskPopupHandler = () => {
     openCustomPopup(dispatch, 'TaskPopup');
   };
 
 
+
   useEffect(() => {
+    console.log('useEffect in Project component is called');
     if (!projectId) {
       const storedSelectedProject = localStorage.getItem('selectedProject');
       if (storedSelectedProject) {
@@ -40,26 +39,10 @@ const Project = () => {
     }
     dispatch(getTasks());
   }, [projectId, dispatch]);
-  
-  // const handleTaskDrop = (taskId, newStatus) => {
-  //   dispatch(updateTaskStatus({ taskId, previousStatus: selectedTaskStatus, newStatus }));
-  // };
 
-  // const [, queueDrop] = useDrop({
-  //   accept: itemTypes.TASK,
-  //   drop: (item) => handleTaskDrop(item.id, 'queue'), // Перетаскивание в секцию "queue"
-  // });
-
-  // const [, devDrop] = useDrop({
-  //   accept: itemTypes.TASK,
-  //   drop: (item) => handleTaskDrop(item.id, 'dev'), // Перетаскивание в секцию "dev"
-  // });
-
-  // const [, doneDrop] = useDrop({
-  //   accept: itemTypes.TASK,
-  //   drop: (item) => handleTaskDrop(item.id, 'done'), // Перетаскивание в секцию "done"
-  // });
-  
+  useEffect(() => {
+    console.log('Tasks in Redux Store updated:', tasks);
+  }, [tasks]);  
 
   return (
     <>
@@ -85,7 +68,6 @@ const Project = () => {
           </section>
         </section>
       </article>
-      {/* {selectedTaskId && <TaskPopup taskId={selectedTaskId} />} */}
       {activePopup === 'AddTaskPopup' && <AddTaskPopup />}
       {activePopup === 'TaskPopup' && <TaskPopup />}
     </>

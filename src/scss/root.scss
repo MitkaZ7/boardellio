@@ -1,16 +1,13 @@
 
 #root {
-  // @include apply-theme('light');
+
   overflow: hidden;
   font-family: 'IBM Plex Mono', 'Helvetica', 'Arial', sans-serif;
   font-weight: 500;
   height: 100vh;
   font-size: 14px;
       display: grid;
-      //   grid-auto-columns: 1fr;
-      //   grid-template-columns: 1fr;
-        grid-template-rows: max-content 1fr 50px;
-      //   gap: 10px 0px;
+      grid-template-rows: max-content 1fr auto;
         grid-template-areas:
           "header"
           "content"

@@ -20,9 +20,20 @@ class Api {
             });
     }
 
-    updateTask(taskId,data) {
-       return instance.put(`/classes/Task/${taskId}`, data)
+    updateTask(taskId, data) {
+        // console.log(data);
+        return instance
+            .patch(`/tasks/${taskId}.json`, data)  // Передаем данные в теле запроса
+            .then((res) => {
+                const task = res.data;
+                return task;
+            })
+            .catch((error) => {
+                console.error('Error updating task:', error);
+                throw error;  // Пробрасываем ошибку дальше для обработки в вызывающем коде
+            });
     }
+
     deleteTask(taskId) {
          return instance.delete(`/classes/Task/${taskId}`)
     }

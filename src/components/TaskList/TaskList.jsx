@@ -9,18 +9,17 @@ import { ItemTypes } from '../../utils/constants';
 
 const TaskList = ({ onClick, taskStatus }) => {
   const refs = useRef({});
-  const listRef = useRef(); 
   const dispatch = useDispatch();
 
   const handleDrop = (taskId, newStatus) => {
-    console.log('item dropped:', taskId);
-    dispatch(updateTaskStatus({ taskId, newStatus }));
+    // console.log('item dropped:', taskId);
+    dispatch(updateTaskStatus({ taskId, newStatus, taskStatus }));
   };
 
 
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TASK_CARD,
-    drop: (item) => handleDrop(item.taskId, taskStatus),
+    drop: (item) => handleDrop(item.taskId, taskStatus, item.status),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -42,15 +41,22 @@ const TaskList = ({ onClick, taskStatus }) => {
   const filteredTasks = tasks[taskStatus] || [];
 
   useEffect(() => {
+  if (!tasks[taskStatus]) {
     dispatch(getTasks());
-  }, [dispatch]);
+  }
+}, [dispatch, tasks, taskStatus]);
+
+useEffect(() => {
+  console.log('Tasks updated:', tasks);
+}, [tasks, taskStatus, filteredTasks]);
 
   return (
-    <div ref={drop} className="task-list-container">
+    <>
       {isLoading && <Loader />}
-      <ul className="taskList" >
+      <ul className={`taskList ${isOver ? 'drag-over' : ''}`} ref={drop}>
         {filteredTasks.map((task) => (
           <TaskCard
+          
             key={task.taskId}
             title={task.title}
             priority={task.priority}
@@ -63,7 +69,7 @@ const TaskList = ({ onClick, taskStatus }) => {
           />
         ))}
       </ul>
-    </div>
+    </>
   );
 };
 

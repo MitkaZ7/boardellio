@@ -11,6 +11,7 @@ const getInitialSelectedTask = () => {
     hideLoader();
     return { taskData: null };
 };
+
 const initialState = {
     isLoad: false,
     selectedTaskId: null,
@@ -20,22 +21,21 @@ const initialState = {
         dev: [],
         done: [],
     },
-    
 };
+
 export const getOneTask = createAsyncThunk(
     'tasks/getOneTask',
-    async (taskId, {rejectWithValue, dispatch}) => {
+    async (taskId, { rejectWithValue, dispatch }) => {
         dispatch(showLoader());
         try {
             const task = await api.getTaskById(taskId);
             dispatch(hideLoader());
-            console.log(task)
-            return task
+            return task;
         } catch (error) {
             return rejectWithValue(error.message);
         }
     }
-)
+);
 
 export const getTasks = createAsyncThunk(
     'tasks/getTasksList',
@@ -54,36 +54,6 @@ export const getTasks = createAsyncThunk(
     }
 );
 
-const categorizeTasks = (tasksList) => {
-    const categorizedTasks = {
-        queue: [],
-        dev: [],
-        done: [],
-    };
-    Object.entries(tasksList).map(([taskId, task])=>{
-        categorizedTasks[task.status].push({
-            ...task,
-            taskId,
-        })
-    })
-    
-    return categorizedTasks;
-};
-// сериализация для редакса
-const serializeTasks = (categorizedTasks) => {
-    const serializedTasks = {
-        queue: [],
-        dev: [],
-        done: [],
-    };
-    for (const [status, tasks] of Object.entries(categorizedTasks)) {
-        serializedTasks[status] = tasks.map((task) => ({
-            ...task,
-        }));
-    }
-    return serializedTasks;
-};
-//
 export const createTask = createAsyncThunk(
     'tasks/createTask',
     async (data, { rejectWithValue, dispatch }) => {
@@ -96,9 +66,6 @@ export const createTask = createAsyncThunk(
         }
     }
 );
-
-
-
 
 export const deleteTask = createAsyncThunk(
     'tasks/deleteTask',
@@ -114,16 +81,47 @@ export const deleteTask = createAsyncThunk(
 
 export const updateTaskStatus = createAsyncThunk(
     'tasks/updateTaskStatus',
-    async ({ taskId, previousStatus, newStatus }, { rejectWithValue, dispatch }) => {
+    async ({ taskId, newStatus }, { rejectWithValue, dispatch }) => {
         try {
             await api.updateTask(taskId, { status: newStatus });
-            console.log(`Task with ID ${taskId} status changed from ${previousStatus} to ${newStatus}.`);
+            console.log(`Task with ID ${taskId} status changed to ${newStatus}.`);
+            await dispatch(getTasks());
             return { taskId, newStatus };
         } catch (error) {
             return rejectWithValue(error.message);
         }
     }
 );
+
+const categorizeTasks = (tasksList) => {
+    const categorizedTasks = {
+        queue: [],
+        dev: [],
+        done: [],
+    };
+    Object.entries(tasksList).forEach(([taskId, task]) => {
+        categorizedTasks[task.status].push({
+            ...task,
+            taskId,
+        });
+    });
+
+    return categorizedTasks;
+};
+
+const serializeTasks = (categorizedTasks) => {
+    const serializedTasks = {
+        queue: [],
+        dev: [],
+        done: [],
+    };
+    for (const [status, tasks] of Object.entries(categorizedTasks)) {
+        serializedTasks[status] = tasks.map((task) => ({
+            ...task,
+        }));
+    }
+    return serializedTasks;
+};
 
 export const taskSlice = createSlice({
     name: 'tasks',
@@ -140,8 +138,9 @@ export const taskSlice = createSlice({
             state.tasks.done = state.tasks.done.filter((task) => task.objectId !== taskId);
         },
         updateTask(state, action) {
-            
+            // Ваш код обновления задачи здесь
         },
+
         selectTask(state, action) {
             state.selectedTaskId = action.payload;
             localStorage.setItem('selectedTaskId', JSON.stringify(action.payload));
@@ -162,20 +161,19 @@ export const taskSlice = createSlice({
             .addCase(getTasks.rejected, (state) => {
                 state.isLoad = false;
             })
-            // .addCase(updateTaskStatus.fulfilled, (state, action) => {
-            //     const { taskId, previousStatus, newStatus } = action.meta.arg;
-            //     const task = state.tasks[previousStatus].find((task) => task.objectId === taskId);
-            //     if (task) {
-            //         state.tasks[previousStatus] = state.tasks[previousStatus].filter((task) => task.objectId !== taskId);
-            //         state.tasks[newStatus].push(task);
-            //     }
-            // })
+            .addCase(updateTaskStatus.fulfilled, (state, action) => {
+                const { taskId, newStatus } = action.payload;
+
+                state.tasks = {
+                    ...state.tasks,
+                    [newStatus]: state.tasks[newStatus].map((task) =>
+                        task.objectId === taskId ? { ...task, status: newStatus } : task
+                    ),
+                };
+            })
             .addCase(getOneTask.fulfilled, (state, action) => {
                 state.selectedTaskData = action.payload;
-                // console.log(action.payload)
-            })
-            
-            ;
+            });
     },
 });
 

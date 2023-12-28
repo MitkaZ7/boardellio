@@ -25,7 +25,7 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, taskId, status },
     //
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.TASK_CARD,
-    item: { taskId },
+    item: { taskId, status },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -35,7 +35,7 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, taskId, status },
   return (
 
       <li 
-      className="task-item" 
+      className={`task-item ${isDragging ? 'dragging' : ''}`}
       onClick={openTaskPopupHandler} 
       ref={(element) => {
         ref(element);

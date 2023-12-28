@@ -3,7 +3,11 @@
   margin-bottom: 10px;
   border: 1px solid var(--additional-border-clr);
   border-radius: 5px;
-
+  &.dragging {
+ 
+      opacity: 0.5;
+      border-color: var(--inactive-btn-clr);
+    }
   &__link {
       flex-flow: column wrap;
       // margin-left: 10px;

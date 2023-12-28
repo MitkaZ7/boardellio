@@ -2,7 +2,14 @@
     list-style: none;
     color: #fff;
     padding: 0;
-
+    height: 45vh;
     margin: 5px 5px 0px 3px;
+    box-sizing: border-box;
+    
 
+    &.drag-over {
+ 
+
+        }
 }
+

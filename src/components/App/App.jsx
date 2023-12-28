@@ -68,10 +68,15 @@ function App() {
             </RequireAuth>
           } />
           <Route path="/projects/:projectTitle" element={
+          
+              <Project />
+           
+          } />
+          {/* <Route path="/projects/:projectTitle" element={
             <RequireAuth>
               <Project />
             </RequireAuth>
-          } />
+          } /> */}
           <Route path="/projects/:projectTitle/:taskId" element={
             <RequireAuth>
               <TaskPopup />

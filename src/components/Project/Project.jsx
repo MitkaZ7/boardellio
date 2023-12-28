@@ -5,32 +5,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
 import { getTasks, updateTaskStatus, getOneTask} from '../../store/slices/tasksSlice';
 import { selectProject } from '../../store/slices/projectSlice';
-import { DndProvider,useDrop } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskPopup from '../TaskPopup/TaskPopup';
-import { itemTypes } from '../../utils/constants';
+
 import { useTranslation } from 'react-i18next';
+
 const Project = () => {
   const { projectId, projectName } = useSelector(state => state.projects.selectedProject);
   const activePopup = useSelector(state => state.popup.activePopup);
-  // const { selectedTaskId } = useSelector(state => state.popup);
-  // const { activeTaskId, selectedTaskStatus } = useSelector(state => state.tasks);
+  const { tasks } = useSelector((state) => state.tasks);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const openAddTaskPopupHandler = () => {
     openCustomPopup(dispatch, 'AddTaskPopup');
   };
-  const openTaskPopupHandler = () => {
-    // console.log(selectedTaskId)
-    // dispatch(getOneTask(selectedTaskId))
-    // const popupData = { taskPopupData: 'someValue' };
 
+  const openTaskPopupHandler = () => {
     openCustomPopup(dispatch, 'TaskPopup');
   };
 
 
+
   useEffect(() => {
+    console.log('useEffect in Project component is called');
     if (!projectId) {
       const storedSelectedProject = localStorage.getItem('selectedProject');
       if (storedSelectedProject) {
@@ -40,29 +39,13 @@ const Project = () => {
     }
     dispatch(getTasks());
   }, [projectId, dispatch]);
-  
-  // const handleTaskDrop = (taskId, newStatus) => {
-  //   dispatch(updateTaskStatus({ taskId, previousStatus: selectedTaskStatus, newStatus }));
-  // };
 
-  // const [, queueDrop] = useDrop({
-  //   accept: itemTypes.TASK,
-  //   drop: (item) => handleTaskDrop(item.id, 'queue'), // Перетаскивание в секцию "queue"
-  // });
-
-  // const [, devDrop] = useDrop({
-  //   accept: itemTypes.TASK,
-  //   drop: (item) => handleTaskDrop(item.id, 'dev'), // Перетаскивание в секцию "dev"
-  // });
-
-  // const [, doneDrop] = useDrop({
-  //   accept: itemTypes.TASK,
-  //   drop: (item) => handleTaskDrop(item.id, 'done'), // Перетаскивание в секцию "done"
-  // });
-  
+  useEffect(() => {
+    console.log('Tasks in Redux Store updated:', tasks);
+  }, [tasks]);  
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <>
       <article className='project'>
         <div className='project__header'>
           <h3 className='project__title'>{projectName}</h3>
@@ -85,10 +68,9 @@ const Project = () => {
           </section>
         </section>
       </article>
-      {/* {selectedTaskId && <TaskPopup taskId={selectedTaskId} />} */}
       {activePopup === 'AddTaskPopup' && <AddTaskPopup />}
       {activePopup === 'TaskPopup' && <TaskPopup />}
-    </DndProvider>
+    </>
   );
 };
 

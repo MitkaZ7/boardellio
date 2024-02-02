@@ -27,10 +27,12 @@ const Header = () => {
       <Link to='/'>
         <img src={theme === 'dark' ? logo : logoMonochrome} className='header__logo'></img>
       </Link>
-      
-      <Link to='/'>
-        <h3 className='header__title'>{t('project-title')}</h3>
-      </Link>
+      <div className="header__title-wrapper">
+        <Link to='/'>
+          <h3 className='header__title'>{t('project-title')}</h3>
+        </Link>
+      </div>
+     
     
       <Navbar />
       <MenuToggler onClick={handleToggleMenu} isMenuOpen={isMenuOpen} />

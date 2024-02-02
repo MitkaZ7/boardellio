@@ -47,7 +47,7 @@ const TaskList = ({ onClick, taskStatus }) => {
 }, [dispatch, tasks, taskStatus]);
 
 useEffect(() => {
-  console.log('Tasks updated:', tasks);
+  // console.log('Tasks updated:', tasks);
 }, [tasks, taskStatus, filteredTasks]);
 
   return (

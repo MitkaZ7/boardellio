@@ -20,8 +20,8 @@
     &__container {
         max-width: 600px;
         width: 100%;
-        background-color: var(--font-clr);
-        color: var(--bg-clr);
+        background-color: var(--popup-bg-clr);
+        color: var(--font-clr-invert);
         border-radius: 5px;
         margin: 0 auto;
         padding-bottom: 20px;

@@ -7,6 +7,7 @@ import loaderSlice from './slices/loaderSlice';
 import sideMenuSlice from './slices/sideMenuSlice';
 import userSlice from './slices/userSlice';
 import themeSlice from './slices/themeSlice';
+import projectsMenuSlice from './slices/projectsMenuSlice';
 import errorTransformMiddleware from './middlewares/errorTransformMiddleware';
 import localStorageMiddleware from './middlewares/localStorageMiddleware';
 import rejectionMiddleware from './middlewares/rejectionMiddleware'
@@ -15,6 +16,7 @@ export default configureStore ({
         tasks: tasksSlice,
         popup: popupSlice,
         projects: projectSlice,
+        projectsMenu: projectsMenuSlice,
         loader: loaderSlice,
         sideMenu: sideMenuSlice,
         user: userSlice,

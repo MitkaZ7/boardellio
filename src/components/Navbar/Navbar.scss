@@ -104,18 +104,12 @@
     text-decoration: none;
     font-size: 1.4em;
     color: var(--additional-color);
-  }
-  &__link:hover {
-    color: var(--additional-color);
-    text-decoration: underline;
+    @include link-hover;
   }
   &__link:visited {
     color: var(--additional-color);
     
   }
-    &__link:hover:visited {
-      color: var(--additional-color);
-    }
   &_state_active {
     // align-self: center;
     // position: absolute;

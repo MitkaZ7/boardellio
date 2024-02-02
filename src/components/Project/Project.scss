@@ -18,6 +18,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 50px;
+   position: relative;
   }
 
   &__content {
@@ -69,10 +71,11 @@
   &__title {
     font-size: 1.5em;
     text-align: center;
-    max-height: 50px;
+    
     // grid-column: 1 / -1;
-    margin: 20px 0;
-
+    margin: 20px 0; 
+    position: relative;
+    @include link-hover;
   }
   &__tasks-section {
     border: 2px solid var(--border-clr);

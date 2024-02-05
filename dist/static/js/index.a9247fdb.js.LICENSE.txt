@@ -1,0 +1,537 @@
+/*! ./middlewares/rejectionMiddleware */
+
+/*! @reduxjs/toolkit */
+
+/*! ./middlewares/localStorageMiddleware */
+
+/*! react */
+
+/*! core-js/modules/esnext.json.parse.js */
+
+/*! ../../store/slices/tasksSlice */
+
+/*! react-i18next */
+
+/*! ../Project/Project */
+
+/*! react-router-dom */
+
+/*! ../AddTaskPopup/AddTaskPopup */
+
+/*! ../locales/ru/translation.json */
+
+/*! ../../store/slices/themeSlice */
+
+/*! react */
+
+/*! react-i18next */
+
+/*! ../NotFound/NotFound */
+
+/*! core-js/modules/es.array.push.js */
+
+/*! ./slices/loaderSlice */
+
+/*! react-i18next */
+
+/*! ../../store/slices/sideMenuSlice */
+
+/*! @reduxjs/toolkit */
+
+/*! react-hook-form */
+
+/*! core-js/modules/esnext.async-iterator.map.js */
+
+/*! react-redux */
+
+/*! core-js/modules/esnext.async-iterator.for-each.js */
+
+/*! react/jsx-runtime */
+
+/*! react */
+
+/*! ../../store/slices/projectsMenuSlice */
+
+/*! core-js/modules/esnext.json.parse.js */
+
+/*! react/jsx-runtime */
+
+/*! react */
+
+/*! react */
+
+/*! react-redux */
+
+/*! ../../store/slices/tasksSlice */
+
+/*! react/jsx-runtime */
+
+/*! react */
+
+/*! react */
+
+/*! ../../utils/validation */
+
+/*! react */
+
+/*! @hookform/resolvers/joi */
+
+/*! core-js/modules/web.dom-collections.iterator.js */
+
+/*! ../Loader/Loader */
+
+/*! ./slices/projectSlice */
+
+/*! ../Registration/Registration */
+
+/*! react */
+
+/*! react/jsx-runtime */
+
+/*! ../../store/slices/projectSlice */
+
+/*! react-router-dom */
+
+/*! gsap/ScrollTrigger */
+
+/*! react/jsx-runtime */
+
+/*! ../../store/slices/userSlice */
+
+/*! @reduxjs/toolkit */
+
+/*! i18next-http-backend */
+
+/*! react/jsx-runtime */
+
+/*! ./slices/tasksSlice */
+
+/*! ../../utils/constants */
+
+/*! core-js/modules/esnext.json.parse.js */
+
+/*! ../Login/Login */
+
+/*! react-redux */
+
+/*! ../Layout */
+
+/*! react */
+
+/*! @reduxjs/toolkit */
+
+/*! core-js/modules/web.dom-collections.iterator.js */
+
+/*! ./slices/themeSlice */
+
+/*! react */
+
+/*! react/jsx-runtime */
+
+/*! react-redux */
+
+/*! react-redux */
+
+/*! ../../store/slices/popupSlice */
+
+/*! ./store/store */
+
+/*! react/jsx-runtime */
+
+/*! react/jsx-runtime */
+
+/*! ../AddProjectPopup/AddProjectPopup */
+
+/*! ../ProjectCard/ProjectCard */
+
+/*! react */
+
+/*! react-i18next */
+
+/*! core-js/modules/esnext.iterator.map.js */
+
+/*! react-redux */
+
+/*! ../../store/slices/popupSlice */
+
+/*! react-hook-form */
+
+/*! react-redux */
+
+/*! gsap/CSSPlugin */
+
+/*! ../Hint/Hint.jsx */
+
+/*! react/jsx-runtime */
+
+/*! react-dom/client */
+
+/*! ../../store/slices/popupSlice */
+
+/*! core-js/modules/web.dom-collections.iterator.js */
+
+/*! react/jsx-runtime */
+
+/*! axios */
+
+/*! ../SearchForm/SearchForm */
+
+/*! ../Task/Task */
+
+/*! react/jsx-runtime */
+
+/*! ../ProjectsList/ProjectsList */
+
+/*! ../../utils/constants */
+
+/*! ../../store/slices/tasksSlice */
+
+/*! core-js/modules/esnext.json.parse.js */
+
+/*! core-js/modules/esnext.async-iterator.map.js */
+
+/*! react */
+
+/*! core-js/modules/esnext.iterator.filter.js */
+
+/*! react */
+
+/*! react-i18next */
+
+/*! react/jsx-runtime */
+
+/*! ./slices/projectsMenuSlice */
+
+/*! react/jsx-runtime */
+
+/*! ../../store/slices/projectSlice */
+
+/*! core-js/modules/esnext.iterator.for-each.js */
+
+/*! react */
+
+/*! ../slices/userSlice */
+
+/*! ../TaskPopup/TaskPopup */
+
+/*! react */
+
+/*! react-dnd */
+
+/*! react/jsx-runtime */
+
+/*! react-router-dom */
+
+/*! react */
+
+/*! ../locales/zh/translation.json */
+
+/*! react-router-dom */
+
+/*! ./components/App/App.jsx */
+
+/*! react-i18next */
+
+/*! @reduxjs/toolkit */
+
+/*! ../../utils/animations */
+
+/*! ../../store/slices/sideMenuSlice */
+
+/*! react-i18next */
+
+/*! react/jsx-runtime */
+
+/*! ../Task/Task */
+
+/*! react */
+
+/*! react/jsx-runtime */
+
+/*! react-hook-form */
+
+/*! ../Form/Form */
+
+/*! react/jsx-runtime */
+
+/*! react */
+
+/*! ./utils/i18n.js */
+
+/*! react-router-dom */
+
+/*! react */
+
+/*! ../LangSelect/LangSelect */
+
+/*! ../../utils/api */
+
+/*! react-redux */
+
+/*! @reduxjs/toolkit */
+
+/*! react-redux */
+
+/*! ../../utils/api */
+
+/*! ../../assets/icons/logo-monochrome.svg */
+
+/*! ../../store/slices/tasksSlice */
+
+/*! react-router-dom */
+
+/*! core-js/modules/web.dom-collections.iterator.js */
+
+/*! ../../store/slices/popupSlice */
+
+/*! @reduxjs/toolkit */
+
+/*! ../EntryForm/EntryForm */
+
+/*! react */
+
+/*! gsap/TextPlugin */
+
+/*! react-router-dom */
+
+/*! ../../utils/authApi */
+
+/*! react */
+
+/*! react-router-dom */
+
+/*! react-i18next */
+
+/*! core-js/modules/esnext.async-iterator.filter.js */
+
+/*! ./scss/index.scss */
+
+/*! react-i18next */
+
+/*! react/jsx-runtime */
+
+/*! ./slices/userSlice */
+
+/*! ../locales/en/translation.json */
+
+/*! react */
+
+/*! ../../store/slices/userSlice */
+
+/*! react/jsx-runtime */
+
+/*! ./slices/sideMenuSlice */
+
+/*! ../../store/slices/popupSlice */
+
+/*! react-router-dom */
+
+/*! ./loaderSlice */
+
+/*! react/jsx-runtime */
+
+/*! react-redux */
+
+/*! ../FadeInAnimtion/FadeInAnimation */
+
+/*! axios */
+
+/*! react-router-dom */
+
+/*! core-js/modules/web.dom-collections.iterator.js */
+
+/*! react */
+
+/*! ../../store/slices/projectSlice */
+
+/*! @reduxjs/toolkit */
+
+/*! react */
+
+/*! react/jsx-runtime */
+
+/*! ../Popup/Popup */
+
+/*! ./Header/Header */
+
+/*! react */
+
+/*! ../Popup/Popup */
+
+/*! react-redux */
+
+/*! react-redux */
+
+/*! ../Popup/Popup */
+
+/*! react-dnd-html5-backend */
+
+/*! core-js/modules/esnext.iterator.map.js */
+
+/*! ../../store/slices/tasksSlice */
+
+/*! ../../store/slices/popupSlice */
+
+/*! ./Footer/Footer */
+
+/*! react/jsx-runtime */
+
+/*! ../OptionsPanel/OptionsPanel */
+
+/*! react-i18next */
+
+/*! react-redux */
+
+/*! ../intro/Intro */
+
+/*! react/jsx-runtime */
+
+/*! ../../store/slices/tasksSlice */
+
+/*! core-js/modules/esnext.iterator.map.js */
+
+/*! ../../store/slices/popupSlice */
+
+/*! ../UserProfile/UserProfile */
+
+/*! ./slices/popupSlice */
+
+/*! ./loaderSlice */
+
+/*! ../../store/slices/popupSlice */
+
+/*! react/jsx-runtime */
+
+/*! ../../utils/animations.js */
+
+/*! joi */
+
+/*! ../Tooltip/Tooltip */
+
+/*! react */
+
+/*! react */
+
+/*! gsap */
+
+/*! ../../utils/animations */
+
+/*! core-js/modules/web.dom-collections.iterator.js */
+
+/*! ../../assets/icons/upload.svg */
+
+/*! react */
+
+/*! react-redux */
+
+/*! react-redux */
+
+/*! react-redux */
+
+/*! core-js/modules/esnext.async-iterator.map.js */
+
+/*! core-js/modules/es.array.push.js */
+
+/*! ../../store/slices/projectSlice */
+
+/*! i18next */
+
+/*! ../EntryForm/EntryForm */
+
+/*! react/jsx-runtime */
+
+/*! core-js/modules/esnext.iterator.constructor.js */
+
+/*! ../MenuToggler/MenuToggler */
+
+/*! react */
+
+/*! core-js/modules/web.dom-collections.iterator.js */
+
+/*! react-redux */
+
+/*! core-js/modules/esnext.async-iterator.map.js */
+
+/*! react */
+
+/*! ../../utils/validation */
+
+/*! react/jsx-runtime */
+
+/*! react-dnd */
+
+/*! react-i18next */
+
+/*! core-js/modules/esnext.iterator.map.js */
+
+/*! ../../store/slices/projectSlice */
+
+/*! ../hoc/RequireAuth */
+
+/*! react-redux */
+
+/*! @reduxjs/toolkit */
+
+/*! ../Unauthorized/Unauthorized */
+
+/*! gsap */
+
+/*! react-redux */
+
+/*! core-js/modules/esnext.iterator.map.js */
+
+/*! react/jsx-runtime */
+
+/*! react/jsx-runtime */
+
+/*! ../TaskList/TaskList */
+
+/*! react-router-dom */
+
+/*! react */
+
+/*! react-router-dom */
+
+/*! react/jsx-runtime */
+
+/*! ../../assets/icons/upload.svg */
+
+/*! react/jsx-runtime */
+
+/*! react/jsx-runtime */
+
+/*! react-router-dom */
+
+/*! ../../data/technologies.json */
+
+/*! react */
+
+/*! ../Navbar/Navbar */
+
+/*! ../../store/slices/userSlice */
+
+/*! react/jsx-runtime */
+
+/*! ../../assets/icons/logo.svg */
+
+/*! react */
+
+/*! ../../store/slices/userSlice */
+
+/*! core-js/modules/esnext.async-iterator.map.js */
+
+/*! ../TaskCard/TaskCard */
+
+/*! core-js/modules/esnext.iterator.map.js */
+
+/*! core-js/modules/web.dom-collections.iterator.js */
+
+/*! core-js/modules/web.dom-collections.iterator.js */
+
+/*! react/jsx-runtime */
+
+/*! core-js/modules/esnext.async-iterator.map.js */
+
+/*! ../ThemeSwitcher/ThemeSwitcher */
+
+/*! react-dnd */

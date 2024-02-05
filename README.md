@@ -10,6 +10,7 @@
 ![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 + **React 18**
++ **Rsbuild**
 + **React router dom 6** 
 + **React hook form**  
 + **React DnD**
@@ -37,5 +38,5 @@
 
 #### `npm run build`
 
-Осуществляет сборку приложения в папке `build`, но пока на стадии разработки не используется, не работает.
+Осуществляет сборку приложения в папке `dist`,
 

@@ -11,4 +11,9 @@ export default defineConfig({
     source: {
         define: publicVars,
     },
+    html: {
+        title: 'Boardellio',
+        favicon: './src/assets/icons/logo-monochrome.svg',
+    },
+    
 });

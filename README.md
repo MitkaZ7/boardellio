@@ -34,7 +34,7 @@
 ### Доступные скрипты:
 #### `npm start`
 Запускает приложение в режиме разработки (development mode) на 3000 порту.
-Откройте [http://localhost:3000](http://localhost:3000) для просмотра в браузере.
+Откройте [http://localhost:8080](http://localhost:8080) для просмотра в браузере.
 
 #### `npm run build`
 

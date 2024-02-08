@@ -44,7 +44,7 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, taskId, status },
       // ref={drag}
       >
         <a href={link} className="task-item__link">
-          <span className="task-item__title">{title}</span>
+          <span className="task-item__title" title={title}>{title}</span>
           <span className="task-item__priotiry">{priority}</span>
         </a>
       </li>

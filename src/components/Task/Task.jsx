@@ -21,15 +21,15 @@ const Task = ({ taskId }) => {
   return (
     <li className='task'>
       <article className='task__content'>
-        <h3 className='task__header'>
-          <span className='task__metadata-item task__number'>№ {number}: </span>
-          {title}
+        <header className='task__header'>
+          <span className='task__metadata-item task__number'>№ {number}: 2213 </span>
+          <h3>{title}</h3>
           <div className='task__metadata-parametres'>
             <span className='task__metadata-item task__priority'>&nbsp;proirity: {priority}</span>
 
             <span className='task__metadata-item task__status'>&nbsp;status: {status}</span>
           </div>
-        </h3>
+        </header>
         <section className='task__metadata-block metadata-block'>
           <div className='task__metadata-dates'>
             <span className='task__metadata-item task__creation-date'>Created: 27-11-2022&nbsp;</span>

@@ -9,6 +9,7 @@ import { hideLoader, showLoader } from './loaderSlice';
 //     authApi.checkToken(token)
 //   }
 // }
+
 export const createUser = createAsyncThunk(
   'user/createUser',
   async (regData, { rejectWithValue, dispatch}) => {
@@ -30,10 +31,10 @@ export const authorizeUser = createAsyncThunk(
     const { email, password } = authData;
     try {
       const userData = await authApi.authorize(authData);
-      console.log('User authorized successfully');
-      dispatch(setUser(userData.data));
-
-      console.log(userData.data);
+      // console.log('User authorized successfully');
+      dispatch(setAuthorizationStatus(true));
+      await dispatch(setUser(userData.data));
+      // console.log(userData.data);
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         // Обработка ошибки от сервера
@@ -54,10 +55,11 @@ export const authorizeUser = createAsyncThunk(
     }
   }
 );
-
-
-
-const initialState = {
+const userDataFromLocalStorage = localStorage.getItem('userData');
+// if (userDataFromLocalStorage) {
+//     initialState = JSON.parse(userDataFromLocalStorage);
+// }
+const initialState = (userDataFromLocalStorage) ? JSON.parse(userDataFromLocalStorage) : {
   // email: null,
   // name: null,
   user: {
@@ -73,18 +75,35 @@ const initialState = {
   isAuthorized: false,
   error: null,
 }
+
+// const initialState = {
+//   // email: null,
+//   // name: null,
+//   user: {
+//     email: '',
+//     name: '',
+//     role: 'user',
+//     avatar: null,
+//   },
+//   // accessToken: null,
+//   // idToken: null,
+//   refreshToken: null,
+//   // userId: null,
+//   isAuthorized: false,
+//   error: null,
+// }
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser(state, action) {
+      console.log(action.payload)
       state.user = action.payload;
       // const {email, idToken, localId} = action.payload;
       // state.user.email = email;
       // state.idToken = idToken;
       // localStorage.setItem('idToken', idToken);
       // state.userId = localId;
- 
       
     },
     setAuthorizationStatus(state, action) {
@@ -112,6 +131,7 @@ export const userSlice = createSlice({
       })
       .addCase(authorizeUser.fulfilled, (state, action) => {
         state.isAuthorized = true; 
+        
       })
       .addCase(createUser.rejected, (state,action) => {
         state.error = action.payload;

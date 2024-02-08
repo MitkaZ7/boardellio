@@ -1,5 +1,5 @@
 .langSelect {
-    max-width: 40px;
+    min-width: 45px;
     max-height: 20px;
     @include round-borders;
     background-color: var(--bg-clr);

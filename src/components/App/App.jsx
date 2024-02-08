@@ -36,7 +36,8 @@ function App() {
     if (userData) {
       const { user } = JSON.parse(userData);
       if (user.idToken) {
-        dispatch(setAuthorizationStatus(true));
+        console.log(user.idToken)
+        // dispatch(setAuthorizationStatus(true));
         dispatch(setUser(user))
       }
     }
@@ -62,7 +63,7 @@ function App() {
               <UserProfile />
             </RequireAuth>
           } />
-          <Route path="/projects/" element={
+          <Route path="/projects" element={
             <RequireAuth>
               <ProjectsList />
             </RequireAuth>

@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openMenu, closeMenu } from '../../store/slices/sideMenuSlice'
 
 const Header = () => {
+  const { isAuthorized } = useSelector(state => state.user);
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state) => state.sideMenu)
   const { t } = useTranslation();
@@ -24,11 +25,11 @@ const Header = () => {
   
   return (
     <header className='header'>
-      <Link to='/'>
+      <Link to={`${!isAuthorized ? '/' : '/projects'}`}>
         <img src={theme === 'dark' ? logo : logoMonochrome} className='header__logo'></img>
       </Link>
       <div className="header__title-wrapper">
-        <Link to='/'>
+        <Link to={`${!isAuthorized ? '/' : '/projects'}`}>
           <h3 className='header__title'>{t('project-title')}</h3>
         </Link>
       </div>

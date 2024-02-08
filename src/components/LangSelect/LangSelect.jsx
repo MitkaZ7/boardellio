@@ -13,7 +13,12 @@ const LangSelect = () => {
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem('i18nextLng');
-    setSelectedLang(savedLanguage);
+    if (savedLanguage) {
+      setSelectedLang(savedLanguage);
+    } else {
+      setSelectedLang('en');
+    }
+    
   }, []);
 
   return (

@@ -76,6 +76,7 @@
     }
 
     &__button-submit {
+        @include button-add;
         // max-width: 200px;
         width: 100%;
         height: 40px;

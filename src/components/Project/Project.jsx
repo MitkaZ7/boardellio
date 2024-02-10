@@ -54,15 +54,15 @@ const Project = () => {
       }
     }
     dispatch(getTasks());
-    console.log(isProjectsMenuOpen)
+    // console.log(isProjectsMenuOpen)
   }, [projectId, dispatch]);
 
   // useEffect(() => {
   //   console.log('Tasks in Redux Store updated:', tasks);
   // }, [tasks]);
-  useEffect(() => {
-    console.log('Projects in Redux Store: ', projects);
-  }, []);  
+  // useEffect(() => {
+  //   console.log('Projects in Redux Store: ', projects);
+  // }, []);  
   const closeProjectSearchMenu = (evt) => {
     if (evt.target === evt.currentTarget) {
       console.log('clilll')

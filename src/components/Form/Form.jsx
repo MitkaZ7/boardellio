@@ -4,11 +4,22 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { closePopup } from '../../store/slices/popupSlice';
 import { createTask } from '../../store/slices/tasksSlice';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 
-const Form = ({ projects }) => {
+const Form = ({ projects, validationSchema }) => {
     const dispatch = useDispatch();
-    const { register, handleSubmit, reset } = useForm();
+    const { register,
+        handleSubmit,
+        reset,
+        formState: {
+            errors,
+            isValid,
+        }
+    } = useForm({
+        mode: 'all',
+        resolver: joiResolver(validationSchema),
+    }); 
     const {selectedProject}= useSelector(state => state.projects)
     console.log(selectedProject.projectName)
     const [reselectedProject, setReselectedProject] = useState(null);
@@ -49,12 +60,12 @@ const Form = ({ projects }) => {
                         </option>
                     ))}
                 </select>
-                <select className="form__select" {...register('priority')} >
+                {/* <select className="form__select" {...register('priority')} >
                     <option value="usual">Assign priority</option>
                     <option value="usual">usual</option>
                     <option value="seriously">seriously</option>
                     <option value="critical">critical</option>
-                </select>
+                </select> */}
             </fieldset>
             <textarea
                 className="form__text-area"
@@ -62,7 +73,7 @@ const Form = ({ projects }) => {
                 placeholder="Add task text"
                 spellCheck="true"
             ></textarea>
-            <div className="form__file-wrapper">
+            {/* <div className="form__file-wrapper">
                 <label className="form__input-label" htmlFor="file">
                     <span className="form__input-icon-wrapper">
                         <img className="popup__form-load-icon" src={Upload} alt="select files"></img>
@@ -70,8 +81,8 @@ const Form = ({ projects }) => {
                     <span className="form__input-file-text">Upload files...</span>
                 </label>
                 <input className="form__input-file" id="file" name="file" type="file" multiple />
-            </div>
-            <button type="submit" className="form__button-submit button">
+            </div> */}
+            <button type="submit" className="form__button-submit button" disabled={!isValid}>
                 Add
             </button>
         </form>

@@ -42,8 +42,13 @@
     "user-greeting": "Привет!",
     "exit-btn": "выйти",
     "user-profile-link": "профиль",
-    "log-in": "Войти",
-    "sign-up": "Зарегистрироваться"
+    "log-in": "Вход",
+    "sign-up": "Регистрация",
+    "already-registred": "Уже зарегистрированы?",
+    "not-registred": "Еще не регистрировались?",
+    "email": "почта",
+    "password": "пароль",
+    "confirm-password": "подтверждение пароля"
 
 
 }

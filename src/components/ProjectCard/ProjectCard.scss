@@ -7,13 +7,18 @@
     min-height: 50px;
     height: 50%;
     text-align: center;
-   
+    box-sizing: border-box;
     &__link {
         color: var(--accent-clr);
         width: 100%;
+            // overflow: hidden;
+            //     white-space: nowrap;
+            //     text-overflow: ellipsis;
         text-decoration: none;
         text-transform: uppercase;
         margin: 0 auto;
+        padding: 10px;
+        
         &:visited {
             color: var(--accent-clr);
         }

@@ -6,6 +6,7 @@ import { fadeInAnimation } from '../../utils/animations'
 import { createUser, authorizeUser } from '../../store/slices/userSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next'
 
 
 import Popup from '../Popup/Popup';
@@ -16,6 +17,8 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
     const { error } = useSelector((state) => state.user);
     const formRef = useRef();
     const navigate = useNavigate();
+    const { t } = useTranslation();
+
     const { register, 
         handleSubmit,
         reset,
@@ -86,7 +89,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                         <label
                             className='entryForm__label'
                             htmlFor='email'>
-                            email
+                            {t('email')}
                         </label>
                         <div className='entryForm__input-error'>
                             {errors?.email && <span>{errors.email.message}</span>}
@@ -103,7 +106,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                         <label
                             className='entryForm__label'
                             htmlFor='password'>
-                            password
+                            {t('password')}
                         </label>
                         <div className='entryForm__input-error'>
                             {errors?.password && <span>{errors.password.message}</span>}
@@ -124,7 +127,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                             <label
                                 className='entryForm__label'
                                 htmlFor='confirmpassword'>
-                                confirm password
+                                {t('confirm-password')}
                             </label>
                             <div className='entryForm__input-error'>
                             {errors?.confirmPassword && <span>{errors.confirmPassword.message}</span>}

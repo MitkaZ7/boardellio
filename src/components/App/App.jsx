@@ -36,7 +36,7 @@ function App() {
     if (userData) {
       const { user } = JSON.parse(userData);
       if (user.idToken) {
-        console.log(user.idToken)
+        // console.log(user.idToken)
         // dispatch(setAuthorizationStatus(true));
         dispatch(setUser(user))
       }

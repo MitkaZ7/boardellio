@@ -43,6 +43,11 @@
     "exit-btn": "exit",
     "user-profile-link": "profile",
     "log-in": "Log in",
-    "sign-up": "Sign up"
+    "sign-up": "Sign up",
+    "already-registred": "Already registred?",
+    "not-registred": "Don't have an account?",
+    "email": "email",
+    "password": "password",
+    "confirm-password":"confirm password"
 
 }

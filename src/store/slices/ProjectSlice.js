@@ -61,6 +61,7 @@ export const createProject = createAsyncThunk(
         const { dispatch, rejectWithValue } = thunkAPI;
         dispatch(showLoader());
         try {
+            console.log(data)
             await api.createProject(data);
             dispatch(hideLoader());
         } catch (error) {

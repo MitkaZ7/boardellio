@@ -7,12 +7,13 @@ import { openPopup, closePopup, openTaskPopup, closeTaskPopup, popupReducer } fr
 import { createProject } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
 import { getProjects } from '../../store/slices/projectSlice';
+import { joiResolver } from '@hookform/resolvers/joi';
 // import { closePopup } from '../../store/slices/popupSlice';
-
+import { createProjectSchema } from '../../utils/validation.js'
 
 const AddProjectPopup = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ resolver: joiResolver(createProjectSchema)});
   // const navigate = useNavigate();
   const { isOpen, data } = useSelector((state) => state.popup.addProjectPopup);
 
@@ -32,8 +33,8 @@ const AddProjectPopup = () => {
     <Popup className="popup_place_addProjectPopup" isOpen={isOpen} onClose={closePopupHandler} resetForm={reset}>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <h3 className="form__title">New project</h3>
-        <input placeholder="Insert project title" {...register("title")} />
-        <button type="submit" className="form__button-submit button">Create new project</button>
+        <input placeholder="Insert project title" {...register('title')} id='project-title' type='text'/>
+        <button type="submit" className="form__button-submit button" disabled={!isValid}>Create new project</button>
       </form>
     </Popup>
   )

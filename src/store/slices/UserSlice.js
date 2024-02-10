@@ -97,7 +97,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
-      console.log(action.payload)
+      // console.log(action.payload)
       state.user = action.payload;
       // const {email, idToken, localId} = action.payload;
       // state.user.email = email;
@@ -135,7 +135,7 @@ export const userSlice = createSlice({
       })
       .addCase(createUser.rejected, (state,action) => {
         state.error = action.payload;
-        console.log(action.payload)
+        // console.log(action.payload)
       })
       .addCase(authorizeUser.rejected, (state, action) => {
         // state.error = action.payload;

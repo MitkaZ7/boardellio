@@ -4,7 +4,7 @@ import Form from '../Form/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { closePopup } from '../../store/slices/popupSlice';
 import { getProjects } from '../../store/slices/projectSlice';
-
+import { createTaskSchema } from '../../utils/validation';
 const AddTaskPopup = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.popup.isOpen);
@@ -26,12 +26,11 @@ const AddTaskPopup = () => {
     loadProjects();
   }, [isOpen, isProjectsLoaded, dispatch]);
 
-  if (!isOpen || !isProjectsLoaded) return null; // Рендер попапа только если isOpen === true и список проектов загружен
-
+  // Рендер попапа только если isOpen === true и список проектов загружен
+  if (!isOpen || !isProjectsLoaded) return null; 
   return (
     <Popup>
-      {/* Передаем список проектов в компонент Form */}
-      <Form projects={projects} />
+      <Form projects={projects} validationSchema={createTaskSchema}/>
     </Popup>
   );
 };

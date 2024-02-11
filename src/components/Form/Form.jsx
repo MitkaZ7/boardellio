@@ -23,8 +23,7 @@ const Form = ({ projects, validationSchema }) => {
         resolver: joiResolver(validationSchema),
     }); 
     const {selectedProject}= useSelector(state => state.projects)
-    console.log(selectedProject.projectName)
-    const [reselectedProject, setReselectedProject] = useState(null);
+    console.log(selectedProject)
     const onSubmit = async (data) => {
         dispatch(
             createTask({
@@ -50,11 +49,10 @@ const Form = ({ projects, validationSchema }) => {
                 <select 
                 className="form__select" 
                 {...register('project')} 
-                // onChange={(e) => setReselectedProject(e.target.value)} 
-                value={selectedProject.projectName}
+                    value={selectedProject.projectId}
                 >
                     
-                    {/* <option value="noNameProject">Select a project</option> */}
+                    <option value="noNameProject" selected>{selectedProject.projectName}</option>
                     {Object.entries(projects).map(([projectId, projectData]) => (
                         
                         <option key={projectId} value={projectId}>

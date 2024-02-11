@@ -28,6 +28,9 @@
     "menu-item-github": "my github",
     "menu-settings": "settings",
     "projects-page-title": "current projects",
+    "projects-form-add-title": "create project",
+    "projects-form-add-placeholder": "new project title...",
+    "projects-form-add-btn": "Create",
     "projects-page-add-btn": "create project",
     "project-page-add-btn": "add task",
     "project-page-queue-section-title": "queue",
@@ -48,6 +51,12 @@
     "not-registred": "Don't have an account?",
     "email": "email",
     "password": "password",
-    "confirm-password":"confirm password"
+    "confirm-password":"confirm password",
+    "add-task-form-title": "Add task",
+    "add-task-title-placeholder": "add task title",
+    "add-task-priority-select-placeholder": "Assign priority",
+    "add-task-text-placeholder": "Add task text",
+    "upload-files-placeholder": "Upload files....",
+    "add-task-btn": "Add"
 
 }

@@ -40,6 +40,17 @@
     "unauthorized-subtitle": "您无权访问所请求的页面。",
     "unauthorized-button": "回去授权",
     "log-in": "进入",
-    "sign-up": "登记册"
+    "sign-up": "登记册",
+    "already-registred": "已經註冊了？",
+    "not-registred": "沒有帳戶？",
+    "email": "電子郵件",
+    "password": "密碼",
+    "confirm-password": "確認密碼",
+    "add-task-form-title": "新增任務",
+    "add-task-title-placeholder": "任務標題",
+    "add-task-priority-select-placeholder": "優先事項",
+    "add-task-text-placeholder": "任務內容",
+    "upload-files-placeholder": "新增文件...",
+    "add-task-btn": "添加"
 
 }

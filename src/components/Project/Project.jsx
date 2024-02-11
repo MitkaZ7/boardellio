@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
 import { getTasks, updateTaskStatus, getOneTask} from '../../store/slices/tasksSlice';
 import { selectProject } from '../../store/slices/projectSlice';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { openProjectsMenu, closeProjectsMenu, setProjetcs } from '../../store/slices/projectsMenuSlice';
 import { useTranslation } from 'react-i18next';
@@ -46,8 +44,10 @@ const Project = () => {
 
 
   useEffect(() => {
+    console.log(projectId)
     if (!projectId) {
       const storedSelectedProject = localStorage.getItem('selectedProject');
+      
       if (storedSelectedProject) {
         const { projectId, projectName } = JSON.parse(storedSelectedProject);
         dispatch(selectProject({ projectId, projectName }));
@@ -82,7 +82,7 @@ const Project = () => {
           
           )}
           <button className='project__button-add-task' onClick={openAddTaskPopupHandler}>
-            add task
+            {t('add-task-form-title')}
           </button>
         </div>
         <section className='project__content'>

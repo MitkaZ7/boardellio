@@ -10,12 +10,14 @@ import { getProjects } from '../../store/slices/projectSlice';
 import { joiResolver } from '@hookform/resolvers/joi';
 // import { closePopup } from '../../store/slices/popupSlice';
 import { createProjectSchema } from '../../utils/validation.js'
+import { useTranslation } from 'react-i18next';
 
 const AddProjectPopup = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ resolver: joiResolver(createProjectSchema)});
   // const navigate = useNavigate();
   const { isOpen, data } = useSelector((state) => state.popup.addProjectPopup);
+  const { t } = useTranslation();
 
   const onSubmit = (formData) => {
     dispatch(createProject(formData))
@@ -32,9 +34,9 @@ const AddProjectPopup = () => {
   return (
     <Popup className="popup_place_addProjectPopup" isOpen={isOpen} onClose={closePopupHandler} resetForm={reset}>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
-        <h3 className="form__title">New project</h3>
-        <input placeholder="Insert project title" {...register('title')} id='project-title' type='text'/>
-        <button type="submit" className="form__button-submit button" disabled={!isValid}>Create new project</button>
+        <h3 className="form__title">{t('projects-form-add-title')}</h3>
+        <input placeholder={t('projects-form-add-placeholder')}{...register('title')} id='project-title' type='text'/>
+        <button type="submit" className="form__button-submit button" disabled={!isValid}>{t('projects-form-add-btn')}</button>
       </form>
     </Popup>
   )

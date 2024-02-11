@@ -11,7 +11,7 @@ const options = {
     taskProject: Joi.string().required(),
     taskText: Joi.string(),
     projectName: Joi.string().required(),
-
+    taskPriority: Joi.string(),
 
 }
 
@@ -32,6 +32,7 @@ export const createTaskSchema = Joi.object({
     title: options.taskTitle,
     project: options.taskProject,
     description: options.taskText,
+    priority: options.taskPriority,
 
 }).required();
 

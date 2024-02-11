@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closePopup } from '../../store/slices/popupSlice';
 import { createTask } from '../../store/slices/tasksSlice';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next'
 
 
 const Form = ({ projects, validationSchema }) => {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { register,
         handleSubmit,
@@ -41,9 +43,9 @@ const Form = ({ projects, validationSchema }) => {
 
     return (
         <form id="form" action="#" className="form" onSubmit={handleSubmit(onSubmit)}>
-            <h3 className="form__title">Add new task</h3>
+            <h3 className="form__title">{t('add-task-form-title')}</h3>
             <fieldset className="form__fieldset">
-                <input className="form__input" {...register('title')} placeholder="Add task title" />
+                <input className="form__input" {...register('title')} placeholder={t('add-task-title-placeholder')} />
 
                 <select 
                 className="form__select" 
@@ -60,30 +62,30 @@ const Form = ({ projects, validationSchema }) => {
                         </option>
                     ))}
                 </select>
-                {/* <select className="form__select" {...register('priority')} >
-                    <option value="usual">Assign priority</option>
+                <select className="form__select" {...register('priority')} >
+                    <option value="usual">{t('add-task-priority-select-placeholder')}</option>
                     <option value="usual">usual</option>
                     <option value="seriously">seriously</option>
                     <option value="critical">critical</option>
-                </select> */}
+                </select>
             </fieldset>
             <textarea
                 className="form__text-area"
                 {...register('description')}
-                placeholder="Add task text"
+                placeholder={t('add-task-text-placeholder')}
                 spellCheck="true"
             ></textarea>
-            {/* <div className="form__file-wrapper">
+            <div className="form__file-wrapper">
                 <label className="form__input-label" htmlFor="file">
                     <span className="form__input-icon-wrapper">
                         <img className="popup__form-load-icon" src={Upload} alt="select files"></img>
                     </span>
-                    <span className="form__input-file-text">Upload files...</span>
+                    <span className="form__input-file-text">{t('upload-files-placeholder')}</span>
                 </label>
                 <input className="form__input-file" id="file" name="file" type="file" multiple />
-            </div> */}
+            </div>
             <button type="submit" className="form__button-submit button" disabled={!isValid}>
-                Add
+                {t('add-task-btn')}
             </button>
         </form>
     );

@@ -6,7 +6,7 @@ import { closePopup } from '../../store/slices/popupSlice';
 import { createTask } from '../../store/slices/tasksSlice';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next'
-
+import { getTasks } from '../../store/slices/tasksSlice';
 
 const Form = ({ projects, validationSchema }) => {
     const { t } = useTranslation();
@@ -34,10 +34,10 @@ const Form = ({ projects, validationSchema }) => {
                 priority: data.priority,
                 projectId: selectedProject.projectId,
             })
-        );
-
-        dispatch(closePopup());
-        reset();
+        )
+            .then(() => dispatch(getTasks()))
+            .then(() => dispatch(closePopup()))
+            .then(() => reset());
     };
 
     return (

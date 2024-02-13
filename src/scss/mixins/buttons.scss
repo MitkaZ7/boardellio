@@ -2,30 +2,32 @@
     background-color: var(--bg-clr);
     color: var(--succes-clr);
     max-height: 30px;
-       
+
     outline: none;
     border-radius: 5px;
     border: 2px solid var(--succes-clr);
     text-transform: uppercase;
     font-weight: 700;
     margin-left: 10px;
-    transition: all .2s linear;
+
+    // transition: all .2s linear;
     &:hover:enabled {
         cursor: pointer;
-        background-color: var(--succes-clr);
-        border-color: var(--succes-clr);
-        color: var(--font-clr);
+        // background-color: var(--succes-clr);
+        // border-color: var(--succes-clr);
+        border: 2px solid var(--succes-clr);
+        color: var(--succes-clr);
     }
-    
-    &:focus {
 
-    }
+    &:focus {}
+
     &:active {
         color: green;
     }
+
     &:disabled {
-            color: var(--inactive-btn-clr);
-            border-color: var(--inactive-btn-clr);
+        color: var(--inactive-btn-clr);
+        border-color: var(--inactive-btn-clr);
     }
 }
 
@@ -39,7 +41,8 @@
     // text-transform: uppercase;
     font-weight: 700;
     transition: all .2s linear;
-    text-align: center; 
+    text-align: center;
+
     &:hover {
         cursor: pointer;
         // background-color: var(--succes-clr);

@@ -1,4 +1,4 @@
-{   
+{
     "project-title": "Boardellio",
     "intro-title": "- Одностраниченое приложение",
     "intro-subtitle": " - для управления проектами и задачами",
@@ -28,7 +28,10 @@
     "menu-item-github": "Репозиторий",
     "menu-settings": "настройки",
     "projects-page-title": "Текущие проекты",
-    "projects-page-add-btn": "создать проект",
+    "projects-page-add-btn": "добавить проект",
+    "projects-form-add-title": "Добавление проекта",
+    "projects-form-add-placeholder": "название проекта...",
+    "projects-form-add-btn": "добавить",
     "project-page-add-btn": "добавить задачу",
     "project-page-queue-section-title": "в очереди",
     "project-page-dev-section-title": "в работе",
@@ -42,8 +45,17 @@
     "user-greeting": "Привет!",
     "exit-btn": "выйти",
     "user-profile-link": "профиль",
-    "log-in": "Войти",
-    "sign-up": "Зарегистрироваться"
-
-
+    "log-in": "Вход",
+    "sign-up": "Регистрация",
+    "already-registred": "Уже зарегистрированы?",
+    "not-registred": "Еще не регистрировались?",
+    "email": "почта",
+    "password": "пароль",
+    "confirm-password": "подтверждение пароля",
+    "add-task-form-title": "Добавить задачу",
+    "add-task-title-placeholder": "название задачи",
+    "add-task-priority-select-placeholder": "Приоритет",
+    "add-task-text-placeholder": "описание задачи",
+    "upload-files-placeholder": "добавить файлы...",
+    "add-task-btn": "создать"
 }

@@ -36,7 +36,7 @@ function App() {
     if (userData) {
       const { user } = JSON.parse(userData);
       if (user.idToken) {
-        console.log(user.idToken)
+        // console.log(user.idToken)
         // dispatch(setAuthorizationStatus(true));
         dispatch(setUser(user))
       }
@@ -52,7 +52,7 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path='*' element={<NotFound/>}/>
+          <Route path='*' element={<NotFound />} />
           <Route index element={<Intro />} />
           <Route path='/login' element={<Login />} />
           <Route path='/registration' element={<Registration />} />
@@ -69,9 +69,9 @@ function App() {
             </RequireAuth>
           } />
           <Route path="/projects/:projectTitle" element={
-          
-              <Project />
-           
+
+            <Project />
+
           } />
           {/* <Route path="/projects/:projectTitle" element={
             <RequireAuth>
@@ -83,8 +83,8 @@ function App() {
               <TaskPopup />
             </RequireAuth>
           } />
-          
-  
+
+
         </Route>
       </Routes>
     </DndProvider>

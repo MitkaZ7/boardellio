@@ -11,27 +11,28 @@
   // grid-template-columns: repeat(auto-fill, minmax(min-content, 400px));
   // padding: 0 20px;
   // gap: 10px;
-  display: flex;
+  // display: flex;
 
-  flex-flow: column wrap;
+  // flex-flow: column wrap;
   &__header {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 50px;
-   position: relative;
+    position: relative;
   }
 
   &__content {
-    
+
     // overflow-y: scroll;
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(auto-fit, minmax(min-content, 375px));
     // grid-template-columns: repeat(3, minmax(min-content, 400px));
-      padding: 0 20px;
-      gap: 10px;
+    padding: 0 20px;
+    gap: 10px;
   }
+
   &__button-add-task {
     @include button-add;
     // background-color: var(--bg-clr);
@@ -68,42 +69,57 @@
     margin: 0;
 
   }
+
   &__title {
     font-size: 1.5em;
     text-align: center;
-    
+
     // grid-column: 1 / -1;
-    margin: 20px 0; 
+    margin: 20px 0;
     position: relative;
     @include link-hover;
   }
+
   &__tasks-section {
     border: 2px solid var(--border-clr);
     border-radius: 5px;
-    // min-height: 200px;
-   max-height: 50vh;
+    // max-height: 50vh;
+    box-sizing: border-box;
+    // overflow-y: ;
+
   }
+
+  &__task-section-content-wrap {
+
+    height: 50vh;
+    border: 6px dotted plum;
+    // overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
   &__tasks-section-header {
 
     margin: 0;
     padding: 5px;
-    border-bottom: 2px solid ;
+    border-bottom: 2px solid;
     text-align: center;
     font-weight: 700;
     text-transform: uppercase;
 
   }
+
   &__queue-tasks {
     @include task-section-colors(var(--queue-clr), var(--queue-clr));
   }
+
   &__dev-tasks {
     @include task-section-colors(var(--font-minor-clr), var(--font-minor-clr));
   }
+
   &__done-tasks {
     @include task-section-colors(var(--accent-clr), var(--accent-clr));
   }
 }
 
-@media screen and (max-width: 768px){
-  
-}
+@media screen and (max-width: 768px) {}

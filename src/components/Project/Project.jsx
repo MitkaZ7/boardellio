@@ -57,9 +57,6 @@ const Project = () => {
   }, [projectId, dispatch]);
 
   // useEffect(() => {
-  //   console.log('Tasks in Redux Store updated:', tasks);
-  // }, [tasks]);
-  // useEffect(() => {
   //   console.log('Projects in Redux Store: ', projects);
   // }, []);  
   const closeProjectSearchMenu = (evt) => {

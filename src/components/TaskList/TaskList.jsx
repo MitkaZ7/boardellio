@@ -8,6 +8,9 @@ import { openCustomPopup } from '../../store/slices/popupSlice';
 import { ItemTypes } from '../../utils/constants';
 
 const TaskList = ({ onClick, taskStatus }) => {
+  const { tasks } = useSelector((state) => state.tasks);
+  const filteredTasks = tasks[taskStatus] || [];
+  
   const refs = useRef({});
   const dispatch = useDispatch();
 
@@ -37,8 +40,7 @@ const TaskList = ({ onClick, taskStatus }) => {
     onClick();
   };
 
-  const { tasks } = useSelector((state) => state.tasks);
-  const filteredTasks = tasks[taskStatus] || [];
+ 
 
   useEffect(() => {
   if (!tasks[taskStatus]) {

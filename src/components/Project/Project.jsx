@@ -26,7 +26,6 @@ const Project = () => {
     openCustomPopup(dispatch, 'TaskPopup');
   };
   const handleProjectTitleClick = () => {
-    console.log('pr title clicked')
     if (!isProjectsMenuOpen) {
       // Если меню не открыто, обновите список проектов и откройте меню
       // dispatch(setProjects(/* ваш список проектов */));
@@ -87,16 +86,28 @@ const Project = () => {
         </div>
         <section className='project__content'>
           <section className='project__tasks-section project__queue-tasks'>
-            <h3 className='project__tasks-section-header'>{t('project-page-queue-section-title')}</h3>
-            <TaskList onClick={openTaskPopupHandler} taskStatus="queue" />
+            <div className="project__task-section-header-wrap">
+              <h3 className='project__tasks-section-header'>{t('project-page-queue-section-title')}</h3>
+            </div>
+            <div className="project__task-section-content-wrap">
+              <TaskList onClick={openTaskPopupHandler} taskStatus="queue" />
+            </div>
           </section>
           <section className='project__tasks-section project__dev-tasks'>
-            <h3 className='project__tasks-section-header'>{t('project-page-dev-section-title')}</h3>
-            <TaskList onClick={openTaskPopupHandler} taskStatus="dev" />
+            <div className="project__task-section-header-wrap">
+              <h3 className='project__tasks-section-header'>{t('project-page-dev-section-title')}</h3>
+            </div>
+            <div className="project__task-section-content-wrap">
+              <TaskList onClick={openTaskPopupHandler} taskStatus="dev" />
+            </div>
           </section>
           <section className='project__tasks-section project__done-tasks'>
-            <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')}</h3>
-            <TaskList onClick={openTaskPopupHandler} taskStatus="done" />
+            <div className="project__task-section-header-wrap">
+              <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')}</h3>
+            </div>
+            <div className="project__task-section-content-wrap">
+              <TaskList onClick={openTaskPopupHandler} taskStatus="done" />
+            </div>
           </section>
         </section>
       </article>

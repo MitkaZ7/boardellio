@@ -2,21 +2,27 @@
   padding: 0 20px;
   display: grid;
   grid-template-columns: 60px 1fr 40px;
-  align-items: center;
 
   border-bottom: 2px solid var(--accent-clr);
-  // justify-content: space-between;
+  justify-content: center;
   align-items: center;
   // min-height: 100px;
   // position: relative;
   &__logo {
     width:60px;
-
+    @include link-hover;
+  }
+  &__title-wrapper {
+    max-width: 150px;
+    
+    margin: 0 auto;
   }
   &__title {
     font-size: 1.5em;
     color: var(--accent-clr);
-    // text-transform: uppercase;
+    @include link-hover;
     text-align: center;
+   
+    
     }
 }

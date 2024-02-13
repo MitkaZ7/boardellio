@@ -8,6 +8,7 @@ import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import TaskPopup from '../Task/Task';
 import Intro from '../intro/Intro';
+import NotFound from '../NotFound/NotFound';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { setAuthorizationStatus, setUser } from '../../store/slices/userSlice'
@@ -35,7 +36,8 @@ function App() {
     if (userData) {
       const { user } = JSON.parse(userData);
       if (user.idToken) {
-        dispatch(setAuthorizationStatus(true));
+        console.log(user.idToken)
+        // dispatch(setAuthorizationStatus(true));
         dispatch(setUser(user))
       }
     }
@@ -50,6 +52,7 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path='*' element={<NotFound/>}/>
           <Route index element={<Intro />} />
           <Route path='/login' element={<Login />} />
           <Route path='/registration' element={<Registration />} />
@@ -60,16 +63,21 @@ function App() {
               <UserProfile />
             </RequireAuth>
           } />
-          <Route path="/projects/" element={
+          <Route path="/projects" element={
             <RequireAuth>
               <ProjectsList />
             </RequireAuth>
           } />
           <Route path="/projects/:projectTitle" element={
+          
+              <Project />
+           
+          } />
+          {/* <Route path="/projects/:projectTitle" element={
             <RequireAuth>
               <Project />
             </RequireAuth>
-          } />
+          } /> */}
           <Route path="/projects/:projectTitle/:taskId" element={
             <RequireAuth>
               <TaskPopup />

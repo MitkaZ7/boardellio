@@ -72,10 +72,11 @@ const Navbar = () => {
             {/* <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-project-tasks')}</Link></li> */}
           </>
         }
-        
+
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-contacts')}</Link></li>
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-github')}</Link></li>
-         
+        <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-changelog')}</Link></li>
+
         </ul>
       
         {isMenuOpen && <>

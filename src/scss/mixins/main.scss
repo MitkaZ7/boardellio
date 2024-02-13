@@ -11,3 +11,9 @@
 @mixin small-shadow() {
   box-shadow: 0px 0px 6px 0px rgba(34, 60, 80, 0.2);
 }
+
+@mixin section() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

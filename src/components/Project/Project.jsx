@@ -5,28 +5,43 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
 import { getTasks, updateTaskStatus, getOneTask} from '../../store/slices/tasksSlice';
 import { selectProject } from '../../store/slices/projectSlice';
-import { DndProvider,useDrop } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskPopup from '../TaskPopup/TaskPopup';
-import { itemTypes } from '../../utils/constants';
+import { openProjectsMenu, closeProjectsMenu, setProjetcs } from '../../store/slices/projectsMenuSlice';
 import { useTranslation } from 'react-i18next';
+import SearchForm from '../SearchForm/SearchForm';
 const Project = () => {
   const { projectId, projectName } = useSelector(state => state.projects.selectedProject);
+  const { projects } = useSelector(state => state.projects);
   const activePopup = useSelector(state => state.popup.activePopup);
-  // const { selectedTaskId } = useSelector(state => state.popup);
-  // const { activeTaskId, selectedTaskStatus } = useSelector(state => state.tasks);
+  const { tasks } = useSelector(state => state.tasks);
+  const isProjectsMenuOpen = useSelector(state => state.projectsMenu.isOpen)
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const openAddTaskPopupHandler = () => {
     openCustomPopup(dispatch, 'AddTaskPopup');
   };
-  const openTaskPopupHandler = () => {
-    // console.log(selectedTaskId)
-    // dispatch(getOneTask(selectedTaskId))
-    // const popupData = { taskPopupData: 'someValue' };
 
+  const openTaskPopupHandler = () => {
     openCustomPopup(dispatch, 'TaskPopup');
+  };
+  const handleProjectTitleClick = () => {
+    console.log('pr title clicked')
+    if (!isProjectsMenuOpen) {
+      // Если меню не открыто, обновите список проектов и откройте меню
+      // dispatch(setProjects(/* ваш список проектов */));
+      dispatch(openProjectsMenu());
+    } else {
+      // Если меню открыто, закройте его
+      dispatch(closeProjectsMenu());
+    }
+  };
+  const handleSearchChange = (event) => {
+    const searchTerm = event.target.value;
+    // Реализуйте логику поиска и обновления результатов
+    // dispatch(setSearchResult(/* результаты поиска */));
   };
 
 
@@ -39,33 +54,33 @@ const Project = () => {
       }
     }
     dispatch(getTasks());
+    console.log(isProjectsMenuOpen)
   }, [projectId, dispatch]);
-  
-  // const handleTaskDrop = (taskId, newStatus) => {
-  //   dispatch(updateTaskStatus({ taskId, previousStatus: selectedTaskStatus, newStatus }));
-  // };
 
-  // const [, queueDrop] = useDrop({
-  //   accept: itemTypes.TASK,
-  //   drop: (item) => handleTaskDrop(item.id, 'queue'), // Перетаскивание в секцию "queue"
-  // });
-
-  // const [, devDrop] = useDrop({
-  //   accept: itemTypes.TASK,
-  //   drop: (item) => handleTaskDrop(item.id, 'dev'), // Перетаскивание в секцию "dev"
-  // });
-
-  // const [, doneDrop] = useDrop({
-  //   accept: itemTypes.TASK,
-  //   drop: (item) => handleTaskDrop(item.id, 'done'), // Перетаскивание в секцию "done"
-  // });
-  
-
+  // useEffect(() => {
+  //   console.log('Tasks in Redux Store updated:', tasks);
+  // }, [tasks]);
+  useEffect(() => {
+    console.log('Projects in Redux Store: ', projects);
+  }, []);  
+  const closeProjectSearchMenu = (evt) => {
+    if (evt.target === evt.currentTarget) {
+      console.log('clilll')
+      dispatch(closeProjectsMenu())
+    }
+  }
   return (
-    <DndProvider backend={HTML5Backend}>
+    <>
+      
       <article className='project'>
         <div className='project__header'>
-          <h3 className='project__title'>{projectName}</h3>
+        
+            <h3 className='project__title' onClick={handleProjectTitleClick}>{projectName}</h3>
+     
+          {isProjectsMenuOpen && (
+            <SearchForm />
+          
+          )}
           <button className='project__button-add-task' onClick={openAddTaskPopupHandler}>
             add task
           </button>
@@ -85,10 +100,9 @@ const Project = () => {
           </section>
         </section>
       </article>
-      {/* {selectedTaskId && <TaskPopup taskId={selectedTaskId} />} */}
       {activePopup === 'AddTaskPopup' && <AddTaskPopup />}
       {activePopup === 'TaskPopup' && <TaskPopup />}
-    </DndProvider>
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
-# Одностраничное приложение "Dashboard" 
-Создан через [Create React App](https://github.com/facebook/create-react-app).
-Дизайн и стиль свой. Находится в процессе разработки на данный момент.
-Состоит из двух страниц, с выбором проекта и выбором задач. Взаимодействие(изменение задач/проектов) через модальные окна.
+# Одностраничное приложение "Boardellio" 
+Был создан через [Create React App](https://github.com/facebook/create-react-app) и процессе разработки переведен на [Rsbuild](https://rsbuild.dev).
+Дизайн и стиль свой. Реализована смена темы, смена языка, переиспользуемые компоненты,валидация форм. Добавление проектов и ведение задач в разрезе проекта.  Задачи редактируются, удаляются, есть возможность добавлять файлы к задаче. 
 
 ### Стек:
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
@@ -10,6 +9,7 @@
 ![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 + **React 18**
++ **Rsbuild**
 + **React router dom 6** 
 + **React hook form**  
 + **React DnD**
@@ -33,9 +33,9 @@
 ### Доступные скрипты:
 #### `npm start`
 Запускает приложение в режиме разработки (development mode) на 3000 порту.
-Откройте [http://localhost:3000](http://localhost:3000) для просмотра в браузере.
+Откройте [http://localhost:8080](http://localhost:8080) для просмотра в браузере.
 
 #### `npm run build`
 
-Осуществляет сборку приложения в папке `build`, но пока на стадии разработки не используется, не работает.
+Осуществляет сборку приложения в папке `dist`,
 

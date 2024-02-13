@@ -5,3 +5,10 @@
   }
 
 }
+@mixin link-hover {
+    &:hover {
+      // filter: opacity(0.5);
+      filter: grayscale(80%);
+    }
+  
+}

@@ -3,7 +3,14 @@
   margin-bottom: 10px;
   border: 1px solid var(--additional-border-clr);
   border-radius: 5px;
+  // padding: 5px;
+  box-sizing: border-box;
 
+  &.dragging {
+ 
+      opacity: 0.5;
+      border-color: var(--inactive-btn-clr);
+    }
   &__link {
       flex-flow: column wrap;
       // margin-left: 10px;
@@ -25,6 +32,9 @@
     }
     &__title {
       padding-left: 5px;
+        overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
     }
     &__priotiry {
       display: flex;

@@ -18,7 +18,7 @@ const LangSelect = () => {
     } else {
       setSelectedLang('en');
     }
-    
+
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import React, {useState, useTransition} from 'react'
+import React, { useState, useTransition } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/icons/logo.svg'
 import logoMonochrome from '../../assets/icons/logo-monochrome.svg'
@@ -22,7 +22,7 @@ const Header = () => {
     }
   }
   const theme = useSelector(state => state.theme);
-  
+
   return (
     <header className='header'>
       <Link to={`${!isAuthorized ? '/' : '/projects'}`}>
@@ -33,8 +33,8 @@ const Header = () => {
           <h3 className='header__title'>{t('project-title')}</h3>
         </Link>
       </div>
-     
-    
+
+
       <Navbar />
       <MenuToggler onClick={handleToggleMenu} isMenuOpen={isMenuOpen} />
 

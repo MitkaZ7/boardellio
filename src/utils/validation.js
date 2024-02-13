@@ -7,6 +7,11 @@ const options = {
         'any.only': 'Passwords do not match',
         'any.required': 'Confirm password is required',
     }),
+    taskTitle: Joi.string().min(5).max(120).required(),
+    taskProject: Joi.string().required(),
+    taskText: Joi.string(),
+    projectName: Joi.string().required(),
+    taskPriority: Joi.string(),
 
 }
 
@@ -20,5 +25,17 @@ export const loginSchema = Joi.object({
 export const registrationSchema = Joi.object({
     email: options.email,
     password: options.password,
-    confirmPassword:  options.confirmPassword,
+    confirmPassword: options.confirmPassword,
 });
+
+export const createTaskSchema = Joi.object({
+    title: options.taskTitle,
+    project: options.taskProject,
+    description: options.taskText,
+    priority: options.taskPriority,
+
+}).required();
+
+export const createProjectSchema = Joi.object({
+    title: options.projectName,
+}).required();

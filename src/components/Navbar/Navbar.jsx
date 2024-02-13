@@ -1,4 +1,4 @@
-import React, {useState,useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -10,16 +10,16 @@ import { closeMenu } from '../../store/slices/sideMenuSlice'
 const Navbar = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  
-  const {isAuthorized, user} = useSelector(state => state.user);
-  const { t }= useTranslation();
+
+  const { isAuthorized, user } = useSelector(state => state.user);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state) => state.sideMenu)
 
-  
+
 
   const handleExitClick = () => {
-    dispatch(removeUser()); 
+    dispatch(removeUser());
     navigate('/login');
     dispatch(closeMenu())
   };
@@ -35,23 +35,23 @@ const Navbar = () => {
   // };
 
   const activeMenuClassName = 'navbar_state_active';
-  
+
   return (
-  
+
     <div ref={menuRef} className={`menu ${isMenuOpen ? 'menu_state_active' : ''}`} >
       <div className="menu__user-container">
         {(isMenuOpen && isAuthorized) && (
           <>
-          <div className='menu__user-link'>
-            {user.email}
+            <div className='menu__user-link'>
+              {user.email}
 
-          </div>
+            </div>
             <button className='menu__logout-btn' onClick={handleExitClick}></button>
           </>
         )}
         {
           (isMenuOpen && !isAuthorized) && (
-            <div className="menu__entrance-buttons entrance-buttons" onClick={()=>dispatch(closeMenu())}>
+            <div className="menu__entrance-buttons entrance-buttons" onClick={() => dispatch(closeMenu())}>
               <button className='entrance-buttons__button'>
                 <Link to='/login'>{t('log-in')}</Link>
               </button>
@@ -59,14 +59,14 @@ const Navbar = () => {
               <button className='entrance-buttons__button'>
                 <Link to='/registration'>{t('sign-up')}</Link>
               </button>
-            </div>  
+            </div>
           )
         }
       </div>
-        
-        
-        <ul className={`navbar ${isMenuOpen ? activeMenuClassName : ''}`} onClick={(()=>dispatch(closeMenu()))}>
-        {isAuthorized && 
+
+
+      <ul className={`navbar ${isMenuOpen ? activeMenuClassName : ''}`} onClick={(() => dispatch(closeMenu()))}>
+        {isAuthorized &&
           <>
             <li className='navbar__item'><Link to='/projects' className='navbar__link'>{t('menu-item-projects-list')}</Link></li>
             {/* <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-project-tasks')}</Link></li> */}
@@ -77,22 +77,22 @@ const Navbar = () => {
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-github')}</Link></li>
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-changelog')}</Link></li>
 
-        </ul>
-      
-        {isMenuOpen && <>
-          <div className='navbar__site-settings'>
-            <p className="navbar__subtitle">{t('menu-settings')}</p>
-            <OptionsPanel />
-          </div>
-           
-      </>
-        }
-  
-      
+      </ul>
 
-      
+      {isMenuOpen && <>
+        <div className='navbar__site-settings'>
+          <p className="navbar__subtitle">{t('menu-settings')}</p>
+          <OptionsPanel />
+        </div>
+
+      </>
+      }
+
+
+
+
       {/* <MenuToggler onClick={handleToggleMenu} isMenuOpen={isMenuOpen}/> */}
-      
+
     </div>
   )
 }

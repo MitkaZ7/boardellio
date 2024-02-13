@@ -3,10 +3,8 @@ import TaskList from '../TaskList/TaskList';
 import AddTaskPopup from '../AddTaskPopup/AddTaskPopup';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
-import { getTasks, updateTaskStatus, getOneTask} from '../../store/slices/tasksSlice';
+import { getTasks, updateTaskStatus, getOneTask } from '../../store/slices/tasksSlice';
 import { selectProject } from '../../store/slices/projectSlice';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { openProjectsMenu, closeProjectsMenu, setProjetcs } from '../../store/slices/projectsMenuSlice';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +26,6 @@ const Project = () => {
     openCustomPopup(dispatch, 'TaskPopup');
   };
   const handleProjectTitleClick = () => {
-    console.log('pr title clicked')
     if (!isProjectsMenuOpen) {
       // Если меню не открыто, обновите список проектов и откройте меню
       // dispatch(setProjects(/* ваш список проектов */));
@@ -46,17 +43,22 @@ const Project = () => {
 
 
   useEffect(() => {
+    console.log(projectId)
     if (!projectId) {
       const storedSelectedProject = localStorage.getItem('selectedProject');
+
       if (storedSelectedProject) {
         const { projectId, projectName } = JSON.parse(storedSelectedProject);
         dispatch(selectProject({ projectId, projectName }));
       }
     }
     dispatch(getTasks());
-    console.log(isProjectsMenuOpen)
+    // console.log(isProjectsMenuOpen)
   }, [projectId, dispatch]);
 
+  // useEffect(() => {
+  //   console.log('Tasks in Redux Store updated:', tasks);
+  // }, [tasks]);
   // useEffect(() => {
   //   console.log('Projects in Redux Store: ', projects);
   // }, []);  
@@ -68,32 +70,44 @@ const Project = () => {
   }
   return (
     <>
-      
+
       <article className='project'>
         <div className='project__header'>
-        
-            <h3 className='project__title' onClick={handleProjectTitleClick}>{projectName}</h3>
-     
+
+          <h3 className='project__title' onClick={handleProjectTitleClick}>{projectName}</h3>
+
           {isProjectsMenuOpen && (
             <SearchForm />
-          
+
           )}
           <button className='project__button-add-task' onClick={openAddTaskPopupHandler}>
-            add task
+            {t('add-task-form-title')}
           </button>
         </div>
         <section className='project__content'>
           <section className='project__tasks-section project__queue-tasks'>
-            <h3 className='project__tasks-section-header'>{t('project-page-queue-section-title')}</h3>
-            <TaskList onClick={openTaskPopupHandler} taskStatus="queue" />
+            <div className="project__task-section-header-wrap">
+              <h3 className='project__tasks-section-header'>{t('project-page-queue-section-title')}</h3>
+            </div>
+            <div className="project__task-section-content-wrap">
+              <TaskList onClick={openTaskPopupHandler} taskStatus="queue" />
+            </div>
           </section>
           <section className='project__tasks-section project__dev-tasks'>
-            <h3 className='project__tasks-section-header'>{t('project-page-dev-section-title')}</h3>
-            <TaskList onClick={openTaskPopupHandler} taskStatus="dev" />
+            <div className="project__task-section-header-wrap">
+              <h3 className='project__tasks-section-header'>{t('project-page-dev-section-title')}</h3>
+            </div>
+            <div className="project__task-section-content-wrap">
+              <TaskList onClick={openTaskPopupHandler} taskStatus="dev" />
+            </div>
           </section>
           <section className='project__tasks-section project__done-tasks'>
-            <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')}</h3>
-            <TaskList onClick={openTaskPopupHandler} taskStatus="done" />
+            <div className="project__task-section-header-wrap">
+              <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')}</h3>
+            </div>
+            <div className="project__task-section-content-wrap">
+              <TaskList onClick={openTaskPopupHandler} taskStatus="done" />
+            </div>
           </section>
         </section>
       </article>

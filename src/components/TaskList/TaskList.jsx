@@ -8,6 +8,9 @@ import { openCustomPopup } from '../../store/slices/popupSlice';
 import { ItemTypes } from '../../utils/constants';
 
 const TaskList = ({ onClick, taskStatus }) => {
+  const { tasks } = useSelector((state) => state.tasks);
+  const filteredTasks = tasks[taskStatus] || [];
+
   const refs = useRef({});
   const dispatch = useDispatch();
 
@@ -37,18 +40,17 @@ const TaskList = ({ onClick, taskStatus }) => {
     onClick();
   };
 
-  const { tasks } = useSelector((state) => state.tasks);
-  const filteredTasks = tasks[taskStatus] || [];
+
 
   useEffect(() => {
-  if (!tasks[taskStatus]) {
-    dispatch(getTasks());
-  }
-}, [dispatch, tasks, taskStatus]);
+    if (!tasks[taskStatus]) {
+      dispatch(getTasks());
+    }
+  }, [dispatch, tasks, taskStatus]);
 
-useEffect(() => {
-  // console.log('Tasks updated:', tasks);
-}, [tasks, taskStatus, filteredTasks]);
+  useEffect(() => {
+    // console.log('Tasks updated:', tasks);
+  }, [tasks, taskStatus, filteredTasks]);
 
   return (
     <>
@@ -56,7 +58,7 @@ useEffect(() => {
       <ul className={`taskList ${isOver ? 'drag-over' : ''}`} ref={drop}>
         {filteredTasks.map((task) => (
           <TaskCard
-          
+
             key={task.taskId}
             title={task.title}
             priority={task.priority}

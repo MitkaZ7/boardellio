@@ -9,6 +9,7 @@ import TaskPopup from '../TaskPopup/TaskPopup';
 import { openProjectsMenu, closeProjectsMenu, setProjetcs } from '../../store/slices/projectsMenuSlice';
 import { useTranslation } from 'react-i18next';
 import SearchForm from '../SearchForm/SearchForm';
+import FoldButton from '../FoldButton/FoldButton';
 const Project = () => {
   const { projectId, projectName } = useSelector(state => state.projects.selectedProject);
   const { projects } = useSelector(state => state.projects);
@@ -88,6 +89,7 @@ const Project = () => {
           <section className='project__tasks-section project__queue-tasks'>
             <div className="project__task-section-header-wrap">
               <h3 className='project__tasks-section-header'>{t('project-page-queue-section-title')}</h3>
+              <FoldButton />
             </div>
             <div className="project__task-section-content-wrap">
               <TaskList onClick={openTaskPopupHandler} taskStatus="queue" />
@@ -96,6 +98,8 @@ const Project = () => {
           <section className='project__tasks-section project__dev-tasks'>
             <div className="project__task-section-header-wrap">
               <h3 className='project__tasks-section-header'>{t('project-page-dev-section-title')}</h3>
+              <FoldButton />
+              {/* <button className="project__task-section-fold-btn"></button> */}
             </div>
             <div className="project__task-section-content-wrap">
               <TaskList onClick={openTaskPopupHandler} taskStatus="dev" />
@@ -104,6 +108,8 @@ const Project = () => {
           <section className='project__tasks-section project__done-tasks'>
             <div className="project__task-section-header-wrap">
               <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')}</h3>
+              <FoldButton />
+              {/* <button className="project__task-section-fold-btn"></button> */}
             </div>
             <div className="project__task-section-content-wrap">
               <TaskList onClick={openTaskPopupHandler} taskStatus="done" />

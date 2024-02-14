@@ -21,6 +21,11 @@ const initialState = {
         dev: [],
         done: [],
     },
+    tasksVisibility: {
+        isQueueVisible: true,
+        isDevVisible: true,
+        idDoneVisible: true,
+    }
 };
 
 export const getOneTask = createAsyncThunk(
@@ -148,6 +153,15 @@ export const taskSlice = createSlice({
         resetSelectedTaskData: (state) => {
             state.selectedTaskData = getInitialSelectedTask(); // Сброс данных задачи
         },
+        toggleQueueVisibility(state) {
+            state.tasksVisibility.isQueueVisible = !state.tasksVisibility.isQueueVisible;
+        },
+        toggleDevVisibility(state) {
+            state.tasksVisibility.isDevVisible = !state.tasksVisibility.isDevVisible;
+        },
+        toggleDoneVisibility(state) {
+            state.tasksVisibility.idDoneVisible = !state.tasksVisibility.isDoneVisible;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -177,5 +191,14 @@ export const taskSlice = createSlice({
     },
 });
 
-export const { addTask, removeTask, updateTask, selectTask, resetSelectedTaskData } = taskSlice.actions;
+export const { 
+    addTask, 
+    removeTask, 
+    updateTask, 
+    selectTask, 
+    resetSelectedTaskData,
+    toggleQueueVisibility,
+    toggleDevVisibility,
+    toggleDoneVisibility 
+} = taskSlice.actions;
 export default taskSlice.reducer;

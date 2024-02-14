@@ -160,7 +160,7 @@ export const taskSlice = createSlice({
             state.tasksVisibility.isDevVisible = !state.tasksVisibility.isDevVisible;
         },
         toggleDoneVisibility(state) {
-            state.tasksVisibility.idDoneVisible = !state.tasksVisibility.isDoneVisible;
+            state.tasksVisibility.isDoneVisible = !state.tasksVisibility.isDoneVisible;
         },
     },
     extraReducers: (builder) => {

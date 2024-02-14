@@ -145,7 +145,9 @@ const Project = () => {
               <TaskList onClick={openTaskPopupHandler} taskStatus="done" />
             </div>)}
           </section>
-          div.
+          <div className="project__task-counters">
+            queue: {tasks.queue.length} / dev: {tasks.dev.length} / done: {tasks.done.length}
+          </div>
         </section>
       </article>
       {activePopup === 'AddTaskPopup' && <AddTaskPopup />}

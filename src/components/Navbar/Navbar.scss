@@ -22,7 +22,7 @@
   &__user-link {
     margin-left: 20px;
     position: relative;
-
+    @include link-hover;
     &::after {
       content: '';
       position: absolute;
@@ -33,6 +33,7 @@
   &__logout-btn {
     box-sizing: border-box;
     @include action-button;
+    @include link-hover;
     margin-left: 5px;
     border: none;
     border-radius: 0;
@@ -157,9 +158,6 @@
     color: var(--subtitle-clr);
     padding: 0;
     font-weight: 100;
-
-    &:hover {}
-
     &:first-of-type {
       // margin-right: 10px;
       border: none;

@@ -42,7 +42,7 @@ const Navbar = () => {
       <div className="menu__user-container">
         {(isMenuOpen && isAuthorized) && (
           <>
-            <div className='menu__user-link'>
+            <div className='menu__user-link' onClick={() => navigate('users/me')}>
               {user.email}
 
             </div>

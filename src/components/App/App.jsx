@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import UserProfile from '../UserProfile/UserProfile';
 import Unauthorized from '../Unauthorized/Unauthorized';
 import RequireAuth from '../hoc/RequireAuth';
+
 function App() {
   const theme = useSelector(state => state.theme);
   const { i18n } = useTranslation();

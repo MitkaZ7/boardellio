@@ -74,7 +74,7 @@ const Navbar = () => {
         }
 
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-contacts')}</Link></li>
-        <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-github')}</Link></li>
+        <li className='navbar__item'><Link to='https://github.com/MitkaZ7/boardellio' className='navbar__link' target="_blank">{t('menu-item-github')}</Link></li>
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-changelog')}</Link></li>
 
       </ul>

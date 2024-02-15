@@ -35,6 +35,7 @@
 
   &__button-add-task {
     @include button-add;
+    @include link-hover;
     // background-color: var(--bg-clr);
     // color: var(--succes-clr);
     // max-height: 30px;

@@ -1,5 +1,5 @@
 .project-card {
-    border: 3px solid var(--border-clr);
+    border: 3px solid var(--accent-clr);
     border-radius: 5px;
     align-items: center;
     display: flex;
@@ -7,7 +7,7 @@
     min-height: 50px;
     height: 50%;
     text-align: center;
-   
+    @include link-hover;
     &__link {
         color: var(--accent-clr);
         width: 100%;

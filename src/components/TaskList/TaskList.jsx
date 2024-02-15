@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import TaskCard from '../TaskCard/TaskCard';
@@ -10,10 +10,16 @@ import { ItemTypes } from '../../utils/constants';
 const TaskList = ({ onClick, taskStatus }) => {
   const { tasks } = useSelector((state) => state.tasks);
   const filteredTasks = tasks[taskStatus] || [];
-
+  const [isDragging, setIsDragging] = useState(false);
   const refs = useRef({});
   const dispatch = useDispatch();
+const handleDragStart = () => {
+    setIsDragging(true);
+  };
 
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
   const handleDrop = (taskId, newStatus) => {
     // console.log('item dropped:', taskId);
     dispatch(updateTaskStatus({ taskId, newStatus, taskStatus }));
@@ -55,7 +61,7 @@ const TaskList = ({ onClick, taskStatus }) => {
   return (
     <>
       {isLoading && <Loader />}
-      <ul className={`taskList ${isOver ? 'drag-over' : ''}`} ref={drop}>
+      <ul className={`taskList ${isOver || isDragging ? 'drag-over' : ''}`} ref={drop} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         {filteredTasks.map((task) => (
           <TaskCard
 

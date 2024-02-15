@@ -1,6 +1,6 @@
 {
   "name": "Boardellio",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",

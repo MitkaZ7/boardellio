@@ -154,7 +154,16 @@
     @include task-section-colors(var(--accent-clr), var(--accent-clr));
   }
   &__task-counters {
-    color:var(--font-clr-invert);
+    color:var(--font-clr);
+    > span {
+      // margin-right: 5px;
+      border-left: 2px solid;
+      padding: 0 5px;
+    
+    }
+    > :last-child {
+      border-right: 2px solid;
+    }
   }
 }
 

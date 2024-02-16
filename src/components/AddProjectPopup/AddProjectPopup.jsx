@@ -3,7 +3,6 @@ import Popup from '../Popup/Popup'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, closePopup, openTaskPopup, closeTaskPopup, popupReducer } from '../../store/slices/popupSlice';
-// import { closeAddProjectPopup, setAddProjectPopupData } from '../../store/slices/popupSlice';
 import { createProject, getProjects } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';

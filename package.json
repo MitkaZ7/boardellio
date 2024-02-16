@@ -1,6 +1,6 @@
 {
-  "name": "advan-todo",
-  "version": "0.1.0",
+  "name": "Boardellio",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",

@@ -42,7 +42,7 @@ const Navbar = () => {
       <div className="menu__user-container">
         {(isMenuOpen && isAuthorized) && (
           <>
-            <div className='menu__user-link'>
+            <div className='menu__user-link' onClick={() => navigate('users/me')}>
               {user.email}
 
             </div>
@@ -74,8 +74,8 @@ const Navbar = () => {
         }
 
         <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-contacts')}</Link></li>
-        <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-github')}</Link></li>
-        <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-changelog')}</Link></li>
+        <li className='navbar__item'><Link to='https://github.com/MitkaZ7/boardellio' className='navbar__link' target="_blank">{t('menu-item-github')}</Link></li>
+        <li className='navbar__item'><Link to='/changelog' className='navbar__link'>{t('menu-item-changelog')}</Link></li>
 
       </ul>
 

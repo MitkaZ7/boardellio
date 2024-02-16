@@ -12,7 +12,7 @@
   }
   &__add-button {
     @include button-add;
-    
+    @include link-hover;
    
   }
   &__list {

@@ -5,6 +5,7 @@
     min-height: 100%;
     margin: 5px 5px 0px 3px;
     // box-sizing: border-box;
+    box-sizing: border-box;
     overflow: auto;
     // border: 3px dashed red;
     flex: 1;
@@ -14,9 +15,17 @@
     // align-items: center;
     
     overflow: auto;
+    // scrollbar-width: none;
+    // -ms-text-overflow-style:none;
+    // &::-webkit-scrollbar {
+    //         display: none;
+    //     }
     
 }
 
 .drag-over {
-    background-color: #fff;
+   filter: opacity(.6);
+   border-style: dotted;
+   border-width: 5px;
+   
 }

@@ -27,7 +27,7 @@
     // overflow-y: scroll;
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 375px));
+    grid-template-columns: repeat(auto-fill, minmax(min-content, 375px));
     // grid-template-columns: repeat(3, minmax(min-content, 400px));
     padding: 0 20px;
     gap: 10px;
@@ -35,6 +35,7 @@
 
   &__button-add-task {
     @include button-add;
+    @include link-hover;
     // background-color: var(--bg-clr);
     // color: var(--succes-clr);
     // max-height: 30px;
@@ -83,7 +84,43 @@
   &__tasks-section {
     border: 2px solid var(--border-clr);
     border-radius: 5px;
-    padding: 10px 0;
+    padding: 0 0 10px;
+  }
+  &__task-section-header-wrap {
+    display: grid;
+    grid-template-columns: 1fr 40px;
+    justify-items: center;
+    align-items: center;
+    box-sizing: border-box;
+    border-bottom: 2px solid;
+  }
+  &__task-section-fold-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    align-self: center;
+    margin: 0 auto;
+    margin-right: 5px;
+    background-color: var(--accent-clr);
+    width: 20px;
+    height: 20px;
+    // padding: 10px;
+    // background: url(../../assets/icons/close.svg) no-repeat;
+    // background-position: center;
+    // background-size: contain;
+    position: relative;
+    // &::after {
+    //   position: absolute;
+    //   content: 'g';
+    //   right: 0;
+    //   top: 0;
+    //     border: 10px solid transparent;
+    //     // border-radius: 10px;
+    //       border-top: 10px solid var(--accent-clr);
+    //       // border-radius: 10px;
+    // }
+
+
   }
 
   &__task-section-content-wrap {
@@ -91,13 +128,15 @@
     // overflow-y: auto;
     display: flex;
     flex-direction: column;
+    
   }
 
   &__tasks-section-header {
-
-    margin: 0;
+    // align-self: center;
+    // text-align: center;
+    margin: 0 0 0 40px;
     padding: 5px;
-    border-bottom: 2px solid;
+   
     text-align: center;
     font-weight: 700;
     text-transform: uppercase;
@@ -115,6 +154,24 @@
   &__done-tasks {
     @include task-section-colors(var(--accent-clr), var(--accent-clr));
   }
+  &__task-counters {
+    color:var(--font-clr);
+    > span {
+      // margin-right: 5px;
+      border-left: 2px solid;
+      padding: 0 5px;
+    
+    }
+    > :last-child {
+      border-right: 2px solid;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {}
+@media screen and (min-width: 1200px) {
+  .project__content {
+    grid-template-columns: repeat(3, minmax(min-content, 375px));
+
+  }
+}

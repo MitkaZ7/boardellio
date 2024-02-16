@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import UserProfile from '../UserProfile/UserProfile';
 import Unauthorized from '../Unauthorized/Unauthorized';
 import RequireAuth from '../hoc/RequireAuth';
+import Changelog from '../ChangeLog/Changelog';
 function App() {
   const theme = useSelector(state => state.theme);
   const { i18n } = useTranslation();
@@ -57,6 +58,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/registration' element={<Registration />} />
           <Route path='/unauthorized' element={<Unauthorized />} />
+          <Route path='/changelog' element={<Changelog />} />
           {/* Private routes */}
           <Route path='users/me' element={
             <RequireAuth>
@@ -83,7 +85,7 @@ function App() {
               <TaskPopup />
             </RequireAuth>
           } />
-
+          
 
         </Route>
       </Routes>

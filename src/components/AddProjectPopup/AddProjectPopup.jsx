@@ -4,9 +4,8 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, closePopup, openTaskPopup, closeTaskPopup, popupReducer } from '../../store/slices/popupSlice';
 // import { closeAddProjectPopup, setAddProjectPopupData } from '../../store/slices/popupSlice';
-import { createProject } from '../../store/slices/projectSlice';
+import { createProject, getProjects } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
-import { getProjects } from '../../store/slices/projectSlice';
 import { joiResolver } from '@hookform/resolvers/joi';
 // import { closePopup } from '../../store/slices/popupSlice';
 import { createProjectSchema } from '../../utils/validation.js'

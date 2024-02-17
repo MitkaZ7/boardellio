@@ -28,33 +28,24 @@ const popupSlice = createSlice({
             state.popups = [];
             state.isOpen = true;
             state.activePopup = action.payload.name;
-            state.popupData = action.payload.data; // Данные для попапа
+            state.popupData = action.payload.data; 
         },
         closePopup: (state, action) => {
             state.isOpen = false;
-            state.activePopup = ''; // Сбрасывает имя активного попапа
-            state.popupData = null; // Сбрасывает данные попапа
+            state.activePopup = ''; 
+            state.popupData = null; 
             
         },
         openTaskPopup: (state, action) => {
             state.isOpen = true;
             state.activePopup = action.payload.name;
-            state.openedTaskId = action.payload; // Установите openedTaskId в переданный taskId
+            state.openedTaskId = action.payload; 
         },
 
         closeTaskPopup: (state, action) => {
             state.taskPopupIsOpen = false;
             state.openedTaskId = null; 
         },
-        // openAddProjectPopup(state) {
-        //     state.addProjectPopup.isOpen = true;
-        // },
-        // closeAddProjectPopup(state) {
-        //     state.addProjectPopup.isOpen = false;
-        // },
-        // setAddProjectPopupData(state, action) {
-        //     state.addProjectPopup.data = action.payload;
-        // },
     },
   
 });

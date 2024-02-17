@@ -30,7 +30,7 @@ class Api {
             })
             .catch((error) => {
                 console.error('Error updating task:', error);
-                throw error;  // Пробрасываем ошибку дальше для обработки в вызывающем коде
+                throw error;  
             });
     }
 

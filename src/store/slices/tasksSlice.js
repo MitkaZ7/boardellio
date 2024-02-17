@@ -25,7 +25,8 @@ const initialState = {
         isQueueVisible: true,
         isDevVisible: true,
         idDoneVisible: true,
-    }
+    },
+    nextTaskNumber: null,
 };
 
 export const getOneTask = createAsyncThunk(

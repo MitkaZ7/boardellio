@@ -29,10 +29,13 @@ const Form = ({ projects, validationSchema }) => {
             createTask({
                 title: data.title,
                 isCompleted: false,
-                status: 'dev',
+                status: 'queue',
                 description: data.description,
                 priority: data.priority,
                 projectId: selectedProject.projectId,
+                author: '',
+                executor: '',
+                number: '',
             })
         )
             .then(() => dispatch(getTasks()))

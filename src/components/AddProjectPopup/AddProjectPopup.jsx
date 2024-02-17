@@ -11,6 +11,7 @@ import { createProjectSchema } from '../../utils/validation.js'
 import { useTranslation } from 'react-i18next';
 
 const AddProjectPopup = () => {
+  const projectAuthor = useSelector((state)=> state.user.user.email)
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ resolver: joiResolver(createProjectSchema) });
   // const navigate = useNavigate();
@@ -18,7 +19,12 @@ const AddProjectPopup = () => {
   const { t } = useTranslation();
 
   const onSubmit = (formData) => {
-    dispatch(createProject(formData))
+    const data = { 
+      ...formData, 
+      projectTaskQty: 1,
+      projectAuthor,
+    };
+    dispatch(createProject(data))
       .then(() => dispatch(getProjects()))
       .then(() => dispatch(closePopup()))
       .then(() => reset());

@@ -8,13 +8,18 @@ const getInitialSelectedProject = () => {
     if (storedSelectedProject) {
         return JSON.parse(storedSelectedProject);
     }
-    return { projectId: null, projectName: null };
+    return { projectId: null, projectName: null, projectAuthor: null, projectTaskQty: null };
 };
+
+const getLastTaskNumber = () => {
+    
+}
 
 const initialState = {
     projects: [],
     isLoad: false,
     selectedProject: getInitialSelectedProject(),
+    selectedProjectData: getInitialSelectedProject(),
 };
 
 function isPendingAction(action) {

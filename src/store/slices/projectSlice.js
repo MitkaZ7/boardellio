@@ -11,9 +11,6 @@ const getInitialSelectedProject = () => {
     return { projectId: null, projectName: null, projectAuthor: null, projectTaskQty: null };
 };
 
-const getLastTaskNumber = () => {
-    
-}
 
 const initialState = {
     projects: [],
@@ -39,6 +36,7 @@ export const getProjects = createAsyncThunk(
             }));
            
             // dispatch(hideLoader());
+            console.log(projectsList)
             return projectsList;
         } catch (error) {
             return rejectWithValue(error.message);

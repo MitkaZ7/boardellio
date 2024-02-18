@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 import { hideLoader, showLoader } from './loaderSlice';
+import { incrementProjectTaskQty } from './projectSlice';
 
 const getInitialSelectedTask = () => {
     showLoader();
@@ -62,8 +63,11 @@ export const getTasks = createAsyncThunk(
 
 export const createTask = createAsyncThunk(
     'tasks/createTask',
-    async (data, { rejectWithValue, dispatch }) => {
+    async (data, { rejectWithValue, dispatch, getState }) => {
         try {
+            const lastTaskNumber = getState().projects.selectedProject.projectTaskQty;
+            console.log(lastTaskNumber)
+            // const nextTaslNumber = dispatch(incrementProjectTaskQty())
             await api.createTask(data);
             console.log('Task created successfully.');
         } catch (error) {

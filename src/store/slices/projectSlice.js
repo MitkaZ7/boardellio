@@ -19,6 +19,8 @@ const initialState = {
 
 };
 
+
+
 function isPendingAction(action) {
     return action.type.endsWith('/pending');
 }
@@ -88,6 +90,9 @@ const projectSlice = createSlice({
             state.selectedProjectId = null;
             localStorage.removeItem('selectedProjectId'); 
         },
+        incrementProjectTaskQty(state,action) {
+            state.selectedProject.projectTaskQty += 1;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -117,5 +122,5 @@ const projectSlice = createSlice({
     },
 });
 
-export const { addProject, updateProject, selectProject, resetSelectedProjectId } = projectSlice.actions;
+export const { addProject, updateProject, selectProject, resetSelectedProjectId, incrementProjectTaskQty } = projectSlice.actions;
 export default projectSlice.reducer;

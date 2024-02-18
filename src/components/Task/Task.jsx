@@ -22,7 +22,7 @@ const Task = ({ taskId }) => {
     <li className='task'>
       <article className='task__content'>
         <header className='task__header'>
-          <span className='task__metadata-item task__number'>№ {number}: 2213 </span>
+          <span className='task__metadata-item task__number'>№: {number}</span>
           <h3>{title}</h3>
           <div className='task__metadata-parametres'>
             <span className='task__metadata-item task__priority'>&nbsp;proirity: {priority}</span>

@@ -16,7 +16,7 @@ const initialState = {
     projects: [],
     isLoad: false,
     selectedProject: getInitialSelectedProject(),
-    selectedProjectData: getInitialSelectedProject(),
+
 };
 
 function isPendingAction(action) {

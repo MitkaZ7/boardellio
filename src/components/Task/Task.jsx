@@ -36,6 +36,10 @@ const Task = ({ taskId }) => {
             <span className='task__metadata-item task__spent-time'>In work for: 1 day</span>
             <span className='task__metadata-item task__finish-date'>&nbsp;Done: 02-12-2022</span>
           </div>
+          <div className="task__controls">
+            <button className="task__controls-btn task-button task__controls-btn_type_edit"></button>
+            <button className="task__controls-btn task-button task__controls-btn_type_delete"></button>
+            </div>
         </section>
         <p className='task__text'>
           {description}

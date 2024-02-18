@@ -50,3 +50,13 @@
         // color: var(--font-clr);
     }
 }
+
+@mixin custom-button {
+    @include link-hover;
+    outline: none;
+    height: 15px;
+    width: 20px;
+    margin: 0;
+    padding: 0;
+    border: none;
+}

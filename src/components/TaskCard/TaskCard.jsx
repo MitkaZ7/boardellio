@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 import { getOneTask, selectTask } from '../../store/slices/tasksSlice';
 import { ItemTypes } from '../../utils/constants';
 const TaskCard = forwardRef(({ title, priority, link, onClick, taskId, status }, ref) => {
-
+  
+  
 
 
   const navigate = useNavigate();

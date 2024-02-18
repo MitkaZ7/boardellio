@@ -21,6 +21,7 @@ const initialState = {
         queue: [],
         dev: [],
         done: [],
+        deleted: [],
     },
     tasksVisibility: {
         isQueueVisible: true,
@@ -82,7 +83,19 @@ export const deleteTask = createAsyncThunk(
     async (taskId, { rejectWithValue, dispatch }) => {
         try {
             await api.deleteTask(taskId);
-            console.log(`Task with ID ${taskId} deleted.`);
+            console.log(`Task with ID ${taskId} deleted forever.`);
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+export const logicDeleteTask = createAsyncThunk(
+    'tasks/logicDeleteTask',
+    async(taskId, { rejectWithValue, dispatch }) => {
+        try {
+            await api.logicDeleteTask(taskId);
+            console.log(`Task with ID ${taskId} logicaly deleted.`);
         } catch (error) {
             return rejectWithValue(error.message);
         }

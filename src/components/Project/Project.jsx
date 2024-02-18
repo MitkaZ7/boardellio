@@ -5,12 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
 import { 
   getTasks, 
-  updateTaskStatus, 
-  getOneTask, 
   toggleQueueVisibility, 
   toggleDevVisibility, 
   toggleDoneVisibility } from '../../store/slices/tasksSlice';
-import { selectProject } from '../../store/slices/projectSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { openProjectsMenu, closeProjectsMenu, setProjetcs } from '../../store/slices/projectsMenuSlice';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +15,6 @@ import SearchForm from '../SearchForm/SearchForm';
 import FoldButton from '../FoldButton/FoldButton';
 const Project = () => {
   const { projectId, projectName } = useSelector(state => state.projects.selectedProject);
-  const { projects } = useSelector(state => state.projects);
   const activePopup = useSelector(state => state.popup.activePopup);
   const { tasks } = useSelector(state => state.tasks);
   const isProjectsMenuOpen = useSelector(state => state.projectsMenu.isOpen)
@@ -37,11 +33,11 @@ const Project = () => {
   };
   const handleProjectTitleClick = () => {
     if (!isProjectsMenuOpen) {
-      // Если меню не открыто, обновите список проектов и откройте меню
-      // dispatch(setProjects(/* ваш список проектов */));
+ 
+      // dispatch(setProjects(/* список проектов */));
       dispatch(openProjectsMenu());
     } else {
-      // Если меню открыто, закройте его
+      
       dispatch(closeProjectsMenu());
     }
   };

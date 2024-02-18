@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import TaskCard from '../TaskCard/TaskCard';
-import { getTasks, updateTaskStatus } from '../../store/slices/tasksSlice';
+import { getTasks, updateTaskStatus, selectTask } from '../../store/slices/tasksSlice';
 import Loader from '../Loader/Loader';
 import { openCustomPopup } from '../../store/slices/popupSlice';
 import { ItemTypes } from '../../utils/constants';
@@ -43,6 +43,7 @@ const handleDragStart = () => {
 
   const handleTaskClick = () => {
     openTaskPopupHandler(selectedTaskId);
+    dispatch(selectTask(selectedTaskId))
     onClick();
   };
 

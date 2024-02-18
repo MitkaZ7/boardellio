@@ -35,14 +35,32 @@ class Api {
     }
 
     deleteTask(taskId) {
-         return instance.delete(`/classes/Task/${taskId}`)
+        return instance
+            .delete(`/tasks/${taskId}.json`)
+            .then((res) => {
+                console.log(`Task with ID ${taskId} deleted successfully.`);
+                return res.data;
+            })
+            .catch((error) => {
+                console.error(`Error deleting task with ID ${taskId}:`, error);
+                throw error;
+            });
+    }
+    logicDeleteTask(taskId) {
+        return instance
+            .patch(`/tasks/${taskId}.json`, { deleted: true }) // Устанавливаем значение поля "deleted" в true
+            .then((res) => {
+                const task = res.data;
+                console.log(task);
+                return task;
+            })
     }
     getProjectTasks(projectId) {
         return instance
             .get('/tasks.json', {
             params: {
                 orderBy: '"projectId"',
-                equalTo: `"${projectId}"`
+                equalTo: `"${projectId}"`,
             }
             })
             .then((res) => {

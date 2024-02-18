@@ -60,6 +60,14 @@ class Api {
     createProject(data) {
         return instance.post('/projects.json', data);
     }
+    getOneProjectById(id) {
+        return instance.get(`/projects/${id}.json`)
+            .then((res) => {
+                const project = res.data;
+                console.log(project);
+                return project;
+            });
+    }
     // getProjectById(projectId) {
     //     return instance.get('/projects.json', {
     //         params: {

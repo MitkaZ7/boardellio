@@ -16,7 +16,7 @@ const initialState = {
 
 export const openCustomPopup = (dispatch, name, data = null) => {
     if (name === 'TaskPopup') {
-        console.log('ssssfhg ')
+        // console.log('ssssfhg ')
     }
     dispatch(openPopup({ name, data }));
 };

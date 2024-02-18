@@ -46,19 +46,19 @@ export const getProjects = createAsyncThunk(
     }
 );
 
-// export const getOneProject = createAsyncThunk(
-//     'projects/getOnePeoject',
-//     async (projectId, thunkAPI) => {
-//         const { dispatch, rejectWithValue } = thunkAPI;
-//         try {
-//             const project = await api.getProjectById(projectId);
-//             console.log(project)
-//             return project;
-//         } catch (error) {
-//             return rejectWithValue(error.message);
-//         }
-//     }
-// )
+export const getOneProject = createAsyncThunk(
+    'projects/getOnePeoject',
+    async (projectId, thunkAPI) => {
+        const { dispatch, rejectWithValue } = thunkAPI;
+        try {
+            const project = await api.getOneProjectById(projectId);
+            console.log(project)
+            return project;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
 
 export const createProject = createAsyncThunk(
     'projects/createProject',

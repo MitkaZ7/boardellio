@@ -47,34 +47,29 @@ const Project = () => {
   };
   const handleSearchChange = (event) => {
     const searchTerm = event.target.value;
-    // Реализуйте логику поиска и обновления результатов
+    // Реализовать логику поиска и обновления результатов
     // dispatch(setSearchResult(/* результаты поиска */));
   };
 
 
   useEffect(() => {
-    console.log(projectId)
-    if (!projectId) {
-      const storedSelectedProject = localStorage.getItem('selectedProject');
+    // console.log(projectId)
+    // if (!projectId) {
+    //   const storedSelectedProject = localStorage.getItem('selectedProject');
 
-      if (storedSelectedProject) {
-        const { projectId, projectName } = JSON.parse(storedSelectedProject);
-        dispatch(selectProject({ projectId, projectName }));
-      }
-    }
+    //   if (storedSelectedProject) {
+    //     const { projectId, projectName } = JSON.parse(storedSelectedProject);
+    //     dispatch(selectProject({ projectId, projectName }));
+    //   }
+    // }
     dispatch(getTasks());
     // console.log(isProjectsMenuOpen)
   }, [projectId, dispatch]);
 
-  // useEffect(() => {
-  //   console.log('Tasks in Redux Store updated:', tasks);
-  // }, [tasks]);
-  // useEffect(() => {
-  //   console.log('Projects in Redux Store: ', projects);
-  // }, []);  
+
   const closeProjectSearchMenu = (evt) => {
     if (evt.target === evt.currentTarget) {
-      console.log('clilll')
+      console.log('closed menu search')
       dispatch(closeProjectsMenu())
     }
   }

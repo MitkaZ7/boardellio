@@ -16,7 +16,7 @@ const Changelog = () => {
   return (
     <>  
       <div>Changelog {version}</div>
-          <ReactMarkdown>{changelog}</ReactMarkdown>
+          {/* <ReactMarkdown>{changelog}</ReactMarkdown> */}
     </>
       
       

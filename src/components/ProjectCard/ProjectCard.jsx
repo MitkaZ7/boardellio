@@ -4,13 +4,13 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectProject } from '../../store/slices/projectSlice';
 
-const ProjectCard = ({ projectName, link, projectId }) => {
+const ProjectCard = ({ projectName, projectId, projectAuthor, projectTaskQty }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
 
   const handleProjectClick = () => {
-    dispatch(selectProject({projectName, projectId}));
+    dispatch(selectProject({ projectName, projectId, projectAuthor, projectTaskQty }));
     navigate(`/projects/${projectName}`);
   };
 

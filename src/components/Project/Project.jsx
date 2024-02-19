@@ -5,12 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
 import { 
   getTasks, 
-  updateTaskStatus, 
-  getOneTask, 
   toggleQueueVisibility, 
   toggleDevVisibility, 
   toggleDoneVisibility } from '../../store/slices/tasksSlice';
-import { selectProject } from '../../store/slices/projectSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { openProjectsMenu, closeProjectsMenu, setProjetcs } from '../../store/slices/projectsMenuSlice';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +15,6 @@ import SearchForm from '../SearchForm/SearchForm';
 import FoldButton from '../FoldButton/FoldButton';
 const Project = () => {
   const { projectId, projectName } = useSelector(state => state.projects.selectedProject);
-  const { projects } = useSelector(state => state.projects);
   const activePopup = useSelector(state => state.popup.activePopup);
   const { tasks } = useSelector(state => state.tasks);
   const isProjectsMenuOpen = useSelector(state => state.projectsMenu.isOpen)
@@ -37,44 +33,39 @@ const Project = () => {
   };
   const handleProjectTitleClick = () => {
     if (!isProjectsMenuOpen) {
-      // Если меню не открыто, обновите список проектов и откройте меню
-      // dispatch(setProjects(/* ваш список проектов */));
+ 
+      // dispatch(setProjects(/* список проектов */));
       dispatch(openProjectsMenu());
     } else {
-      // Если меню открыто, закройте его
+      
       dispatch(closeProjectsMenu());
     }
   };
   const handleSearchChange = (event) => {
     const searchTerm = event.target.value;
-    // Реализуйте логику поиска и обновления результатов
+    // Реализовать логику поиска и обновления результатов
     // dispatch(setSearchResult(/* результаты поиска */));
   };
 
 
   useEffect(() => {
-    console.log(projectId)
-    if (!projectId) {
-      const storedSelectedProject = localStorage.getItem('selectedProject');
+    // console.log(projectId)
+    // if (!projectId) {
+    //   const storedSelectedProject = localStorage.getItem('selectedProject');
 
-      if (storedSelectedProject) {
-        const { projectId, projectName } = JSON.parse(storedSelectedProject);
-        dispatch(selectProject({ projectId, projectName }));
-      }
-    }
+    //   if (storedSelectedProject) {
+    //     const { projectId, projectName } = JSON.parse(storedSelectedProject);
+    //     dispatch(selectProject({ projectId, projectName }));
+    //   }
+    // }
     dispatch(getTasks());
     // console.log(isProjectsMenuOpen)
   }, [projectId, dispatch]);
 
-  // useEffect(() => {
-  //   console.log('Tasks in Redux Store updated:', tasks);
-  // }, [tasks]);
-  // useEffect(() => {
-  //   console.log('Projects in Redux Store: ', projects);
-  // }, []);  
+
   const closeProjectSearchMenu = (evt) => {
     if (evt.target === evt.currentTarget) {
-      console.log('clilll')
+      console.log('closed menu search')
       dispatch(closeProjectsMenu())
     }
   }
@@ -136,7 +127,7 @@ const Project = () => {
           </section>
           <section className='project__tasks-section project__done-tasks'>
             <div className="project__task-section-header-wrap">
-              <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')} ({tasks.queue.length})</h3>
+              <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')} ({tasks.done.length})</h3>
               <FoldButton onClick={() => handleToggleVisibility('done')} />
               {/* <button className="project__task-section-fold-btn"></button> */}
             </div>

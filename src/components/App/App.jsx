@@ -11,7 +11,7 @@ import Intro from '../intro/Intro';
 import NotFound from '../NotFound/NotFound';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { setAuthorizationStatus, setUser } from '../../store/slices/userSlice'
+import { setUser } from '../../store/slices/userSlice';
 import { useTranslation } from 'react-i18next';
 import UserProfile from '../UserProfile/UserProfile';
 import Unauthorized from '../Unauthorized/Unauthorized';
@@ -37,8 +37,6 @@ function App() {
     if (userData) {
       const { user } = JSON.parse(userData);
       if (user.idToken) {
-        // console.log(user.idToken)
-        // dispatch(setAuthorizationStatus(true));
         dispatch(setUser(user))
       }
     }

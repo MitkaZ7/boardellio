@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 import { hideLoader, showLoader } from './loaderSlice';
+import { incrementProjectTaskQty } from './projectSlice';
 
 const getInitialSelectedTask = () => {
     showLoader();
@@ -20,12 +21,14 @@ const initialState = {
         queue: [],
         dev: [],
         done: [],
+        deleted: [],
     },
     tasksVisibility: {
         isQueueVisible: true,
         isDevVisible: true,
         idDoneVisible: true,
-    }
+    },
+    nextTaskNumber: null,
 };
 
 export const getOneTask = createAsyncThunk(
@@ -61,8 +64,11 @@ export const getTasks = createAsyncThunk(
 
 export const createTask = createAsyncThunk(
     'tasks/createTask',
-    async (data, { rejectWithValue, dispatch }) => {
+    async (data, { rejectWithValue, dispatch, getState }) => {
         try {
+            const lastTaskNumber = getState().projects.selectedProject.projectTaskQty;
+            console.log(lastTaskNumber)
+            // const nextTaslNumber = dispatch(incrementProjectTaskQty())
             await api.createTask(data);
             console.log('Task created successfully.');
         } catch (error) {
@@ -77,7 +83,19 @@ export const deleteTask = createAsyncThunk(
     async (taskId, { rejectWithValue, dispatch }) => {
         try {
             await api.deleteTask(taskId);
-            console.log(`Task with ID ${taskId} deleted.`);
+            console.log(`Task with ID ${taskId} deleted forever.`);
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+export const logicDeleteTask = createAsyncThunk(
+    'tasks/logicDeleteTask',
+    async(taskId, { rejectWithValue, dispatch }) => {
+        try {
+            await api.logicDeleteTask(taskId);
+            console.log(`Task with ID ${taskId} logicaly deleted.`);
         } catch (error) {
             return rejectWithValue(error.message);
         }

@@ -1,14 +1,22 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeTask } from '../../store/slices/tasksSlice';
+import { removeTask, logicDeleteTask, deleteTask } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
+import { closePopup } from '../../store/slices/popupSlice';
 
 const Task = ({ taskId }) => {
   const dispatch = useDispatch();
-  const { selectedTaskData } = useSelector(state => state.tasks)
+  const { selectedTaskData, selectedTaskId } = useSelector(state => state.tasks)
   const handleRemoveTask = () => {
-    dispatch(removeTask(taskId));
+    dispatch(logicDeleteTask(selectedTaskId))
+      .then(() => dispatch(closePopup()));
+
+   
   };
+
+  useEffect(() => {
+    console.log(selectedTaskId)
+  }, [])
 
   const { 
     status, 
@@ -22,7 +30,7 @@ const Task = ({ taskId }) => {
     <li className='task'>
       <article className='task__content'>
         <header className='task__header'>
-          <span className='task__metadata-item task__number'>№ {number}: 2213 </span>
+          <span className='task__metadata-item task__number'>№: {number}</span>
           <h3>{title}</h3>
           <div className='task__metadata-parametres'>
             <span className='task__metadata-item task__priority'>&nbsp;proirity: {priority}</span>
@@ -36,6 +44,10 @@ const Task = ({ taskId }) => {
             <span className='task__metadata-item task__spent-time'>In work for: 1 day</span>
             <span className='task__metadata-item task__finish-date'>&nbsp;Done: 02-12-2022</span>
           </div>
+          <div className="task__controls">
+            {/* <button className="task__controls-btn task-button task__controls-btn_type_edit"></button> */}
+            <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={handleRemoveTask}></button>
+            </div>
         </section>
         <p className='task__text'>
           {description}

@@ -8,14 +8,18 @@ const getInitialSelectedProject = () => {
     if (storedSelectedProject) {
         return JSON.parse(storedSelectedProject);
     }
-    return { projectId: null, projectName: null };
+    return { projectId: null, projectName: null, projectAuthor: null, projectTaskQty: null };
 };
+
 
 const initialState = {
     projects: [],
     isLoad: false,
     selectedProject: getInitialSelectedProject(),
+
 };
+
+
 
 function isPendingAction(action) {
     return action.type.endsWith('/pending');
@@ -34,6 +38,7 @@ export const getProjects = createAsyncThunk(
             }));
            
             // dispatch(hideLoader());
+            console.log(projectsList)
             return projectsList;
         } catch (error) {
             return rejectWithValue(error.message);
@@ -41,19 +46,19 @@ export const getProjects = createAsyncThunk(
     }
 );
 
-// export const getOneProject = createAsyncThunk(
-//     'projects/getOnePeoject',
-//     async (projectId, thunkAPI) => {
-//         const { dispatch, rejectWithValue } = thunkAPI;
-//         try {
-//             const project = await api.getProjectById(projectId);
-//             console.log(project)
-//             return project;
-//         } catch (error) {
-//             return rejectWithValue(error.message);
-//         }
-//     }
-// )
+export const getOneProject = createAsyncThunk(
+    'projects/getOnePeoject',
+    async (projectId, thunkAPI) => {
+        const { dispatch, rejectWithValue } = thunkAPI;
+        try {
+            const project = await api.getOneProjectById(projectId);
+            console.log(project)
+            return project;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
 
 export const createProject = createAsyncThunk(
     'projects/createProject',
@@ -85,6 +90,9 @@ const projectSlice = createSlice({
             state.selectedProjectId = null;
             localStorage.removeItem('selectedProjectId'); 
         },
+        incrementProjectTaskQty(state,action) {
+            state.selectedProject.projectTaskQty += 1;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -114,5 +122,5 @@ const projectSlice = createSlice({
     },
 });
 
-export const { addProject, updateProject, selectProject, resetSelectedProjectId } = projectSlice.actions;
+export const { addProject, updateProject, selectProject, resetSelectedProjectId, incrementProjectTaskQty } = projectSlice.actions;
 export default projectSlice.reducer;

@@ -38,13 +38,18 @@ const ProjectsList = () => {
 
         <ul className="projects-list__list">
           { 
-            projects?.map((projectItem) => <ProjectCard key={projectItem.id} projectName={projectItem.title} projectId={projectItem.id} />)
+            projects?.map((projectItem) => 
+              
+              <ProjectCard 
+                key={projectItem.id} 
+                projectName={projectItem.title} 
+                projectId={projectItem.id} 
+                projectAuthor={projectItem.projectAuthor}
+                projectTaskQty={projectItem.projectTaskQty}
+              />
+            )
           }
           
-
-          {/* {Object.entries(projects).map(([projectId, projectData]) => (
-            <ProjectCard key={projectId} projectName={projectData.title} projectId={projectId} />
-          ))} */}
         </ul>
       </section>
       <AddProjectPopup />

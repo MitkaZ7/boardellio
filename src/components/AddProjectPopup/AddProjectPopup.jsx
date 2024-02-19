@@ -3,16 +3,15 @@ import Popup from '../Popup/Popup'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, closePopup, openTaskPopup, closeTaskPopup, popupReducer } from '../../store/slices/popupSlice';
-// import { closeAddProjectPopup, setAddProjectPopupData } from '../../store/slices/popupSlice';
-import { createProject } from '../../store/slices/projectSlice';
+import { createProject, getProjects } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
-import { getProjects } from '../../store/slices/projectSlice';
 import { joiResolver } from '@hookform/resolvers/joi';
 // import { closePopup } from '../../store/slices/popupSlice';
 import { createProjectSchema } from '../../utils/validation.js'
 import { useTranslation } from 'react-i18next';
 
 const AddProjectPopup = () => {
+  const projectAuthor = useSelector((state)=> state.user.user.email)
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ resolver: joiResolver(createProjectSchema) });
   // const navigate = useNavigate();
@@ -20,7 +19,12 @@ const AddProjectPopup = () => {
   const { t } = useTranslation();
 
   const onSubmit = (formData) => {
-    dispatch(createProject(formData))
+    const data = { 
+      ...formData, 
+      projectTaskQty: 1,
+      projectAuthor,
+    };
+    dispatch(createProject(data))
       .then(() => dispatch(getProjects()))
       .then(() => dispatch(closePopup()))
       .then(() => reset());

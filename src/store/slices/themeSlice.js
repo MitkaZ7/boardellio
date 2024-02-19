@@ -15,7 +15,7 @@ const themeSlice = createSlice({
   initialState,
   reducers: {
     setTheme: (state, action) => {
-      localStorage.setItem('theme', action.payload); // Сохраняем выбранную тему в локальное хранилище
+      localStorage.setItem('theme', action.payload); 
       return action.payload;
     },
   },

@@ -14,7 +14,7 @@ const Registration = () => {
       formTitle={t('sign-up')}
       linkText={t('already-registred')}
       linkTitle={t('log-in')}
-      linkTo='/projects'
+      linkTo='/login'
       isRegistration={true}
       validationSchema={registrationSchema}
     />

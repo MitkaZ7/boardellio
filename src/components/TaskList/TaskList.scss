@@ -4,23 +4,19 @@
     padding: 0;
     min-height: 100%;
     margin: 5px 5px 0px 3px;
-    // box-sizing: border-box;
     box-sizing: border-box;
-    overflow: auto;
-    // border: 3px dashed red;
     flex: 1;
-    // display: flex;
-    // flex-direction: column;
-    // // align-items: stretch;
-    // align-items: center;
-    
     overflow: auto;
-    // scrollbar-width: none;
-    // -ms-text-overflow-style:none;
-    // &::-webkit-scrollbar {
-    //         display: none;
-    //     }
-    
+    &::-webkit-scrollbar {
+            // display: none;
+            width: 5px;
+        }
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--accent-clr);
+        border-radius: 3px;
+    }
+    scrollbar-color: var(--accent-clr);
+    scrollbar-width: thin;
 }
 
 .drag-over {
@@ -29,3 +25,4 @@
    border-width: 5px;
    
 }
+

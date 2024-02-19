@@ -8,7 +8,10 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next'
 import { getTasks } from '../../store/slices/tasksSlice';
 
+
 const Form = ({ projects, validationSchema }) => {
+    const { selectedProject } = useSelector(state => state.projects)
+    const [selectedProjectId, setSelectedProjectId] = useState(selectedProject ? selectedProject.projectId : '' )
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const { register,
@@ -22,17 +25,27 @@ const Form = ({ projects, validationSchema }) => {
         mode: 'all',
         resolver: joiResolver(validationSchema),
     });
-    const { selectedProject } = useSelector(state => state.projects)
-    console.log(selectedProject)
+    const reselectProjectHandler = (event) => {
+        const reselectedProjectId = event.target.value;
+        setSelectedProjectId(reselectedProjectId);
+    }
+    useEffect(() => {
+        console.log(selectedProjectId)
+    }, [])
+    
     const onSubmit = async (data) => {
+        console.log(data)
         dispatch(
             createTask({
                 title: data.title,
                 isCompleted: false,
-                status: 'dev',
+                status: 'queue',
                 description: data.description,
                 priority: data.priority,
-                projectId: selectedProject.projectId,
+                projectId: selectedProjectId,
+                author: '',
+                executor: '',
+                number: '',
             })
         )
             .then(() => dispatch(getTasks()))
@@ -49,13 +62,13 @@ const Form = ({ projects, validationSchema }) => {
                 <select
                     className="form__select"
                     {...register('project')}
-                    value={selectedProject.projectId}
+                    onChange={reselectProjectHandler}
+                    defaultValue={selectedProject.projectId}
                 >
 
-                    <option value="noNameProject" selected>{selectedProject.projectName}</option>
                     {Object.entries(projects).map(([projectId, projectData]) => (
 
-                        <option key={projectId} value={projectId}>
+                        <option key={projectData.id} value={projectData.id}>
                             {projectData.title}
                         </option>
                     ))}

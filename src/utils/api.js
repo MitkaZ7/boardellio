@@ -2,6 +2,10 @@ import axios from 'axios';
 
 const instance = axios.create({
     baseURL: 'https://firestore.googleapis.com/v1/projects/dashboard-app-2ad06/databases/(default)/documents',
+    // headers : {
+    //     'Content-Type': 'application/json'
+    // }
+
 });
 
 class Api {
@@ -29,13 +33,22 @@ class Api {
     }
 
     getProjectTasks(projectId) {
-        return instance
-            .get('/tasks', {
-                params: {
-                    orderBy: 'projectId',
-                    equalTo: projectId,
-                },
-            })
+        return instance.post(':runQuery',{
+            structuredQuery: {
+                from: [
+                   { collectionId: "tasks"}
+                ],
+                where: {
+                   fieldFilter: {
+                        field: { fieldPath: 'projectId' },
+                        op: 'EQUAL',
+                        value: {
+                            stringValue: projectId
+                        }
+                   }
+                }
+            }
+        })
             .then((res) => {
                 const data = res.data.documents.map((doc) => ({
                     id: doc.name.split('/').pop(),
@@ -45,8 +58,15 @@ class Api {
             });
     }
 
+
+
+
+
+
+
     getProjects() {
-        return instance.get('/projects').then((res) => {
+        return instance.get('/projects')
+        .then((res) => {
             const data = res.data.documents.map((doc) => ({
                 id: doc.name.split('/').pop(),
                 ...doc.fields,

@@ -1,0 +1,36 @@
+.user-profile {
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+ 
+
+    &__header {
+        
+    }
+    &__avatar {
+        width: 150px;
+    }
+    &__info {
+        margin-left: 25px;
+        display: flex;
+        flex-flow: column wrap;
+        color: var(--accent-clr);
+    }
+    &__info-item {
+        margin-bottom: 10px;
+        @include link-hover;
+    }
+    &__projects {
+      width: 100%;
+      align-self: center;
+      justify-self: center;
+    
+        text-align: center;
+        margin-bottom: 300px;
+    }
+    &__projects-header {
+       
+    }
+}

@@ -50,19 +50,15 @@ class Api {
             }
         })
             .then((res) => {
-                const data = res.data.documents.map((doc) => ({
-                    id: doc.name.split('/').pop(),
-                    ...doc.fields,
-                }));
+                const data = res.data.map((item) => {
+                    const id = item.document.name.split('/').pop();
+                    const fields = item.document.fields; 
+                    return { id, ...fields }; 
+                });
+                console.log(data);
                 return data;
             });
     }
-
-
-
-
-
-
 
     getProjects() {
         return instance.get('/projects')
@@ -71,13 +67,32 @@ class Api {
                 id: doc.name.split('/').pop(),
                 ...doc.fields,
             }));
+            console.log(data)
             return data;
         });
     }
 
     createProject(data) {
-        return instance.post('/projects', { fields: data });
+        const requestData = {
+            fields: {
+                title: { stringValue: data.title },
+                taskQty: { integerValue: data.taskQty },
+                author: { stringValue: data.author }
+            }
+        };
+
+        return instance.post('/projects', requestData)
+            .then((res) => {
+                console.log('Проект успешно создан:', res.data);
+                return res.data; // возвращаем данные созданного проекта
+            })
+            .catch((error) => {
+                console.error('Ошибка при создании проекта:', error);
+                throw error; // выбрасываем ошибку для дальнейшей обработки
+            });
     }
+
+
 
     getOneProjectById(id) {
         return instance.get(`/projects/${id}`).then((res) => {

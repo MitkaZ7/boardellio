@@ -52,10 +52,13 @@ export const getTasks = createAsyncThunk(
         try {
             const currentProjectId = getState().projects.selectedProject.projectId;
             const tasksList = await api.getProjectTasks(currentProjectId);
+            console.log(tasksList)
             dispatch(hideLoader());
             const categorizedTasks = categorizeTasks(tasksList);
-            const serializedTasks = serializeTasks(categorizedTasks);
-            return serializedTasks;
+            // const serializedTasks = serializeTasks(categorizedTasks);
+            console.log(categorizedTasks)
+            return categorizedTasks;
+            
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -116,34 +119,29 @@ export const updateTaskStatus = createAsyncThunk(
     }
 );
 
+
 const categorizeTasks = (tasksList) => {
     const categorizedTasks = {
         queue: [],
         dev: [],
         done: [],
     };
-    Object.entries(tasksList).forEach(([taskId, task]) => {
-        categorizedTasks[task.status].push({
-            ...task,
-            taskId,
-        });
+    tasksList.forEach((task) => {
+        switch (task.status.stringValue) {
+            case 'queue':
+                categorizedTasks.queue.push({ ...task, taskId: task.id });
+                break;
+            case 'dev':
+                categorizedTasks.dev.push({ ...task, taskId: task.id });
+                break;
+            case 'done':
+                categorizedTasks.done.push({ ...task, taskId: task.id });
+                break;
+            default:
+                break;
+        }
     });
-
     return categorizedTasks;
-};
-
-const serializeTasks = (categorizedTasks) => {
-    const serializedTasks = {
-        queue: [],
-        dev: [],
-        done: [],
-    };
-    for (const [status, tasks] of Object.entries(categorizedTasks)) {
-        serializedTasks[status] = tasks.map((task) => ({
-            ...task,
-        }));
-    }
-    return serializedTasks;
 };
 
 export const taskSlice = createSlice({
@@ -161,7 +159,7 @@ export const taskSlice = createSlice({
             state.tasks.done = state.tasks.done.filter((task) => task.objectId !== taskId);
         },
         updateTask(state, action) {
-            // Ваш код обновления задачи здесь
+            
         },
 
         selectTask(state, action) {
@@ -169,7 +167,7 @@ export const taskSlice = createSlice({
             localStorage.setItem('selectedTaskId', JSON.stringify(action.payload));
         },
         resetSelectedTaskData: (state) => {
-            state.selectedTaskData = getInitialSelectedTask(); // Сброс данных задачи
+            state.selectedTaskData = getInitialSelectedTask(); 
         },
         toggleQueueVisibility(state) {
             state.tasksVisibility.isQueueVisible = !state.tasksVisibility.isQueueVisible;

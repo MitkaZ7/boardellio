@@ -15,27 +15,27 @@ const Task = ({ taskId }) => {
   };
 
   useEffect(() => {
-    console.log(selectedTaskId)
+    console.log(selectedTaskData)
   }, [])
 
-  const { 
-    status, 
-    priority, 
-    title,
-    number,
-    description,
-  } = selectedTaskData;
+  // const { 
+  //   status, 
+  //   priority, 
+  //   title,
+  //   number,
+  //   description,
+  // } = selectedTaskData;
 
   return (
     <li className='task'>
       <article className='task__content'>
         <header className='task__header'>
-          <span className='task__metadata-item task__number'>№: {number}</span>
-          <h3>{title}</h3>
+          <span className='task__metadata-item task__number'>№: </span>
+          <h3>{selectedTaskData.title.stringValue}</h3>
           <div className='task__metadata-parametres'>
-            <span className='task__metadata-item task__priority'>&nbsp;proirity: {priority}</span>
+            <span className='task__metadata-item task__priority'>&nbsp;proirity: </span>
 
-            <span className='task__metadata-item task__status'>&nbsp;status: {status}</span>
+            <span className='task__metadata-item task__status'>&nbsp;status: </span>
           </div>
         </header>
         <section className='task__metadata-block metadata-block'>
@@ -50,7 +50,7 @@ const Task = ({ taskId }) => {
             </div>
         </section>
         <p className='task__text'>
-          {description}
+        
         </p>
 
         {/* <section className='task__subtasks subtasks'>

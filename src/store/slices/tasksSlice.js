@@ -159,7 +159,9 @@ export const taskSlice = createSlice({
         updateTask(state, action) {
             
         },
-        resetTasksState: () => initialState,
+        resetTasksState(state) {
+            state.tasks = initialState.tasks;
+        },
         selectTask(state, action) {
             state.selectedTaskId = action.payload;
             localStorage.setItem('selectedTaskId', JSON.stringify(action.payload));

@@ -10,7 +10,8 @@ const TaskPopup = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    dispatch(resetSelectedTaskData()); // Сброс данных перед загрузкой новой задачи
+    console.log(selectedTaskId)
+    // dispatch(resetSelectedTaskData()); // Сброс данных перед загрузкой новой задачи
     dispatch(getOneTask(selectedTaskId));
   }, [dispatch, selectedTaskId]);
   const handleClosePopup = () => {

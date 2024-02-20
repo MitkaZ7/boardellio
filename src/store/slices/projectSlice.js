@@ -32,14 +32,11 @@ export const getProjects = createAsyncThunk(
         try {
             // dispatch(showLoader());
             const projects = await api.getProjects();
-            console.log(projects)
             const projectsList = Object.keys(projects).map((id) => ({
                 id,
                 ...projects[id],
             }));
-           
             // dispatch(hideLoader());
-            console.log(projectsList)
             return projectsList;
         } catch (error) {
             return rejectWithValue(error.message);

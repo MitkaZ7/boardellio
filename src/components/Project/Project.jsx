@@ -4,7 +4,8 @@ import AddTaskPopup from '../AddTaskPopup/AddTaskPopup';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
 import { 
-  getTasks, 
+  getTasks,
+  resetTasksState, 
   toggleQueueVisibility, 
   toggleDevVisibility, 
   toggleDoneVisibility } from '../../store/slices/tasksSlice';
@@ -49,19 +50,14 @@ const Project = () => {
 
 
   useEffect(() => {
-    // console.log(projectId)
-    // if (!projectId) {
-    //   const storedSelectedProject = localStorage.getItem('selectedProject');
-
-    //   if (storedSelectedProject) {
-    //     const { projectId, projectName } = JSON.parse(storedSelectedProject);
-    //     dispatch(selectProject({ projectId, projectName }));
-    //   }
-    // }
     dispatch(getTasks());
-    // console.log(isProjectsMenuOpen)
+
+    return () => {
+      dispatch(resetTasksState()); // Очищаем список задач при размонтировании компонента
+    };
   }, [projectId, dispatch]);
 
+  
 
   const closeProjectSearchMenu = (evt) => {
     if (evt.target === evt.currentTarget) {
@@ -107,7 +103,7 @@ const Project = () => {
           <section className='project__tasks-section project__queue-tasks'>
             <div className="project__task-section-header-wrap">
               <h3 className='project__tasks-section-header'>{t('project-page-queue-section-title')} ({tasks.queue.length})</h3>
-              <FoldButton onClick={() => handleToggleVisibility('queue')} />
+              {/* <FoldButton onClick={() => handleToggleVisibility('queue')} /> */}
             </div>
             {isQueueVisible && (
             <div className="project__task-section-content-wrap">
@@ -117,7 +113,7 @@ const Project = () => {
           <section className='project__tasks-section project__dev-tasks'>
             <div className="project__task-section-header-wrap">
               <h3 className='project__tasks-section-header'>{t('project-page-dev-section-title')} ({tasks.dev.length})</h3>
-              <FoldButton onClick={() => handleToggleVisibility('dev')} />
+              {/* <FoldButton onClick={() => handleToggleVisibility('dev')} /> */}
               {/* <button className="project__task-section-fold-btn"></button> */}
             </div>
             {isDevVisible && (
@@ -128,7 +124,7 @@ const Project = () => {
           <section className='project__tasks-section project__done-tasks'>
             <div className="project__task-section-header-wrap">
               <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')} ({tasks.done.length})</h3>
-              <FoldButton onClick={() => handleToggleVisibility('done')} />
+              {/* <FoldButton onClick={() => handleToggleVisibility('done')} /> */}
               {/* <button className="project__task-section-fold-btn"></button> */}
             </div>
             {!isDoneVisible && (

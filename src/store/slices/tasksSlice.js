@@ -52,14 +52,12 @@ export const getTasks = createAsyncThunk(
         try {
             const currentProjectId = getState().projects.selectedProject.projectId;
             const tasksList = await api.getProjectTasks(currentProjectId);
-            console.log(tasksList)
+            const categorizedTasks = await categorizeTasks(tasksList);
             dispatch(hideLoader());
-            const categorizedTasks = categorizeTasks(tasksList);
-            // const serializedTasks = serializeTasks(categorizedTasks);
-            console.log(categorizedTasks)
             return categorizedTasks;
             
         } catch (error) {
+            dispatch(hideLoader());
             return rejectWithValue(error.message);
         }
     }
@@ -107,12 +105,12 @@ export const logicDeleteTask = createAsyncThunk(
 
 export const updateTaskStatus = createAsyncThunk(
     'tasks/updateTaskStatus',
-    async ({ taskId, newStatus }, { rejectWithValue, dispatch }) => {
+    async ({ id, newStatus }, { rejectWithValue, dispatch }) => {
         try {
-            await api.updateTask(taskId, { status: newStatus });
-            console.log(`Task with ID ${taskId} status changed to ${newStatus}.`);
+            await api.updateTask(id, { status: newStatus });
+            console.log(`Task with ID ${id} status changed to ${newStatus}.`);
             await dispatch(getTasks());
-            return { taskId, newStatus };
+            return { id, newStatus };
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -161,7 +159,7 @@ export const taskSlice = createSlice({
         updateTask(state, action) {
             
         },
-
+        resetTasksState: () => initialState,
         selectTask(state, action) {
             state.selectedTaskId = action.payload;
             localStorage.setItem('selectedTaskId', JSON.stringify(action.payload));
@@ -189,6 +187,12 @@ export const taskSlice = createSlice({
                 state.isLoad = false;
             })
             .addCase(getTasks.rejected, (state) => {
+                state.tasks = {
+                    queue: [],
+                        dev: [],
+                            done: [],
+                                deleted: [],
+    },
                 state.isLoad = false;
             })
             .addCase(updateTaskStatus.fulfilled, (state, action) => {
@@ -211,7 +215,8 @@ export const {
     addTask, 
     removeTask, 
     updateTask, 
-    selectTask, 
+    selectTask,
+    resetTasksState, 
     resetSelectedTaskData,
     toggleQueueVisibility,
     toggleDevVisibility,

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { getOneTask, selectTask } from '../../store/slices/tasksSlice';
 import { ItemTypes } from '../../utils/constants';
-const TaskCard = forwardRef(({ title, priority, link, onClick, taskId, status }, ref) => {
+const TaskCard = forwardRef(({ title, priority, link, onClick, id, status }, ref) => {
   
   
 
@@ -17,16 +17,16 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, taskId, status },
   const dispatch = useDispatch();
   const openTaskPopupHandler = () => {
     onClick()
-    dispatch(selectTask(taskId))
-    // navigate(`/tasks/${taskId}`);
-    // dispatch(getOneTask(taskId))
+    dispatch(selectTask(id))
+    // navigate(`/tasks/${id}`);
+    // dispatch(getOneTask(id))
     
   };
 
     //
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.TASK_CARD,
-    item: { taskId, status },
+    item: { id, status },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),

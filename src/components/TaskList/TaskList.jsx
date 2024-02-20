@@ -20,15 +20,18 @@ const TaskList = ({ onClick, taskStatus }) => {
   const handleDragEnd = () => {
     setIsDragging(false);
   };
-  const handleDrop = (taskId, newStatus) => {
+  const handleDrop = (id, newStatus) => {
     // console.log('item dropped:', taskId);
-    dispatch(updateTaskStatus({ taskId, newStatus, taskStatus }));
+    dispatch(updateTaskStatus({ id, newStatus, taskStatus }));
   };
 
 
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TASK_CARD,
-    drop: (item) => handleDrop(item.taskId, taskStatus, item.status.stringValue),
+    drop: (item) => {
+      console.log(item); // Выводит содержимое объекта item в консоль
+      handleDrop(item.id, taskStatus, item.status.stringValue);
+    },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -55,25 +58,24 @@ const TaskList = ({ onClick, taskStatus }) => {
     }
   }, [dispatch, tasks, taskStatus]);
 
-  useEffect(() => {
-    console.log('Tasks updated:', tasks);
-  }, [tasks, taskStatus, filteredTasks]);
+  // useEffect(() => {
+  //   console.log('Tasks updated:', tasks);
+  // }, [tasks, taskStatus, filteredTasks]);
 
   return (
     <>
       {isLoading && <Loader />}
       <ul className={`taskList ${isOver || isDragging ? 'drag-over' : ''}`} ref={drop} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-        {filteredTasks.map((task) => console.log(task) || (
+        {filteredTasks.map((task) => (
           <TaskCard
-
-            key={task.id.stringValue}
+            key={task.id}
             title={task.title.stringValue}
             priority={task.priority.stringValue}
             status={taskStatus}
-            id={task.id.stringValue}
+            id={task.id}
             onClick={handleTaskClick}
             ref={(element) => {
-              refs[task.id.stringValue] = element;
+              refs[task.id] = element;
             }}
           />
         ))}

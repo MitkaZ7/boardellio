@@ -21,8 +21,24 @@ class Api {
     }
 
     updateTask(taskId, data) {
-        return instance.patch(`/tasks/${taskId}`, { fields: data });
+        // Подготовка данных для обновления
+        const requestData = {
+            fields: {
+                status: { stringValue: data.status },
+                // title: { stringValue: data.title },
+                // description: { stringValue: data.description },
+                // Другие поля...
+            }
+        };
+
+        // Формирование query string для параметра updateMask
+        const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
+
+        // Отправка PATCH запроса с добавлением параметра updateMask в URL
+        return instance.patch(`/tasks/${taskId}?${updateMaskQuery}`, requestData);
     }
+
+
 
     deleteTask(taskId) {
         return instance.delete(`/tasks/${taskId}`);

@@ -14,6 +14,26 @@ class Api {
             return { id: res.data.name.split('/').pop(), ...task };
         });
     }
+    // getTaskById(taskId) {
+    //     return instance.get(`/tasks/${taskId}`)
+    //         .then((res) => {
+    //             const taskData = res.data;
+    //             const taskId = taskData.name.split('/').pop();
+    //             const fields = taskData.fields || {}; // Обработка случая, если данных fields нет
+    //             const task = { id: taskId, ...fields };
+    //             return task;
+    //         })
+    //         .catch((error) => {
+    //             if (error.response && error.response.status === 404) {
+    //                 console.warn(`Задача с ID ${taskId} не найдена.`);
+    //                 return null; // Возвращаем null, если задача не найдена
+    //             } else {
+    //                 console.error('Ошибка при получении задачи:', error);
+    //                 throw error; // Выбрасываем ошибку для дальнейшей обработки
+    //             }
+    //         });
+    // }
+
 
     updateTask(taskId, data) {
         const requestData = {
@@ -42,34 +62,84 @@ class Api {
         const updateMaskQuery = 'updateMask.fieldPaths=deleted';
         return instance.patch(`/tasks/${taskId}?${updateMaskQuery}`, requestData);
     }
-
-
     getProjectTasks(projectId) {
-        return instance.post(':runQuery',{
+        return instance.post(':runQuery', {
             structuredQuery: {
                 from: [
-                   { collectionId: "tasks"}
+                    { collectionId: "tasks" }
                 ],
                 where: {
-                   fieldFilter: {
-                        field: { fieldPath: 'projectId' },
-                        op: 'EQUAL',
-                        value: {
-                            stringValue: projectId
-                        }
-                   }
+                    compositeFilter: {
+                        op: 'AND',
+                        filters: [
+                            {
+                                fieldFilter: {
+                                    field: { fieldPath: 'projectId' },
+                                    op: 'EQUAL',
+                                    value: {
+                                        stringValue: projectId
+                                    }
+                                }
+                            },
+                            {
+                                fieldFilter: {
+                                    field: { fieldPath: 'deleted' },
+                                    op: 'EQUAL',
+                                    value: { booleanValue: false }
+                                }
+                            }
+                            // {
+                            //     fieldFilter: {
+                            //         field: { fieldPath: 'deleted' },
+                            //         op: 'IS_NULL',
+                            //         value: {
+                            //             booleanValue: false
+                            //         }
+                            //     }
+                            // }
+                        ]
+                    }
+
+                    
                 }
             }
         })
             .then((res) => {
                 const data = res.data.map((item) => {
                     const id = item.document.name.split('/').pop();
-                    const fields = item.document.fields; 
-                    return { id, ...fields }; 
+                    const fields = item.document.fields;
+                    return { id, ...fields };
                 });
                 return data;
             });
     }
+    //без филтра "удаленных" задач
+    // getProjectTasks(projectId) {
+    //     return instance.post(':runQuery',{
+    //         structuredQuery: {
+    //             from: [
+    //                { collectionId: "tasks"}
+    //             ],
+    //             where: {
+    //                fieldFilter: {
+    //                     field: { fieldPath: 'projectId' },
+    //                     op: 'EQUAL',
+    //                     value: {
+    //                         stringValue: projectId
+    //                     }
+    //                }
+    //             }
+    //         }
+    //     })
+    //         .then((res) => {
+    //             const data = res.data.map((item) => {
+    //                 const id = item.document.name.split('/').pop();
+    //                 const fields = item.document.fields; 
+    //                 return { id, ...fields }; 
+    //             });
+    //             return data;
+    //         });
+    // }
 
     getProjects() {
         return instance.get('/projects')

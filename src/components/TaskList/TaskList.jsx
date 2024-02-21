@@ -49,6 +49,12 @@ const TaskList = ({ onClick, taskStatus }) => {
     dispatch(selectTask(selectedTaskId))
     onClick();
   };
+  // const handleTaskClick = (taskId) => {
+  //   openTaskPopupHandler(taskId); // Передаем taskId в openTaskPopupHandler
+  //   dispatch(selectTask(taskId));
+  //   onClick();
+  // };
+
 
 
 

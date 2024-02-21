@@ -10,19 +10,19 @@ const TaskPopup = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    console.log(selectedTaskId)
+    // console.log(selectedTaskId)
     // dispatch(resetSelectedTaskData()); // Сброс данных перед загрузкой новой задачи
     dispatch(getOneTask(selectedTaskId));
   }, [dispatch, selectedTaskId]);
   const handleClosePopup = () => {
-    dispatch(resetSelectedTaskData()); // Сброс данных задачи при закрытии попапа
+    // dispatch(resetSelectedTaskData()); // Сброс данных задачи при закрытии попапа
     dispatch(closePopup());
   };
 
 
   return (
     <Popup onCLose={handleClosePopup}>
-      <Task popupData={selectedTaskId}/>
+      <Task taskId={selectedTaskId}/>
     </Popup>
   )
 }

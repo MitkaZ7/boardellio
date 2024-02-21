@@ -17,9 +17,10 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, id, status }, ref
   const dispatch = useDispatch();
   const openTaskPopupHandler = () => {
     onClick()
+    console.log(id)
     dispatch(selectTask(id))
-    // navigate(`/tasks/${id}`);
-    // dispatch(getOneTask(id))
+    // navigate(`/tasks/${taskId}`);
+    dispatch(getOneTask(id))
     
   };
 
@@ -42,7 +43,6 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, id, status }, ref
         ref(element);
         drag(element);
       }}
-      // ref={drag}
       >
         <a href={link} className="task-item__link">
           <span className="task-item__title" title={title}>{title}</span>

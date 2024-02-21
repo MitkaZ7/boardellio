@@ -1,22 +1,21 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeTask, logicDeleteTask, deleteTask } from '../../store/slices/tasksSlice';
+import { removeTask, logicDeleteTask, deleteTask,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
 import { closePopup } from '../../store/slices/popupSlice';
 
 const Task = ({ taskId }) => {
   const dispatch = useDispatch();
-  const { selectedTaskData, selectedTaskId } = useSelector(state => state.tasks)
+  const { tasks,selectedTaskData, selectedTaskId } = useSelector(state => state.tasks)
   const handleRemoveTask = () => {
     dispatch(logicDeleteTask(selectedTaskId))
-      .then(() => dispatch(closePopup()));
+      .then(() => dispatch(closePopup()))
+      .then(()=> dispatch(getTasks()));
 
    
   };
 
-  useEffect(() => {
-    console.log(selectedTaskData)
-  }, [])
+  
 
   // const { 
   //   status, 
@@ -31,7 +30,7 @@ const Task = ({ taskId }) => {
       <article className='task__content'>
         <header className='task__header'>
           <span className='task__metadata-item task__number'>№: </span>
-          <h3>{selectedTaskData.title.stringValue}</h3>
+          <h3></h3>
           <div className='task__metadata-parametres'>
             <span className='task__metadata-item task__priority'>&nbsp;proirity: </span>
 

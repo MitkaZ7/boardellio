@@ -16,7 +16,7 @@ const getInitialSelectedTask = () => {
 const initialState = {
     isLoad: false,
     selectedTaskId: null,
-    selectedTaskData: getInitialSelectedTask(),
+    selectedTaskData: null,
     tasks: {
         queue: [],
         dev: [],
@@ -34,12 +34,19 @@ const initialState = {
 export const getOneTask = createAsyncThunk(
     'tasks/getOneTask',
     async (taskId, { rejectWithValue, dispatch }) => {
-        dispatch(showLoader());
+        // dispatch(showLoader());
+        console.log(taskId)
         try {
+            
             const task = await api.getTaskById(taskId);
-            dispatch(hideLoader());
-            return task;
+           if (task) {
+               console.log(taskId)
+
+               dispatch(hideLoader());
+               return task;
+           }
         } catch (error) {
+            dispatch(hideLoader());
             return rejectWithValue(error.message);
         }
     }
@@ -52,9 +59,17 @@ export const getTasks = createAsyncThunk(
         try {
             const currentProjectId = getState().projects.selectedProject.projectId;
             const tasksList = await api.getProjectTasks(currentProjectId);
-            const categorizedTasks = await categorizeTasks(tasksList);
-            dispatch(hideLoader());
-            return categorizedTasks;
+            if (tasksList) {
+                const categorizedTasks = await categorizeTasks(tasksList);
+                dispatch(hideLoader());
+                return categorizedTasks;
+            } else {
+                dispatch(hideLoader());
+                return
+            }
+            
+            
+            
             
         } catch (error) {
             dispatch(hideLoader());
@@ -116,7 +131,6 @@ export const updateTaskStatus = createAsyncThunk(
         }
     }
 );
-
 
 const categorizeTasks = (tasksList) => {
     const categorizedTasks = {
@@ -182,6 +196,9 @@ export const taskSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getTasks.pending, (state) => {
+                state.isLoad = true;
+            })
+            .addCase(getOneTask.pending, (state) => {
                 state.isLoad = true;
             })
             .addCase(getTasks.fulfilled, (state, action) => {

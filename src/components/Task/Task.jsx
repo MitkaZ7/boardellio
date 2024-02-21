@@ -1,18 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { removeTask, logicDeleteTask, deleteTask,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
 import { closePopup } from '../../store/slices/popupSlice';
+import Tooltip from '../Tooltip/Tooltip'
 
 const Task = ({ taskId }) => {
   const dispatch = useDispatch();
-  const { tasks,selectedTaskData, selectedTaskId } = useSelector(state => state.tasks)
+  const { tasks,selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
+  // const [isDeleted, setIsDeleted] = useState(false);
+  // const [isShown, setIsShown] = useState(false);
   const handleRemoveTask = () => {
+    // setIsDeleted(!isDeleted);
     dispatch(logicDeleteTask(selectedTaskId))
       .then(() => dispatch(closePopup()))
       .then(()=> dispatch(getTasks()));
 
-   
   };
 
   
@@ -26,6 +29,8 @@ const Task = ({ taskId }) => {
   // } = selectedTaskData;
 
   return (
+    <>
+      {/* {isDeleted && <Tooltip isShown={isShown} messageText={'SUCCESS DELETE'} messageType={'Alert'} />} */}
     <li className='task'>
       <article className='task__content'>
         <header className='task__header'>
@@ -74,6 +79,7 @@ const Task = ({ taskId }) => {
         {/* <button onClick={handleRemoveTask}>Remove task</button> */}
       </article>
     </li>
+    </>
   )
 }
 

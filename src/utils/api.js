@@ -6,8 +6,34 @@ const instance = axios.create({
 });
 
 class Api {
+    // createTask(data) {
+    //     return instance.post('/tasks', { fields: data });
+    // }
+
     createTask(data) {
-        return instance.post('/tasks', { fields: data });
+        const requestData = {
+            fields: {
+                title: { stringValue: data.title },
+                author: { stringValue: data.author },
+                status: { stringValue: data.status },
+                description: { stringValue: data.description },
+                priority: { stringValue: data.priority },
+                projectId: { stringValue: data.projectId },
+                isCompleted: { booleanValue: data.isCompleted },
+                deleted: { booleanValue: data.deleted }, 
+                
+            }
+        };
+
+        return instance.post('/tasks', requestData)
+            .then((res) => {
+                console.log('Задача создана:', res.data);
+                return res.data;
+            })
+            .catch((error) => {
+                console.error('Ошибка при создании задачи', error);
+                throw error;
+            });
     }
 
     getTaskById(taskId) {
@@ -147,6 +173,8 @@ class Api {
                 id: doc.name.split('/').pop(),
                 ...doc.fields,
             }));
+            console.log(data)
+
             return data;
         });
     }
@@ -163,11 +191,11 @@ class Api {
         return instance.post('/projects', requestData)
             .then((res) => {
                 console.log('Проект успешно создан:', res.data);
-                return res.data; // возвращаем данные созданного проекта
+                return res.data; 
             })
             .catch((error) => {
                 console.error('Ошибка при создании проекта:', error);
-                throw error; // выбрасываем ошибку для дальнейшей обработки
+                throw error; 
             });
     }
 

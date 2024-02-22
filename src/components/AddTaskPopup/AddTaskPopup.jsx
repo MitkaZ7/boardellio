@@ -8,7 +8,8 @@ import { createTaskSchema } from '../../utils/validation';
 const AddTaskPopup = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.popup.isOpen);
-  const projects = useSelector((state) => state.projects.projects);
+  const { projects, isLoad } = useSelector(state => state.projects);
+
   const [isProjectsLoaded, setIsProjectsLoaded] = useState(false);
 
   const onClose = () => {

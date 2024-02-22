@@ -10,8 +10,9 @@ import { getTasks } from '../../store/slices/tasksSlice';
 
 
 const Form = ({ projects, validationSchema }) => {
-    const { selectedProject } = useSelector(state => state.projects)
-    const [selectedProjectId, setSelectedProjectId] = useState(selectedProject ? selectedProject.projectId : '' )
+    const { email } = useSelector(state => state.user.user)
+    const { selectedProject } = useSelector(state => state.projects);
+    const [selectedProjectId, setSelectedProjectId] = useState(selectedProject ? selectedProject.projectId : '' );
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const { register,
@@ -29,9 +30,9 @@ const Form = ({ projects, validationSchema }) => {
         const reselectedProjectId = event.target.value;
         setSelectedProjectId(reselectedProjectId);
     }
-    useEffect(() => {
-        console.log(selectedProjectId)
-    }, [])
+    // useEffect(() => {
+    //     console.log(email)
+    // }, [])
     
     const onSubmit = async (data) => {
         console.log(data)
@@ -43,9 +44,9 @@ const Form = ({ projects, validationSchema }) => {
                 description: data.description,
                 priority: data.priority,
                 projectId: selectedProjectId,
-                author: '',
-                executor: '',
-                number: '',
+                author: email,
+                deleted: false,
+                
             })
         )
             .then(() => dispatch(getTasks()))
@@ -61,17 +62,15 @@ const Form = ({ projects, validationSchema }) => {
 
                 <select
                     className="form__select"
-                    {...register('project')}
+                    {...register('projectId')}
                     onChange={reselectProjectHandler}
-                    defaultValue={selectedProject.projectId}
+                    defaultValue={selectedProjectId}
                 >
-
-                    {Object.entries(projects).map(([projectId, projectData]) => (
-
-                        <option key={projectData.id} value={projectData.id}>
-                            {projectData.title}
-                        </option>
-                    ))}
+                    {
+                        projects.map((project)=> (
+                            <option key={project.id} value={project.id}>{project.title.stringValue}</option>
+                        ))
+                    }
                 </select>
                 <select className="form__select" {...register('priority')} >
                     <option value="usual">{t('add-task-priority-select-placeholder')}</option>

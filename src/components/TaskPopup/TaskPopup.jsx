@@ -6,7 +6,7 @@ import { closePopup } from '../../store/slices/popupSlice';
 import { getOneTask } from '../../store/slices/tasksSlice';
 
 const TaskPopup = () => {
-  const { selectedTaskId } = useSelector(state => state.tasks);
+  const { selectedTaskId, selectedTaskData } = useSelector(state => state.tasks);
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -19,9 +19,14 @@ const TaskPopup = () => {
   };
 
   return (
-    <Popup onCLose={handleClosePopup}>
-      <Task taskId={selectedTaskId}/>
-    </Popup>
+    <>
+      {selectedTaskData && (
+        <Popup onCLose={handleClosePopup}>
+        <Task taskId={selectedTaskId} />
+      </Popup>
+      )}
+    
+    </>
   )
 }
 

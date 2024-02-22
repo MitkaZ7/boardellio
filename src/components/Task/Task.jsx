@@ -29,7 +29,6 @@ const Task = ({ taskId }) => {
     };
   }, [dispatch, selectedTaskId]);
 
-
   return (
     
     <>
@@ -47,7 +46,7 @@ const Task = ({ taskId }) => {
         </header>
         <section className='task__metadata-block metadata-block'>
           <div className='task__metadata-dates'>
-            <span className='task__metadata-item task__creation-date'>Created: 27-11-2022&nbsp;</span>
+                <span className='task__metadata-item task__creation-date'>Created: {selectedTaskData.createTime}&nbsp;</span>
             <span className='task__metadata-item task__spent-time'>In work for: 1 day</span>
             <span className='task__metadata-item task__finish-date'>&nbsp;Done: 02-12-2022</span>
           </div>

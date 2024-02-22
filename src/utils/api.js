@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { notDeletedProjecTasks } from './firebase'
+import { formateDate } from '../utils/formateDate'
 const instance = axios.create({
     baseURL: 'https://firestore.googleapis.com/v1/projects/dashboard-app-2ad06/databases/(default)/documents',
 });
@@ -12,9 +13,15 @@ class Api {
     getTaskById(taskId) {
         return instance.get(`/tasks/${taskId}`).then((res) => {
             const task = res.data.fields;
-            return { id: res.data.name.split('/').pop(), ...task };
+            // Возвращаем объект задачи с добавленным полем createTime
+            return {
+                id: res.data.name.split('/').pop(),
+                ...task,
+                createTime: formateDate(res.data.createTime) // Получаем время создания из ответа API
+            };
         });
     }
+
     // getTaskById(taskId) {
     //     return instance.get(`/tasks/${taskId}`)
     //         .then((res) => {

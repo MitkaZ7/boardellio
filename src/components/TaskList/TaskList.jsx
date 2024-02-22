@@ -9,6 +9,8 @@ import { ItemTypes } from '../../utils/constants';
 
 const TaskList = ({ onClick, taskStatus }) => {
   const { tasks } = useSelector((state) => state.tasks);
+  const { selectedTaskId } = useSelector((state) => state.tasks);
+
   const filteredTasks = tasks[taskStatus] || [];
   const [isDragging, setIsDragging] = useState(false);
   const refs = useRef({});
@@ -38,7 +40,7 @@ const TaskList = ({ onClick, taskStatus }) => {
   });
 
   const { isLoading } = useSelector((state) => state.loader);
-  const { selectedTaskId } = useSelector((state) => state.tasks);
+  // const { selectedTaskId } = useSelector((state) => state.tasks);
 
   const openTaskPopupHandler = () => {
     openCustomPopup(dispatch, 'TaskPopup');
@@ -46,7 +48,6 @@ const TaskList = ({ onClick, taskStatus }) => {
 
   const handleTaskClick = () => {
     openTaskPopupHandler(selectedTaskId);
-    dispatch(selectTask(selectedTaskId))
     onClick();
   };
   // const handleTaskClick = (taskId) => {

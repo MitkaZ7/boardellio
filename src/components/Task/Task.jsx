@@ -1,45 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeTask, logicDeleteTask, deleteTask,getTasks } from '../../store/slices/tasksSlice';
+import { getOneTask, logicDeleteTask, deleteTask,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
 import { closePopup } from '../../store/slices/popupSlice';
 import Tooltip from '../Tooltip/Tooltip'
+import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
+
 
 const Task = ({ taskId }) => {
   const dispatch = useDispatch();
-  const { tasks,selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
-  // const [isDeleted, setIsDeleted] = useState(false);
-  // const [isShown, setIsShown] = useState(false);
+  const { selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
+
   const handleRemoveTask = () => {
-    // setIsDeleted(!isDeleted);
     dispatch(logicDeleteTask(selectedTaskId))
       .then(() => dispatch(closePopup()))
       .then(()=> dispatch(getTasks()));
 
   };
+  useEffect(() => {
+    if (selectedTaskId) {
+      dispatch(showLoader());
+      dispatch(getOneTask(selectedTaskId))
+        .then(() => dispatch(hideLoader()))
+        .catch(() => dispatch(hideLoader()));
+    }
+  }, [dispatch, selectedTaskId]);
 
-  
-
-  // const { 
-  //   status, 
-  //   priority, 
-  //   title,
-  //   number,
-  //   description,
-  // } = selectedTaskData;
 
   return (
+    
     <>
-      {/* {isDeleted && <Tooltip isShown={isShown} messageText={'SUCCESS DELETE'} messageType={'Alert'} />} */}
+      {selectedTaskData && (
     <li className='task'>
       <article className='task__content'>
         <header className='task__header'>
           <span className='task__metadata-item task__number'>№: </span>
-          <h3></h3>
+            <h3>{selectedTaskData.title.stringValue}</h3>
           <div className='task__metadata-parametres'>
-            <span className='task__metadata-item task__priority'>&nbsp;proirity: </span>
+                <span className='task__metadata-item task__priority'>&nbsp;proirity: {selectedTaskData.priority.stringValue}</span>
 
-            <span className='task__metadata-item task__status'>&nbsp;status: </span>
+                <span className='task__metadata-item task__status'>&nbsp;status: {selectedTaskData.status.stringValue}</span>
           </div>
         </header>
         <section className='task__metadata-block metadata-block'>
@@ -54,7 +54,7 @@ const Task = ({ taskId }) => {
             </div>
         </section>
         <p className='task__text'>
-        
+              {selectedTaskData.description.stringValue}
         </p>
 
         {/* <section className='task__subtasks subtasks'>
@@ -79,6 +79,7 @@ const Task = ({ taskId }) => {
         {/* <button onClick={handleRemoveTask}>Remove task</button> */}
       </article>
     </li>
+      )}
     </>
   )
 }

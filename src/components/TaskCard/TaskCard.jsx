@@ -1,7 +1,7 @@
 import React, { useEffect, forwardRef } from 'react';
 import { useDrag } from 'react-dnd';
 import { itemTypes } from '../../utils/constants';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { openTaskPopup } from '../../store/slices/popupSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 import { getOneTask, selectTask } from '../../store/slices/tasksSlice';
 import { ItemTypes } from '../../utils/constants';
 const TaskCard = forwardRef(({ title, priority, link, onClick, id, status }, ref) => {
-  
+  const { tasks, selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
+
   
 
 
@@ -17,11 +18,11 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, id, status }, ref
   const dispatch = useDispatch();
   const openTaskPopupHandler = () => {
     onClick()
-    console.log(id)
     dispatch(selectTask(id))
     // navigate(`/tasks/${taskId}`);
-    dispatch(getOneTask(id))
-    
+    // dispatch(getOneTask(id))
+    // console.log(selectedTaskData)
+
   };
 
     //

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { notDeletedProjecTasks } from './firebase'
 const instance = axios.create({
     baseURL: 'https://firestore.googleapis.com/v1/projects/dashboard-app-2ad06/databases/(default)/documents',
 });
@@ -88,15 +89,6 @@ class Api {
                                     value: { booleanValue: false }
                                 }
                             }
-                            // {
-                            //     fieldFilter: {
-                            //         field: { fieldPath: 'deleted' },
-                            //         op: 'IS_NULL',
-                            //         value: {
-                            //             booleanValue: false
-                            //         }
-                            //     }
-                            // }
                         ]
                     }
 

@@ -33,22 +33,14 @@ const initialState = {
 
 export const getOneTask = createAsyncThunk(
     'tasks/getOneTask',
-    async (taskId, { rejectWithValue, dispatch }) => {
-        // dispatch(showLoader());
-        console.log(taskId)
-        try {
-            
-            const task = await api.getTaskById(taskId);
-           if (task) {
-               console.log(taskId)
-
-               dispatch(hideLoader());
-               return task;
-           }
-        } catch (error) {
-            dispatch(hideLoader());
-            return rejectWithValue(error.message);
-        }
+    (taskId, { rejectWithValue, dispatch }) => {
+        return api.getTaskById(taskId)
+            .then(task => {
+                return task;
+            })
+            .catch(error => {
+                throw error;
+            });
     }
 );
 
@@ -66,11 +58,7 @@ export const getTasks = createAsyncThunk(
             } else {
                 dispatch(hideLoader());
                 return
-            }
-            
-            
-            
-            
+            } 
         } catch (error) {
             dispatch(hideLoader());
             return rejectWithValue(error.message);
@@ -173,6 +161,9 @@ export const taskSlice = createSlice({
         updateTask(state, action) {
             
         },
+        setTaskData(state, action) {
+            state.selectedTaskData = action.payload;
+        },
         resetTasksState(state) {
             state.tasks = initialState.tasks;
         },
@@ -225,6 +216,7 @@ export const taskSlice = createSlice({
                 };
             })
             .addCase(getOneTask.fulfilled, (state, action) => {
+  
                 state.selectedTaskData = action.payload;
             });
     },

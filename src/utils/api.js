@@ -1,23 +1,85 @@
 import axios from 'axios';
-
+import { notDeletedProjecTasks } from './firebase'
+import { formateDate } from '../utils/formateDate'
 const instance = axios.create({
     baseURL: 'https://firestore.googleapis.com/v1/projects/dashboard-app-2ad06/databases/(default)/documents',
 });
 
 class Api {
+    // createTask(data) {
+    //     return instance.post('/tasks', { fields: data });
+    // }
+
     createTask(data) {
-        return instance.post('/tasks', { fields: data });
+        const requestData = {
+            fields: {
+                title: { stringValue: data.title },
+                author: { stringValue: data.author },
+                status: { stringValue: data.status },
+                description: { stringValue: data.description },
+                priority: { stringValue: data.priority },
+                projectId: { stringValue: data.projectId },
+                isCompleted: { booleanValue: data.isCompleted },
+                deleted: { booleanValue: data.deleted }, 
+                
+            }
+        };
+
+        return instance.post('/tasks', requestData)
+            .then((res) => {
+                console.log('Задача создана:', res.data);
+                return res.data;
+            })
+            .catch((error) => {
+                console.error('Ошибка при создании задачи', error);
+                throw error;
+            });
     }
 
     getTaskById(taskId) {
         return instance.get(`/tasks/${taskId}`).then((res) => {
             const task = res.data.fields;
-            return { id: res.data.name.split('/').pop(), ...task };
+            // Возвращаем объект задачи с добавленным полем createTime
+            return {
+                id: res.data.name.split('/').pop(),
+                ...task,
+                createTime: formateDate(res.data.createTime) // Получаем время создания из ответа API
+            };
         });
     }
 
+    // getTaskById(taskId) {
+    //     return instance.get(`/tasks/${taskId}`)
+    //         .then((res) => {
+    //             const taskData = res.data;
+    //             const taskId = taskData.name.split('/').pop();
+    //             const fields = taskData.fields || {}; // Обработка случая, если данных fields нет
+    //             const task = { id: taskId, ...fields };
+    //             return task;
+    //         })
+    //         .catch((error) => {
+    //             if (error.response && error.response.status === 404) {
+    //                 console.warn(`Задача с ID ${taskId} не найдена.`);
+    //                 return null; // Возвращаем null, если задача не найдена
+    //             } else {
+    //                 console.error('Ошибка при получении задачи:', error);
+    //                 throw error; // Выбрасываем ошибку для дальнейшей обработки
+    //             }
+    //         });
+    // }
+
+
     updateTask(taskId, data) {
-        return instance.patch(`/tasks/${taskId}`, { fields: data });
+        const requestData = {
+            fields: {
+                status: { stringValue: data.status },
+                // title: { stringValue: data.title },
+                // description: { stringValue: data.description },
+            }
+        };
+        // Формирование query string для параметра updateMask
+        const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
+        return instance.patch(`/tasks/${taskId}?${updateMaskQuery}`, requestData);
     }
 
     deleteTask(taskId) {
@@ -25,39 +87,119 @@ class Api {
     }
 
     logicDeleteTask(taskId) {
-        return instance.patch(`/tasks/${taskId}`, { fields: { deleted: true } });
+        const requestData = {
+            fields: {
+                deleted: { booleanValue: true }
+            }
+        };
+        // Формирование query string для параметра updateMask
+        const updateMaskQuery = 'updateMask.fieldPaths=deleted';
+        return instance.patch(`/tasks/${taskId}?${updateMaskQuery}`, requestData);
     }
-
     getProjectTasks(projectId) {
-        return instance
-            .get('/tasks', {
-                params: {
-                    orderBy: 'projectId',
-                    equalTo: projectId,
-                },
-            })
+        return instance.post(':runQuery', {
+            structuredQuery: {
+                from: [
+                    { collectionId: "tasks" }
+                ],
+                where: {
+                    compositeFilter: {
+                        op: 'AND',
+                        filters: [
+                            {
+                                fieldFilter: {
+                                    field: { fieldPath: 'projectId' },
+                                    op: 'EQUAL',
+                                    value: {
+                                        stringValue: projectId
+                                    }
+                                }
+                            },
+                            {
+                                fieldFilter: {
+                                    field: { fieldPath: 'deleted' },
+                                    op: 'EQUAL',
+                                    value: { booleanValue: false }
+                                }
+                            }
+                        ]
+                    }
+
+                    
+                }
+            }
+        })
             .then((res) => {
-                const data = res.data.documents.map((doc) => ({
-                    id: doc.name.split('/').pop(),
-                    ...doc.fields,
-                }));
+                const data = res.data.map((item) => {
+                    const id = item.document.name.split('/').pop();
+                    const fields = item.document.fields;
+                    return { id, ...fields };
+                });
                 return data;
             });
     }
+    //без филтра "удаленных" задач
+    // getProjectTasks(projectId) {
+    //     return instance.post(':runQuery',{
+    //         structuredQuery: {
+    //             from: [
+    //                { collectionId: "tasks"}
+    //             ],
+    //             where: {
+    //                fieldFilter: {
+    //                     field: { fieldPath: 'projectId' },
+    //                     op: 'EQUAL',
+    //                     value: {
+    //                         stringValue: projectId
+    //                     }
+    //                }
+    //             }
+    //         }
+    //     })
+    //         .then((res) => {
+    //             const data = res.data.map((item) => {
+    //                 const id = item.document.name.split('/').pop();
+    //                 const fields = item.document.fields; 
+    //                 return { id, ...fields }; 
+    //             });
+    //             return data;
+    //         });
+    // }
 
     getProjects() {
-        return instance.get('/projects').then((res) => {
+        return instance.get('/projects')
+        .then((res) => {
             const data = res.data.documents.map((doc) => ({
                 id: doc.name.split('/').pop(),
                 ...doc.fields,
             }));
+            console.log(data)
+
             return data;
         });
     }
 
     createProject(data) {
-        return instance.post('/projects', { fields: data });
+        const requestData = {
+            fields: {
+                title: { stringValue: data.title },
+                taskQty: { integerValue: data.taskQty },
+                author: { stringValue: data.author }
+            }
+        };
+
+        return instance.post('/projects', requestData)
+            .then((res) => {
+                console.log('Проект успешно создан:', res.data);
+                return res.data; 
+            })
+            .catch((error) => {
+                console.error('Ошибка при создании проекта:', error);
+                throw error; 
+            });
     }
+
+
 
     getOneProjectById(id) {
         return instance.get(`/projects/${id}`).then((res) => {
@@ -69,127 +211,3 @@ class Api {
 
 const api = new Api(instance);
 export default api;
-
-
-
-// import axios from 'axios';
-// const instance = axios.create({
-//     // baseURL: 'https://firestore.googleapis.com/v1/projects/5gQDAEARpTvSRsch9nN5/databases/(default)/documents',
-//     baseURL: 'https://dashboard-app-2ad06-default-rtdb.europe-west1.firebasedatabase.app',
-//     // headers: {
-//     //     Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
-//     // }
-// })
-// class Api {
-//     createTask(data) {
-//         console.log(JSON.stringify(data))
-//         return instance.post('/tasks.json' , data)
-//     }
-//     getTaskById(taskId) {
-//         return instance
-//             .get(`/tasks/${taskId}.json`)
-//             .then((res) => {
-//                 const task = res.data;
-//                 return task;
-//             });
-//     }
-
-//     updateTask(taskId, data) {
-//         // console.log(data);
-//         return instance
-//             .patch(`/tasks/${taskId}.json`, data)  // Передаем данные в теле запроса
-//             .then((res) => {
-//                 const task = res.data;
-//                 return task;
-//             })
-//             .catch((error) => {
-//                 console.error('Error updating task:', error);
-//                 throw error;  
-//             });
-//     }
-
-//     deleteTask(taskId) {
-//         return instance
-//             .delete(`/tasks/${taskId}.json`)
-//             .then((res) => {
-//                 console.log(`Task with ID ${taskId} deleted successfully.`);
-//                 return res.data;
-//             })
-//             .catch((error) => {
-//                 console.error(`Error deleting task with ID ${taskId}:`, error);
-//                 throw error;
-//             });
-//     }
-//     logicDeleteTask(taskId) {
-//         return instance
-//             .patch(`/tasks/${taskId}.json`, { deleted: true })
-//             .then((res) => {
-//                 const task = res.data;
-//                 console.log(task);
-//                 return task;
-//             })
-//     }
-//     getProjectTasks(projectId, deleted = false) {
-//         return instance
-//             .get('/tasks.json', {
-//             params: {
-//                 orderBy: '"projectId"',
-//                 equalTo: `"${projectId}"`,
-         
-//             }
-//             })
-//             .then((res) => {
-               
-//                 const {data} = res;
-//                 console.log(data)
-//                 return data
-//             });
-//     }
-//     // getProjectTasks(projectId) {
-//     //     return instance
-//     //         .get(`/tasks?orderBy=projectId&equalTo=${projectId}`)
-//     //         .then((res) => {
-//     //             const data = res.data.documents.map(doc => {
-//     //                 return {
-//     //                     id: doc.name.split('/').pop(),
-//     //                     ...doc.fields
-//     //                 };
-//     //             });
-//     //             return data;
-//     //         });
-//     // }
-//     getProjects() {
-//         return instance.get('/projects.json')
-//             .then(res => {
-//                 const { data } = res;
-//                 return data
-//             })
-//     }
-//     createProject(data) {
-//         return instance.post('/projects.json', data);
-//     }
-//     getOneProjectById(id) {
-//         return instance.get(`/projects/${id}.json`)
-//             .then((res) => {
-//                 const project = res.data;
-//                 console.log(project);
-//                 return project;
-//             });
-//     }
-//     // getProjectById(projectId) {
-//     //     return instance.get('/projects.json', {
-//     //         params: {
-//     //             orderBy: '"projectId"',
-//     //             equalTo: `"${projectId}"`
-//     //         }
-//     //     })
-//     //         .then((res) => {
-//     //             const { data } = res;
-//     //             return data
-//     //         });
-//     // }
-
-// }
-
-// const api = new Api(instance);
-// export default api;

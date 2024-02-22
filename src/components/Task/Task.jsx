@@ -1,46 +1,52 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeTask, logicDeleteTask, deleteTask } from '../../store/slices/tasksSlice';
+import { getOneTask, logicDeleteTask, resetSelectedTaskData,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
 import { closePopup } from '../../store/slices/popupSlice';
+import Tooltip from '../Tooltip/Tooltip'
+import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
+
 
 const Task = ({ taskId }) => {
   const dispatch = useDispatch();
-  const { selectedTaskData, selectedTaskId } = useSelector(state => state.tasks)
+  const { selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
+
   const handleRemoveTask = () => {
     dispatch(logicDeleteTask(selectedTaskId))
-      .then(() => dispatch(closePopup()));
+      .then(() => dispatch(closePopup()))
+      .then(()=> dispatch(getTasks()));
 
-   
   };
-
   useEffect(() => {
-    console.log(selectedTaskId)
-  }, [])
-
-  const { 
-    status, 
-    priority, 
-    title,
-    number,
-    description,
-  } = selectedTaskData;
+    if (selectedTaskId) {
+      dispatch(showLoader());
+      dispatch(getOneTask(selectedTaskId))
+        .then(() => dispatch(hideLoader()))
+        .catch(() => dispatch(hideLoader()));
+    }
+    return () => {
+      dispatch(resetSelectedTaskData());
+    };
+  }, [dispatch, selectedTaskId]);
 
   return (
+    
+    <>
+      {selectedTaskData && (
     <li className='task'>
       <article className='task__content'>
         <header className='task__header'>
-          <span className='task__metadata-item task__number'>№: {number}</span>
-          <h3>{title}</h3>
+          <span className='task__metadata-item task__number'>№: </span>
+            <h3>{selectedTaskData.title.stringValue}</h3>
           <div className='task__metadata-parametres'>
-            <span className='task__metadata-item task__priority'>&nbsp;proirity: {priority}</span>
+                <span className='task__metadata-item task__priority'>&nbsp;proirity: {selectedTaskData.priority.stringValue}</span>
 
-            <span className='task__metadata-item task__status'>&nbsp;status: {status}</span>
+                <span className='task__metadata-item task__status'>&nbsp;status: {selectedTaskData.status.stringValue}</span>
           </div>
         </header>
         <section className='task__metadata-block metadata-block'>
           <div className='task__metadata-dates'>
-            <span className='task__metadata-item task__creation-date'>Created: 27-11-2022&nbsp;</span>
+                <span className='task__metadata-item task__creation-date'>Created: {selectedTaskData.createTime}&nbsp;</span>
             <span className='task__metadata-item task__spent-time'>In work for: 1 day</span>
             <span className='task__metadata-item task__finish-date'>&nbsp;Done: 02-12-2022</span>
           </div>
@@ -50,7 +56,7 @@ const Task = ({ taskId }) => {
             </div>
         </section>
         <p className='task__text'>
-          {description}
+              {selectedTaskData.description.stringValue}
         </p>
 
         {/* <section className='task__subtasks subtasks'>
@@ -75,6 +81,8 @@ const Task = ({ taskId }) => {
         {/* <button onClick={handleRemoveTask}>Remove task</button> */}
       </article>
     </li>
+      )}
+    </>
   )
 }
 

@@ -9,33 +9,38 @@ import { ItemTypes } from '../../utils/constants';
 
 const TaskList = ({ onClick, taskStatus }) => {
   const { tasks } = useSelector((state) => state.tasks);
+  const { selectedTaskId } = useSelector((state) => state.tasks);
+
   const filteredTasks = tasks[taskStatus] || [];
   const [isDragging, setIsDragging] = useState(false);
   const refs = useRef({});
   const dispatch = useDispatch();
-const handleDragStart = () => {
+  const handleDragStart = () => {
     setIsDragging(true);
   };
 
   const handleDragEnd = () => {
     setIsDragging(false);
   };
-  const handleDrop = (taskId, newStatus) => {
+  const handleDrop = (id, newStatus) => {
     // console.log('item dropped:', taskId);
-    dispatch(updateTaskStatus({ taskId, newStatus, taskStatus }));
+    dispatch(updateTaskStatus({ id, newStatus, taskStatus }));
   };
 
 
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TASK_CARD,
-    drop: (item) => handleDrop(item.taskId, taskStatus, item.status),
+    drop: (item) => {
+      console.log(item); // Выводит содержимое объекта item в консоль
+      handleDrop(item.id, taskStatus, item.status.stringValue);
+    },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   });
 
   const { isLoading } = useSelector((state) => state.loader);
-  const { selectedTaskId } = useSelector((state) => state.tasks);
+  // const { selectedTaskId } = useSelector((state) => state.tasks);
 
   const openTaskPopupHandler = () => {
     openCustomPopup(dispatch, 'TaskPopup');
@@ -43,9 +48,14 @@ const handleDragStart = () => {
 
   const handleTaskClick = () => {
     openTaskPopupHandler(selectedTaskId);
-    dispatch(selectTask(selectedTaskId))
     onClick();
   };
+  // const handleTaskClick = (taskId) => {
+  //   openTaskPopupHandler(taskId); // Передаем taskId в openTaskPopupHandler
+  //   dispatch(selectTask(taskId));
+  //   onClick();
+  // };
+
 
 
 
@@ -55,9 +65,9 @@ const handleDragStart = () => {
     }
   }, [dispatch, tasks, taskStatus]);
 
-  useEffect(() => {
-    // console.log('Tasks updated:', tasks);
-  }, [tasks, taskStatus, filteredTasks]);
+  // useEffect(() => {
+  //   console.log('Tasks updated:', tasks);
+  // }, [tasks, taskStatus, filteredTasks]);
 
   return (
     <>
@@ -65,15 +75,14 @@ const handleDragStart = () => {
       <ul className={`taskList ${isOver || isDragging ? 'drag-over' : ''}`} ref={drop} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         {filteredTasks.map((task) => (
           <TaskCard
-
-            key={task.taskId}
-            title={task.title}
-            priority={task.priority}
+            key={task.id}
+            title={task.title.stringValue}
+            priority={task.priority.stringValue}
             status={taskStatus}
-            taskId={task.taskId}
+            id={task.id}
             onClick={handleTaskClick}
             ref={(element) => {
-              refs[task.taskId] = element;
+              refs[task.id] = element;
             }}
           />
         ))}

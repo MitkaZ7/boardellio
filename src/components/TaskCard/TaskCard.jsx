@@ -1,15 +1,16 @@
 import React, { useEffect, forwardRef } from 'react';
 import { useDrag } from 'react-dnd';
 import { itemTypes } from '../../utils/constants';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { openTaskPopup } from '../../store/slices/popupSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { getOneTask, selectTask } from '../../store/slices/tasksSlice';
 import { ItemTypes } from '../../utils/constants';
-const TaskCard = forwardRef(({ title, priority, link, onClick, taskId, status }, ref) => {
-  
+const TaskCard = forwardRef(({ title, priority, link, onClick, id, status }, ref) => {
+  const { tasks, selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
+
   
 
 
@@ -17,16 +18,17 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, taskId, status },
   const dispatch = useDispatch();
   const openTaskPopupHandler = () => {
     onClick()
-    dispatch(selectTask(taskId))
+    dispatch(selectTask(id))
     // navigate(`/tasks/${taskId}`);
-    // dispatch(getOneTask(taskId))
-    
+    // dispatch(getOneTask(id))
+    // console.log(selectedTaskData)
+
   };
 
     //
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.TASK_CARD,
-    item: { taskId, status },
+    item: { id, status },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -42,7 +44,6 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, taskId, status },
         ref(element);
         drag(element);
       }}
-      // ref={drag}
       >
         <a href={link} className="task-item__link">
           <span className="task-item__title" title={title}>{title}</span>

@@ -36,9 +36,7 @@ export const getProjects = createAsyncThunk(
                 id,
                 ...projects[id],
             }));
-           
             // dispatch(hideLoader());
-            console.log(projectsList)
             return projectsList;
         } catch (error) {
             return rejectWithValue(error.message);

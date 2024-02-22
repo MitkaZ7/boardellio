@@ -12,3 +12,36 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
+//queries
+export const notDeletedProjecTasks = {
+  structuredQuery: {
+    from: [
+      { collectionId: "tasks" }
+    ],
+    where: {
+      compositeFilter: {
+        op: 'AND',
+        filters: [
+          {
+            fieldFilter: {
+              field: { fieldPath: 'projectId' },
+              op: 'EQUAL',
+              value: {
+                stringValue: projectId
+              }
+            }
+          },
+          {
+            fieldFilter: {
+              field: { fieldPath: 'deleted' },
+              op: 'EQUAL',
+              value: { booleanValue: false }
+            }
+          }
+        ]
+      }
+
+
+    }
+  }
+};

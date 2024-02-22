@@ -16,7 +16,7 @@ const getInitialSelectedTask = () => {
 const initialState = {
     isLoad: false,
     selectedTaskId: null,
-    selectedTaskData: getInitialSelectedTask(),
+    selectedTaskData: null,
     tasks: {
         queue: [],
         dev: [],
@@ -33,15 +33,14 @@ const initialState = {
 
 export const getOneTask = createAsyncThunk(
     'tasks/getOneTask',
-    async (taskId, { rejectWithValue, dispatch }) => {
-        dispatch(showLoader());
-        try {
-            const task = await api.getTaskById(taskId);
-            dispatch(hideLoader());
-            return task;
-        } catch (error) {
-            return rejectWithValue(error.message);
-        }
+    (taskId, { rejectWithValue, dispatch }) => {
+        return api.getTaskById(taskId)
+            .then(task => {
+                return task;
+            })
+            .catch(error => {
+                throw error;
+            });
     }
 );
 
@@ -52,11 +51,16 @@ export const getTasks = createAsyncThunk(
         try {
             const currentProjectId = getState().projects.selectedProject.projectId;
             const tasksList = await api.getProjectTasks(currentProjectId);
-            dispatch(hideLoader());
-            const categorizedTasks = categorizeTasks(tasksList);
-            const serializedTasks = serializeTasks(categorizedTasks);
-            return serializedTasks;
+            if (tasksList) {
+                const categorizedTasks = await categorizeTasks(tasksList);
+                dispatch(hideLoader());
+                return categorizedTasks;
+            } else {
+                dispatch(hideLoader());
+                return
+            } 
         } catch (error) {
+            dispatch(hideLoader());
             return rejectWithValue(error.message);
         }
     }
@@ -104,12 +108,12 @@ export const logicDeleteTask = createAsyncThunk(
 
 export const updateTaskStatus = createAsyncThunk(
     'tasks/updateTaskStatus',
-    async ({ taskId, newStatus }, { rejectWithValue, dispatch }) => {
+    async ({ id, newStatus }, { rejectWithValue, dispatch }) => {
         try {
-            await api.updateTask(taskId, { status: newStatus });
-            console.log(`Task with ID ${taskId} status changed to ${newStatus}.`);
+            await api.updateTask(id, { status: newStatus });
+            console.log(`Task with ID ${id} status changed to ${newStatus}.`);
             await dispatch(getTasks());
-            return { taskId, newStatus };
+            return { id, newStatus };
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -122,28 +126,22 @@ const categorizeTasks = (tasksList) => {
         dev: [],
         done: [],
     };
-    Object.entries(tasksList).forEach(([taskId, task]) => {
-        categorizedTasks[task.status].push({
-            ...task,
-            taskId,
-        });
+    tasksList.forEach((task) => {
+        switch (task.status.stringValue) {
+            case 'queue':
+                categorizedTasks.queue.push({ ...task, taskId: task.id });
+                break;
+            case 'dev':
+                categorizedTasks.dev.push({ ...task, taskId: task.id });
+                break;
+            case 'done':
+                categorizedTasks.done.push({ ...task, taskId: task.id });
+                break;
+            default:
+                break;
+        }
     });
-
     return categorizedTasks;
-};
-
-const serializeTasks = (categorizedTasks) => {
-    const serializedTasks = {
-        queue: [],
-        dev: [],
-        done: [],
-    };
-    for (const [status, tasks] of Object.entries(categorizedTasks)) {
-        serializedTasks[status] = tasks.map((task) => ({
-            ...task,
-        }));
-    }
-    return serializedTasks;
 };
 
 export const taskSlice = createSlice({
@@ -161,15 +159,20 @@ export const taskSlice = createSlice({
             state.tasks.done = state.tasks.done.filter((task) => task.objectId !== taskId);
         },
         updateTask(state, action) {
-            // Ваш код обновления задачи здесь
+            
         },
-
+        setTaskData(state, action) {
+            state.selectedTaskData = action.payload;
+        },
+        resetTasksState(state) {
+            state.tasks = initialState.tasks;
+        },
         selectTask(state, action) {
             state.selectedTaskId = action.payload;
             localStorage.setItem('selectedTaskId', JSON.stringify(action.payload));
         },
         resetSelectedTaskData: (state) => {
-            state.selectedTaskData = getInitialSelectedTask(); // Сброс данных задачи
+            state.selectedTaskData = null; 
         },
         toggleQueueVisibility(state) {
             state.tasksVisibility.isQueueVisible = !state.tasksVisibility.isQueueVisible;
@@ -186,11 +189,20 @@ export const taskSlice = createSlice({
             .addCase(getTasks.pending, (state) => {
                 state.isLoad = true;
             })
+            .addCase(getOneTask.pending, (state) => {
+                state.isLoad = true;
+            })
             .addCase(getTasks.fulfilled, (state, action) => {
                 state.tasks = action.payload;
                 state.isLoad = false;
             })
             .addCase(getTasks.rejected, (state) => {
+                state.tasks = {
+                    queue: [],
+                        dev: [],
+                            done: [],
+                                deleted: [],
+    },
                 state.isLoad = false;
             })
             .addCase(updateTaskStatus.fulfilled, (state, action) => {
@@ -204,6 +216,7 @@ export const taskSlice = createSlice({
                 };
             })
             .addCase(getOneTask.fulfilled, (state, action) => {
+  
                 state.selectedTaskData = action.payload;
             });
     },
@@ -213,7 +226,8 @@ export const {
     addTask, 
     removeTask, 
     updateTask, 
-    selectTask, 
+    selectTask,
+    resetTasksState, 
     resetSelectedTaskData,
     toggleQueueVisibility,
     toggleDevVisibility,

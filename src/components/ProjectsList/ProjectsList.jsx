@@ -42,10 +42,10 @@ const ProjectsList = () => {
               
               <ProjectCard 
                 key={projectItem.id} 
-                projectName={projectItem.title} 
+                projectName={projectItem.title.stringValue} 
                 projectId={projectItem.id} 
-                projectAuthor={projectItem.projectAuthor}
-                projectTaskQty={projectItem.projectTaskQty}
+                projectAuthor={projectItem.author.stringValue}
+                projectTaskQty={projectItem.taskQty.integerValue}
               />
             )
           }

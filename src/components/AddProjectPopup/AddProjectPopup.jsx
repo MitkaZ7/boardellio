@@ -21,8 +21,8 @@ const AddProjectPopup = () => {
   const onSubmit = (formData) => {
     const data = { 
       ...formData, 
-      projectTaskQty: 1,
-      projectAuthor,
+      taskQty: 0,
+      author: projectAuthor,
     };
     dispatch(createProject(data))
       .then(() => dispatch(getProjects()))

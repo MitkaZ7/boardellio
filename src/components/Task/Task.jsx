@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getOneTask, logicDeleteTask, deleteTask,getTasks } from '../../store/slices/tasksSlice';
+import { getOneTask, logicDeleteTask, resetSelectedTaskData,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
 import { closePopup } from '../../store/slices/popupSlice';
 import Tooltip from '../Tooltip/Tooltip'
@@ -24,6 +24,9 @@ const Task = ({ taskId }) => {
         .then(() => dispatch(hideLoader()))
         .catch(() => dispatch(hideLoader()));
     }
+    return () => {
+      dispatch(resetSelectedTaskData());
+    };
   }, [dispatch, selectedTaskId]);
 
 

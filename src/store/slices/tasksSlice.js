@@ -172,7 +172,7 @@ export const taskSlice = createSlice({
             localStorage.setItem('selectedTaskId', JSON.stringify(action.payload));
         },
         resetSelectedTaskData: (state) => {
-            state.selectedTaskData = getInitialSelectedTask(); 
+            state.selectedTaskData = null; 
         },
         toggleQueueVisibility(state) {
             state.tasksVisibility.isQueueVisible = !state.tasksVisibility.isQueueVisible;

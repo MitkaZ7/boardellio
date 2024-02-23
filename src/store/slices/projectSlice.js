@@ -58,6 +58,20 @@ export const getOneProject = createAsyncThunk(
     }
 )
 
+export const increaseTaskQty = createAsyncThunk(
+    'projects/projectIncreaseTaskQty',
+    async (data, { rejectWithValue }) => {
+        try {
+            await api.increaseTaskQty(data.projectId, data.newQty);
+            return { projectId: data.projectId, newQty: data.newQty };
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+
+        
+    }
+)
+
 export const createProject = createAsyncThunk(
     'projects/createProject',
     async (data, thunkAPI) => {

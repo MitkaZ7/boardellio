@@ -70,11 +70,8 @@ export const createTask = createAsyncThunk(
     'tasks/createTask',
     async (data, { rejectWithValue, dispatch, getState }) => {
         try {
-            const lastTaskNumber = getState().projects.selectedProject.projectTaskQty;
-            console.log(lastTaskNumber)
-            // const nextTaslNumber = dispatch(incrementProjectTaskQty())
             await api.createTask(data);
-            console.log('Task created successfully.');
+            // console.log('Task created successfully.');
         } catch (error) {
             console.error('Error creating task:', error);
             return rejectWithValue(error.message);

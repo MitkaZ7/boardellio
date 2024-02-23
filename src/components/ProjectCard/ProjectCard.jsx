@@ -2,7 +2,7 @@
 import React,{useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { selectProject } from '../../store/slices/projectSlice';
+import { selectProject, getOneProject } from '../../store/slices/projectSlice';
 
 const ProjectCard = ({ projectName, projectId, projectAuthor, projectTaskQty }) => {
   const dispatch = useDispatch();
@@ -11,6 +11,7 @@ const ProjectCard = ({ projectName, projectId, projectAuthor, projectTaskQty }) 
 
   const handleProjectClick = () => {
     dispatch(selectProject({ projectName, projectId, projectAuthor, projectTaskQty }));
+    dispatch(getOneProject(projectId))
     navigate(`/projects/${projectName}`);
   };
 

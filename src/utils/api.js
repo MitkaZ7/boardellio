@@ -16,18 +16,17 @@ class Api {
                 priority: { stringValue: data.priority },
                 projectId: { stringValue: data.projectId },
                 isCompleted: { booleanValue: data.isCompleted },
-                deleted: { booleanValue: data.deleted }, 
+                deleted: { booleanValue: data.deleted },
+                number: { integerValue: data.number }, 
                 
             }
         };
 
         return instance.post('/tasks', requestData)
             .then((res) => {
-                console.log('Задача создана:', res.data);
                 return res.data;
             })
             .catch((error) => {
-                console.error('Ошибка при создании задачи', error);
                 throw error;
             });
     }
@@ -42,15 +41,20 @@ class Api {
             };
         });
     }
-    getLastTaskNumber(projectId) {
-        return instance.get(`/projects/${id}`).then((res) => {
-            const lastTaskNum = res.data.fields;
-            return { id: res.data.name.split('/').pop(), ...project };
-        });
-    }
-    updateTaskQty(projectId, qty){
+    increaseTaskQty(projectId, newTaskQty) {
+        console.log(typeof newTaskQty)
+        const requestData = {
+            fields: {
+                taskQty: { integerValue: newTaskQty },
+            }
+        };
+        // Формирование query string для параметра updateMask
+        const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
+        return instance.patch(`/projects/${projectId}?${updateMaskQuery}`, requestData);
+
 
     }
+  
 
     // getTaskById(taskId) {
     //     return instance.get(`/tasks/${taskId}`)

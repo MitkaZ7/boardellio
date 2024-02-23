@@ -6,10 +6,6 @@ const instance = axios.create({
 });
 
 class Api {
-    // createTask(data) {
-    //     return instance.post('/tasks', { fields: data });
-    // }
-
     createTask(data) {
         const requestData = {
             fields: {
@@ -39,13 +35,21 @@ class Api {
     getTaskById(taskId) {
         return instance.get(`/tasks/${taskId}`).then((res) => {
             const task = res.data.fields;
-            // Возвращаем объект задачи с добавленным полем createTime
             return {
                 id: res.data.name.split('/').pop(),
                 ...task,
-                createTime: formateDate(res.data.createTime) // Получаем время создания из ответа API
+                createTime: res.data.createTime
             };
         });
+    }
+    getLastTaskNumber(projectId) {
+        return instance.get(`/projects/${id}`).then((res) => {
+            const lastTaskNum = res.data.fields;
+            return { id: res.data.name.split('/').pop(), ...project };
+        });
+    }
+    updateTaskQty(projectId, qty){
+
     }
 
     // getTaskById(taskId) {

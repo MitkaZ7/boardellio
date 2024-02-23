@@ -57,5 +57,7 @@
     "add-task-priority-select-placeholder": "Приоритет",
     "add-task-text-placeholder": "описание задачи",
     "upload-files-placeholder": "добавить файлы...",
-    "add-task-btn": "создать"
+    "add-task-btn": "создать",
+    "created": "создана",
+    "done": "выполнена"
 }

@@ -57,5 +57,7 @@
     "add-task-priority-select-placeholder": "Assign priority",
     "add-task-text-placeholder": "Add task text",
     "upload-files-placeholder": "Upload files....",
-    "add-task-btn": "Add"
+    "add-task-btn": "Add",
+    "created": "created",
+    "done": "done"
 }

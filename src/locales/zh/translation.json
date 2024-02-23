@@ -51,5 +51,7 @@
     "add-task-priority-select-placeholder": "優先事項",
     "add-task-text-placeholder": "任務內容",
     "upload-files-placeholder": "新增文件...",
-    "add-task-btn": "添加"
+    "add-task-btn": "添加",
+    "created": "已创建",
+    "done": "完毕"
 }

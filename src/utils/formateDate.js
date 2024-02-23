@@ -9,3 +9,10 @@ export const formateDate = (date) => {
     return formattedDate
 
 }
+export const daysCount = (startDate) => {
+    const currentDate = Date.now();
+    const date = new Date(startDate);
+    const dateDifference = Math.round((currentDate - date) / (1000 * 3600 * 24));
+    console.log(dateDifference + ' дней')
+  
+}

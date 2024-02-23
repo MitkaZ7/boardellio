@@ -36,6 +36,7 @@ const Form = ({ projects, validationSchema }) => {
     
     const onSubmit = async (data) => {
         console.log(data)
+        await 
         dispatch(
             createTask({
                 title: data.title,
@@ -46,6 +47,7 @@ const Form = ({ projects, validationSchema }) => {
                 projectId: selectedProjectId,
                 author: email,
                 deleted: false,
+                number: ''
                 
             })
         )

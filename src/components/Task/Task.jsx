@@ -5,18 +5,24 @@ import Upload from '../../assets/icons/upload.svg';
 import { closePopup } from '../../store/slices/popupSlice';
 import Tooltip from '../Tooltip/Tooltip'
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
-
-
+import { daysCount, formateDate } from '../../utils/formateDate'
+import { useTranslation } from 'react-i18next'
 const Task = ({ taskId }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
-
+  const { projectName } = useSelector(state => state.projects.selectedProject)
+  const [taskWorkTime, setTaskWorkTime] = useState('')
   const handleRemoveTask = () => {
     dispatch(logicDeleteTask(selectedTaskId))
       .then(() => dispatch(closePopup()))
       .then(()=> dispatch(getTasks()));
 
   };
+  const handleTaskWorkTimeCounter = (creationDate) => {
+    console.log(creationDate)
+    setTaskWorkTime(creationDate)
+  }
   useEffect(() => {
     if (selectedTaskId) {
       dispatch(showLoader());
@@ -36,19 +42,44 @@ const Task = ({ taskId }) => {
     <li className='task'>
       <article className='task__content'>
         <header className='task__header'>
-          <span className='task__metadata-item task__number'>№: </span>
-            <h3>{selectedTaskData.title.stringValue}</h3>
+          
+          <h3 className='task__task-title'>
+            <span className='task__metadata-item task__number'>№: </span>
+            {selectedTaskData.title.stringValue}
+          </h3>
+          <h4 className='task__project-title'>
+            {projectName}
+          </h4>
+          
+              
           <div className='task__metadata-parametres'>
-                <span className='task__metadata-item task__priority'>&nbsp;proirity: {selectedTaskData.priority.stringValue}</span>
+                <span className='task__metadata-item task__priority'>proirity: {selectedTaskData.priority.stringValue}</span>
 
-                <span className='task__metadata-item task__status'>&nbsp;status: {selectedTaskData.status.stringValue}</span>
+                <span className='task__metadata-item task__status'>status: {selectedTaskData.status.stringValue}</span>
           </div>
         </header>
         <section className='task__metadata-block metadata-block'>
           <div className='task__metadata-dates'>
-                <span className='task__metadata-item task__creation-date'>Created: {selectedTaskData.createTime}&nbsp;</span>
-            <span className='task__metadata-item task__spent-time'>In work for: 1 day</span>
-            <span className='task__metadata-item task__finish-date'>&nbsp;Done: 02-12-2022</span>
+                <span className='task__metadata-item task__creation-date'>{t('created')}: {formateDate(selectedTaskData.createTime)}&nbsp;</span>
+            {/* <span className='task__metadata-item task__spent-time'>In work for: {
+                  daysCount(selectedTaskData.createTime)
+            }
+            </span> */}
+
+            {
+                selectedTaskData.isCompleted.booleanValue ? 
+                    <span className='task__metadata-item task__finish-date'>
+                      &nbsp;{t('done')}: сегодня
+                    </span>
+                    :
+                    <span className='task__metadata-item task__finish-date'>
+                      &nbsp;{t('done')}: не завершена.
+                    </span>
+            }
+
+            {/* <span className='task__metadata-item task__finish-date'>&nbsp;{t('done')}: {
+                  !selectedTaskData.isCompleted.booleanValue ? 'DDD' : 'NNNN'
+            }</span> */}
           </div>
           <div className="task__controls">
             {/* <button className="task__controls-btn task-button task__controls-btn_type_edit"></button> */}

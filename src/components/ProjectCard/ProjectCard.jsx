@@ -10,9 +10,7 @@ const ProjectCard = ({ title, id, author, taskQty }) => {
 
 
   const handleProjectClick = () => {
-    // dispatch(getOneProject(id));
     dispatch(selectProject({ title, id, author, taskQty }));
-
     navigate(`/projects/${title}`);
   };
 

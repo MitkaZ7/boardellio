@@ -4,7 +4,7 @@ import AddTaskPopup from '../AddTaskPopup/AddTaskPopup';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
-import { selectProject, getOneProject } from '../../store/slices/projectSlice'
+import { getOneProject } from '../../store/slices/projectSlice'
 
 import { 
   getTasks,
@@ -20,11 +20,6 @@ import FoldButton from '../FoldButton/FoldButton';
 const Project = () => {
   const { id } = useSelector(state => state.projects.selectedProject);
   const title = useSelector(state => state.projects.selectedProject.title.stringValue);
-
-  // const { id, title } = useSelector(state => state.projects.selectedProject);
- 
-
-
   const activePopup = useSelector(state => state.popup.activePopup);
   const { tasks } = useSelector(state => state.tasks);
   const isProjectsMenuOpen = useSelector(state => state.projectsMenu.isOpen)
@@ -43,7 +38,6 @@ const Project = () => {
   };
   const handleProjectTitleClick = () => {
     if (!isProjectsMenuOpen) {
- 
       // dispatch(setProjects(/* список проектов */));
       dispatch(openProjectsMenu());
     } else {
@@ -62,28 +56,14 @@ const Project = () => {
     dispatch(getTasks());
 
     return () => {
-      dispatch(resetTasksState()); // Очищаем список задач при размонтировании компонента
+      dispatch(resetTasksState()); 
     };
   }, [id, dispatch]);
-  // useEffect(() => {
-  //   dispatch(selectProject({ id, title }));
-  // }, [tasks, id, title, dispatch]);
   
   useEffect(() => {
     dispatch(getOneProject(id)); // Получаем обновленные данные проекта при изменениях
   }, [id, dispatch]);
 
-
-  // useEffect(() => {
-  //   // Получение данных о проекте из базы данных
-  //   dispatch(getOneProject(id)).then((updatedProject) => {
-  //     console.log(updatedProject)
-  //     // // Обновление выбранного проекта в хранилище Redux
-  //     // dispatch(selectProject(updatedProject));
-  //     // // Обновление данных о проекте в локальном хранилище
-  //     // localStorage.setItem('selectedProject', JSON.stringify(updatedProject));
-  //   });
-  // }, [id, dispatch]);
 
 
   const closeProjectSearchMenu = (evt) => {

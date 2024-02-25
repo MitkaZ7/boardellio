@@ -4,20 +4,21 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectProject, getOneProject } from '../../store/slices/projectSlice';
 
-const ProjectCard = ({ projectName, projectId, projectAuthor, projectTaskQty }) => {
+const ProjectCard = ({ title, id, author, taskQty }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
 
   const handleProjectClick = () => {
-    dispatch(selectProject({ projectName, projectId, projectAuthor, projectTaskQty }));
-    dispatch(getOneProject(projectId))
-    navigate(`/projects/${projectName}`);
+    // dispatch(getOneProject(id));
+    dispatch(selectProject({ title, id, author, taskQty }));
+
+    navigate(`/projects/${title}`);
   };
 
   return (
     <li className="project-card" onClick={handleProjectClick}>
-      <p className="project-card__link">{projectName}</p>
+      <p className="project-card__link">{title}</p>
     </li>
   );
 };

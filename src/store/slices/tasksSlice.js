@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 import { hideLoader, showLoader } from './loaderSlice';
-import { incrementProjectTaskQty } from './projectSlice';
+import { increaseTaskQty } from './projectSlice';
 
 const getInitialSelectedTask = () => {
     showLoader();
@@ -49,7 +49,7 @@ export const getTasks = createAsyncThunk(
     async (_, { rejectWithValue, dispatch, getState }) => {
         dispatch(showLoader());
         try {
-            const currentProjectId = getState().projects.selectedProject.projectId;
+            const currentProjectId = getState().projects.selectedProject.id;
             const tasksList = await api.getProjectTasks(currentProjectId);
             if (tasksList) {
                 const categorizedTasks = await categorizeTasks(tasksList);
@@ -70,8 +70,10 @@ export const createTask = createAsyncThunk(
     'tasks/createTask',
     async (data, { rejectWithValue, dispatch, getState }) => {
         try {
+            console.log(data)
             await api.createTask(data);
-            // console.log('Task created successfully.');
+            await dispatch(increaseTaskQty({ projectId: data.projectId, newQty: data.number }))
+            console.log('Task created successfully.');
         } catch (error) {
             console.error('Error creating task:', error);
             return rejectWithValue(error.message);

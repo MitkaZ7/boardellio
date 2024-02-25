@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { closePopup } from '../../store/slices/popupSlice';
 import { createTask, getTasks } from '../../store/slices/tasksSlice';
-import { increaseTaskQty, getOneProject } from '../../store/slices/projectSlice'
+import { increaseTaskQty, getOneProject, selectProject } from '../../store/slices/projectSlice'
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next'
 
@@ -14,8 +14,8 @@ import { useTranslation } from 'react-i18next'
 const Form = ({ projects, validationSchema }) => {
     const { email } = useSelector(state => state.user.user)
     const { selectedProject } = useSelector(state => state.projects);
-    const [selectedProjectId, setSelectedProjectId] = useState(selectedProject ? selectedProject.projectId : '' );
-    const currentTaskQtyInProject = Number(selectedProject.projectTaskQty);
+    const [selectedProjectId, setSelectedProjectId] = useState(selectedProject ? selectedProject.id : '' );
+    const currentTaskQtyInProject = Number(selectedProject.taskQty.integerValue);
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const { register,
@@ -33,9 +33,14 @@ const Form = ({ projects, validationSchema }) => {
         const reselectedProjectId = event.target.value;
         setSelectedProjectId(reselectedProjectId);
     }
-    // useEffect(() => {
-    //     console.log( typeof currentTaskQtyInProject)
-    // }, [])
+    useEffect(() => {
+        // console.log(currentTaskQtyInProject)
+        // console.log(selectedProjectId)
+        dispatch(getOneProject(selectedProjectId));
+        return () => {
+            dispatch(getOneProject(selectedProjectId));
+        };
+    }, [dispatch])
     
     const onSubmit = async (data) => {
         const nextTaskNumber = currentTaskQtyInProject + 1;
@@ -54,11 +59,18 @@ const Form = ({ projects, validationSchema }) => {
                 
             })
         );
-            await dispatch(increaseTaskQty({ projectId: selectedProjectId, newQty: nextTaskNumber }));
-        
-        dispatch(getTasks());
-        dispatch(getOneProject({ projectId: selectedProjectId }));
-        dispatch(closePopup());
+            // Увеличение поля taskQty в проекте на 1
+            // await dispatch(increaseTaskQty({ projectId: selectedProjectId, newQty: nextTaskNumber }));
+
+            // Получение списка задач проекта
+            await dispatch(getTasks());
+
+            // Получение данных о проекте из базы данных
+            await dispatch(getOneProject(selectedProjectId));
+
+            // Обновление выбранного проекта и закрытие попапа
+            // await dispatch(selectProject(selectedProject));
+            await dispatch(closePopup());
         reset();
         } catch (error) {
              console.log("Ошибка при создании задачи или обновлении taskQty:", error);

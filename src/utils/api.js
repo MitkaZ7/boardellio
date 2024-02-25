@@ -42,7 +42,7 @@ class Api {
         });
     }
     increaseTaskQty(projectId, newTaskQty) {
-        console.log(typeof newTaskQty)
+        console.log(projectId,newTaskQty)
         const requestData = {
             fields: {
                 taskQty: { integerValue: newTaskQty },
@@ -138,6 +138,7 @@ class Api {
             }
         })
             .then((res) => {
+                
                 const data = res.data.map((item) => {
                     const id = item.document.name.split('/').pop();
                     const fields = item.document.fields;

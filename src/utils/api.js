@@ -42,7 +42,6 @@ class Api {
         });
     }
     increaseTaskQty(projectId, newTaskQty) {
-        console.log(projectId,newTaskQty)
         const requestData = {
             fields: {
                 taskQty: { integerValue: newTaskQty },
@@ -182,8 +181,6 @@ class Api {
                 id: doc.name.split('/').pop(),
                 ...doc.fields,
             }));
-            console.log(data)
-
             return data;
         });
     }

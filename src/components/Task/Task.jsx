@@ -44,7 +44,7 @@ const Task = ({ taskId }) => {
         <header className='task__header'>
           
           <h3 className='task__task-title'>
-            <span className='task__metadata-item task__number'>№: </span>
+            <span className='task__metadata-item task__number'>№: {selectedTaskData.number.integerValue} </span>
             {selectedTaskData.title.stringValue}
           </h3>
           <h4 className='task__project-title'>

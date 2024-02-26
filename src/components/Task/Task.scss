@@ -65,6 +65,8 @@
 
     &__number {
         min-width: 60px;
+        color: var(--additional-color);
+        @include link-hover;
     }
 
     &__status {

@@ -11,7 +11,8 @@ const Task = ({ taskId }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
-  const { projectName } = useSelector(state => state.projects.selectedProject)
+  const { projectName } = useSelector(state => state.projects.selectedProject);
+  const projectTag = useSelector(state => state.projects.selectedProject.tag.stringValue);
   const [taskWorkTime, setTaskWorkTime] = useState('')
   const handleRemoveTask = () => {
     dispatch(logicDeleteTask(selectedTaskId))
@@ -44,7 +45,7 @@ const Task = ({ taskId }) => {
         <header className='task__header'>
           
           <h3 className='task__task-title'>
-            <span className='task__metadata-item task__number'>№: {selectedTaskData.number.integerValue} </span>
+                <span className='task__metadata-item task__number'>{projectTag}-{selectedTaskData.number.integerValue} </span>
             {selectedTaskData.title.stringValue}
           </h3>
           <h4 className='task__project-title'>

@@ -54,37 +54,13 @@ class Api {
 
     }
   
-
-    // getTaskById(taskId) {
-    //     return instance.get(`/tasks/${taskId}`)
-    //         .then((res) => {
-    //             const taskData = res.data;
-    //             const taskId = taskData.name.split('/').pop();
-    //             const fields = taskData.fields || {}; // Обработка случая, если данных fields нет
-    //             const task = { id: taskId, ...fields };
-    //             return task;
-    //         })
-    //         .catch((error) => {
-    //             if (error.response && error.response.status === 404) {
-    //                 console.warn(`Задача с ID ${taskId} не найдена.`);
-    //                 return null; // Возвращаем null, если задача не найдена
-    //             } else {
-    //                 console.error('Ошибка при получении задачи:', error);
-    //                 throw error; // Выбрасываем ошибку для дальнейшей обработки
-    //             }
-    //         });
-    // }
-
-
     updateTask(taskId, data) {
         const requestData = {
-            fields: {
-                status: { stringValue: data.status },
-                // title: { stringValue: data.title },
-                // description: { stringValue: data.description },
-            }
+            fields: {}
         };
-        // Формирование query string для параметра updateMask
+        Object.keys(data).forEach(field => {
+            requestData.fields[field] = { stringValue: data[field] };
+        });
         const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
         return instance.patch(`/tasks/${taskId}?${updateMaskQuery}`, requestData);
     }
@@ -190,7 +166,9 @@ class Api {
             fields: {
                 title: { stringValue: data.title },
                 taskQty: { integerValue: data.taskQty },
-                author: { stringValue: data.author }
+                author: { stringValue: data.author },
+                tag: { stringValue: data.tag },
+                description: { stringValue: data.description },
             }
         };
 

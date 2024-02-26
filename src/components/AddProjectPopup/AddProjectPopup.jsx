@@ -24,6 +24,8 @@ const AddProjectPopup = () => {
       taskQty: 0,
       author: projectAuthor,
     };
+    console.log(data)
+
     dispatch(createProject(data))
       .then(() => dispatch(getProjects()))
       .then(() => dispatch(closePopup()))
@@ -39,7 +41,14 @@ const AddProjectPopup = () => {
     <Popup className="popup_place_addProjectPopup" isOpen={isOpen} onClose={closePopupHandler} resetForm={reset}>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <h3 className="form__title">{t('projects-form-add-title')}</h3>
-        <input placeholder={t('projects-form-add-placeholder')}{...register('title')} id='project-title' type='text' />
+        <fieldset className="form__fieldset form__fieldset_place_add-project">
+          <input placeholder={t('projects-form-add-placeholder')} {...register('title')} id='project-title' type='text' className='form__input form__input_place_add-project' />
+          <input type="text" placeholder={t('projects-form-add-tag-placeholder')} {...register('tag')} id='project-tag' className='form__input form__input_place_add-project' />
+          <input type="text" placeholder={t('projects-form-add-description-placeholder')} {...register('description')} id='project-description' className='form__input form__input_place_add-project' />
+
+        </fieldset>
+        
+        
         <button type="submit" className="form__button-submit button" disabled={!isValid}>{t('projects-form-add-btn')}</button>
       </form>
     </Popup>

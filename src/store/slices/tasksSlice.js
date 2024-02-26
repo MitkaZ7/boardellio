@@ -117,6 +117,21 @@ export const updateTaskStatus = createAsyncThunk(
     }
 );
 
+export const updateTask = createAsyncThunk(
+    'tasks/updateTask',
+    async ({ taskId, newData }, { rejectWithValue, dispatch }) => {
+        try {
+            await api.updateTask(taskId, newData);
+            await dispatch(getTasks());
+            return { taskId, newData };
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+
+
 const categorizeTasks = (tasksList) => {
     const categorizedTasks = {
         queue: [],
@@ -155,9 +170,9 @@ export const taskSlice = createSlice({
             state.tasks.dev = state.tasks.dev.filter((task) => task.objectId !== taskId);
             state.tasks.done = state.tasks.done.filter((task) => task.objectId !== taskId);
         },
-        updateTask(state, action) {
+        // updateTask(state, action) {
             
-        },
+        // },
         setTaskData(state, action) {
             state.selectedTaskData = action.payload;
         },
@@ -222,7 +237,6 @@ export const taskSlice = createSlice({
 export const { 
     addTask, 
     removeTask, 
-    updateTask, 
     selectTask,
     resetTasksState, 
     resetSelectedTaskData,

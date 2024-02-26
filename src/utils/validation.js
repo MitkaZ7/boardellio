@@ -9,8 +9,10 @@ const options = {
     }),
     taskTitle: Joi.string().min(5).max(120).required(),
     taskProject: Joi.string().required(),
-    taskText: Joi.string(),
+    taskText: Joi.string().min(0),
     projectName: Joi.string().required(),
+    projectDescription: Joi.string().min(0),
+    projectTag: Joi.string().required(),
     taskPriority: Joi.string(),
     taskAuthor: Joi.string(),
 }
@@ -39,4 +41,6 @@ export const createTaskSchema = Joi.object({
 
 export const createProjectSchema = Joi.object({
     title: options.projectName,
+    description: options.projectDescription,
+    tag: options.projectTag,
 }).required();

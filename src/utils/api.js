@@ -6,10 +6,6 @@ const instance = axios.create({
 });
 
 class Api {
-    // createTask(data) {
-    //     return instance.post('/tasks', { fields: data });
-    // }
-
     createTask(data) {
         const requestData = {
             fields: {
@@ -20,18 +16,17 @@ class Api {
                 priority: { stringValue: data.priority },
                 projectId: { stringValue: data.projectId },
                 isCompleted: { booleanValue: data.isCompleted },
-                deleted: { booleanValue: data.deleted }, 
+                deleted: { booleanValue: data.deleted },
+                number: { integerValue: data.number }, 
                 
             }
         };
 
         return instance.post('/tasks', requestData)
             .then((res) => {
-                console.log('Задача создана:', res.data);
                 return res.data;
             })
             .catch((error) => {
-                console.error('Ошибка при создании задачи', error);
                 throw error;
             });
     }
@@ -39,45 +34,33 @@ class Api {
     getTaskById(taskId) {
         return instance.get(`/tasks/${taskId}`).then((res) => {
             const task = res.data.fields;
-            // Возвращаем объект задачи с добавленным полем createTime
             return {
                 id: res.data.name.split('/').pop(),
                 ...task,
-                createTime: formateDate(res.data.createTime) // Получаем время создания из ответа API
+                createTime: res.data.createTime
             };
         });
     }
-
-    // getTaskById(taskId) {
-    //     return instance.get(`/tasks/${taskId}`)
-    //         .then((res) => {
-    //             const taskData = res.data;
-    //             const taskId = taskData.name.split('/').pop();
-    //             const fields = taskData.fields || {}; // Обработка случая, если данных fields нет
-    //             const task = { id: taskId, ...fields };
-    //             return task;
-    //         })
-    //         .catch((error) => {
-    //             if (error.response && error.response.status === 404) {
-    //                 console.warn(`Задача с ID ${taskId} не найдена.`);
-    //                 return null; // Возвращаем null, если задача не найдена
-    //             } else {
-    //                 console.error('Ошибка при получении задачи:', error);
-    //                 throw error; // Выбрасываем ошибку для дальнейшей обработки
-    //             }
-    //         });
-    // }
-
-
-    updateTask(taskId, data) {
+    increaseTaskQty(projectId, newTaskQty) {
         const requestData = {
             fields: {
-                status: { stringValue: data.status },
-                // title: { stringValue: data.title },
-                // description: { stringValue: data.description },
+                taskQty: { integerValue: newTaskQty },
             }
         };
         // Формирование query string для параметра updateMask
+        const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
+        return instance.patch(`/projects/${projectId}?${updateMaskQuery}`, requestData);
+
+
+    }
+  
+    updateTask(taskId, data) {
+        const requestData = {
+            fields: {}
+        };
+        Object.keys(data).forEach(field => {
+            requestData.fields[field] = { stringValue: data[field] };
+        });
         const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
         return instance.patch(`/tasks/${taskId}?${updateMaskQuery}`, requestData);
     }
@@ -130,6 +113,7 @@ class Api {
             }
         })
             .then((res) => {
+                
                 const data = res.data.map((item) => {
                     const id = item.document.name.split('/').pop();
                     const fields = item.document.fields;
@@ -173,8 +157,6 @@ class Api {
                 id: doc.name.split('/').pop(),
                 ...doc.fields,
             }));
-            console.log(data)
-
             return data;
         });
     }
@@ -184,7 +166,9 @@ class Api {
             fields: {
                 title: { stringValue: data.title },
                 taskQty: { integerValue: data.taskQty },
-                author: { stringValue: data.author }
+                author: { stringValue: data.author },
+                tag: { stringValue: data.tag },
+                description: { stringValue: data.description },
             }
         };
 

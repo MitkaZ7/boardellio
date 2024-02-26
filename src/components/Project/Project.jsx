@@ -3,6 +3,9 @@ import TaskList from '../TaskList/TaskList';
 import AddTaskPopup from '../AddTaskPopup/AddTaskPopup';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
+import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
+import { getOneProject } from '../../store/slices/projectSlice'
+
 import { 
   getTasks,
   resetTasksState, 
@@ -15,7 +18,8 @@ import { useTranslation } from 'react-i18next';
 import SearchForm from '../SearchForm/SearchForm';
 import FoldButton from '../FoldButton/FoldButton';
 const Project = () => {
-  const { projectId, projectName } = useSelector(state => state.projects.selectedProject);
+  const { id } = useSelector(state => state.projects.selectedProject);
+  const title = useSelector(state => state.projects.selectedProject.title.stringValue);
   const activePopup = useSelector(state => state.popup.activePopup);
   const { tasks } = useSelector(state => state.tasks);
   const isProjectsMenuOpen = useSelector(state => state.projectsMenu.isOpen)
@@ -34,7 +38,6 @@ const Project = () => {
   };
   const handleProjectTitleClick = () => {
     if (!isProjectsMenuOpen) {
- 
       // dispatch(setProjects(/* список проектов */));
       dispatch(openProjectsMenu());
     } else {
@@ -53,11 +56,15 @@ const Project = () => {
     dispatch(getTasks());
 
     return () => {
-      dispatch(resetTasksState()); // Очищаем список задач при размонтировании компонента
+      dispatch(resetTasksState()); 
     };
-  }, [projectId, dispatch]);
-
+  }, [id, dispatch]);
   
+  useEffect(() => {
+    dispatch(getOneProject(id)); // Получаем обновленные данные проекта при изменениях
+  }, [id, dispatch]);
+
+
 
   const closeProjectSearchMenu = (evt) => {
     if (evt.target === evt.currentTarget) {
@@ -85,11 +92,11 @@ const Project = () => {
   };
   return (
     <>
-
+      {tasks && (
       <article className='project'>
         <div className='project__header'>
 
-          <h3 className='project__title' onClick={handleProjectTitleClick}>{projectName}</h3>
+          <h3 className='project__title' onClick={handleProjectTitleClick}>{title}</h3>
 
           {isProjectsMenuOpen && (
             <SearchForm />
@@ -139,6 +146,7 @@ const Project = () => {
           </div> */}
         </section>
       </article>
+      )}
       {activePopup === 'AddTaskPopup' && <AddTaskPopup />}
       {activePopup === 'TaskPopup' && <TaskPopup />}
     </>

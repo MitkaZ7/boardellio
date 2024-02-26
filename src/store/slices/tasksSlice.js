@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 import { hideLoader, showLoader } from './loaderSlice';
-import { incrementProjectTaskQty } from './projectSlice';
+import { increaseTaskQty } from './projectSlice';
 
 const getInitialSelectedTask = () => {
     showLoader();
@@ -49,7 +49,7 @@ export const getTasks = createAsyncThunk(
     async (_, { rejectWithValue, dispatch, getState }) => {
         dispatch(showLoader());
         try {
-            const currentProjectId = getState().projects.selectedProject.projectId;
+            const currentProjectId = getState().projects.selectedProject.id;
             const tasksList = await api.getProjectTasks(currentProjectId);
             if (tasksList) {
                 const categorizedTasks = await categorizeTasks(tasksList);
@@ -70,11 +70,8 @@ export const createTask = createAsyncThunk(
     'tasks/createTask',
     async (data, { rejectWithValue, dispatch, getState }) => {
         try {
-            const lastTaskNumber = getState().projects.selectedProject.projectTaskQty;
-            console.log(lastTaskNumber)
-            // const nextTaslNumber = dispatch(incrementProjectTaskQty())
             await api.createTask(data);
-            console.log('Task created successfully.');
+            await dispatch(increaseTaskQty({ projectId: data.projectId, newQty: data.number }))
         } catch (error) {
             console.error('Error creating task:', error);
             return rejectWithValue(error.message);
@@ -120,6 +117,21 @@ export const updateTaskStatus = createAsyncThunk(
     }
 );
 
+export const updateTask = createAsyncThunk(
+    'tasks/updateTask',
+    async ({ taskId, newData }, { rejectWithValue, dispatch }) => {
+        try {
+            await api.updateTask(taskId, newData);
+            await dispatch(getTasks());
+            return { taskId, newData };
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+
+
 const categorizeTasks = (tasksList) => {
     const categorizedTasks = {
         queue: [],
@@ -158,9 +170,9 @@ export const taskSlice = createSlice({
             state.tasks.dev = state.tasks.dev.filter((task) => task.objectId !== taskId);
             state.tasks.done = state.tasks.done.filter((task) => task.objectId !== taskId);
         },
-        updateTask(state, action) {
+        // updateTask(state, action) {
             
-        },
+        // },
         setTaskData(state, action) {
             state.selectedTaskData = action.payload;
         },
@@ -225,7 +237,6 @@ export const taskSlice = createSlice({
 export const { 
     addTask, 
     removeTask, 
-    updateTask, 
     selectTask,
     resetTasksState, 
     resetSelectedTaskData,

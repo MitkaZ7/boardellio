@@ -8,7 +8,7 @@ const getInitialSelectedProject = () => {
     if (storedSelectedProject) {
         return JSON.parse(storedSelectedProject);
     }
-    return { projectId: null, projectName: null, projectAuthor: null, projectTaskQty: null };
+    return { id: null, title: null, author: null, taskQty: null };
 };
 
 
@@ -20,10 +20,9 @@ const initialState = {
 };
 
 
-
-function isPendingAction(action) {
-    return action.type.endsWith('/pending');
-}
+// function isPendingAction(action) {
+//     return action.type.endsWith('/pending');
+// }
 
 export const getProjects = createAsyncThunk(
     'projects/getProjectsList',
@@ -50,11 +49,25 @@ export const getOneProject = createAsyncThunk(
         const { dispatch, rejectWithValue } = thunkAPI;
         try {
             const project = await api.getOneProjectById(projectId);
-            console.log(project)
+            dispatch(selectProject(project))
             return project;
         } catch (error) {
             return rejectWithValue(error.message);
         }
+    }
+)
+
+export const increaseTaskQty = createAsyncThunk(
+    'projects/projectIncreaseTaskQty',
+    async (data, { rejectWithValue }) => {
+        try {
+            await api.increaseTaskQty(data.projectId, data.newQty);
+            return { projectId: data.projectId, newQty: data.newQty };
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+
+        
     }
 )
 
@@ -88,9 +101,9 @@ const projectSlice = createSlice({
             state.selectedProjectId = null;
             localStorage.removeItem('selectedProjectId'); 
         },
-        incrementProjectTaskQty(state,action) {
-            state.selectedProject.projectTaskQty += 1;
-        }
+        // incrementProjectTaskQty(state,action) {
+        //     state.selectedProject.projectTaskQty += 1;
+        // }
     },
     extraReducers: (builder) => {
         builder

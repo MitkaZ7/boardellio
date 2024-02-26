@@ -3,16 +3,17 @@ import Upload from '../../assets/icons/upload.svg';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { closePopup } from '../../store/slices/popupSlice';
-import { createTask } from '../../store/slices/tasksSlice';
+import { createTask, getTasks } from '../../store/slices/tasksSlice';
+import { getOneProject } from '../../store/slices/projectSlice'
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next'
-import { getTasks } from '../../store/slices/tasksSlice';
 
 
 const Form = ({ projects, validationSchema }) => {
     const { email } = useSelector(state => state.user.user)
     const { selectedProject } = useSelector(state => state.projects);
-    const [selectedProjectId, setSelectedProjectId] = useState(selectedProject ? selectedProject.projectId : '' );
+    const [selectedProjectId, setSelectedProjectId] = useState(selectedProject ? selectedProject.id : '' );
+    const currentTaskQtyInProject = Number(selectedProject.taskQty.integerValue);
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const { register,
@@ -30,13 +31,17 @@ const Form = ({ projects, validationSchema }) => {
         const reselectedProjectId = event.target.value;
         setSelectedProjectId(reselectedProjectId);
     }
-    // useEffect(() => {
-    //     console.log(email)
-    // }, [])
+    useEffect(() => {
+        dispatch(getOneProject(selectedProjectId));
+        return () => {
+            dispatch(getOneProject(selectedProjectId));
+        };
+    }, [dispatch])
     
     const onSubmit = async (data) => {
-        console.log(data)
-        dispatch(
+        const nextTaskNumber = currentTaskQtyInProject + 1;
+        try {
+        await dispatch(
             createTask({
                 title: data.title,
                 isCompleted: false,
@@ -46,12 +51,17 @@ const Form = ({ projects, validationSchema }) => {
                 projectId: selectedProjectId,
                 author: email,
                 deleted: false,
+                number: nextTaskNumber,
                 
             })
-        )
-            .then(() => dispatch(getTasks()))
-            .then(() => dispatch(closePopup()))
-            .then(() => reset());
+        );
+            await dispatch(getTasks());
+            await dispatch(getOneProject(selectedProjectId));
+            await dispatch(closePopup());
+        reset();
+        } catch (error) {
+             console.log("Ошибка при создании задачи или обновлении taskQty:", error);
+        }
     };
 
     return (

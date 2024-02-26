@@ -29,7 +29,9 @@
     "menu-settings": "settings",
     "projects-page-title": "current projects",
     "projects-form-add-title": "create project",
-    "projects-form-add-placeholder": "new project title...",
+    "projects-form-add-placeholder": "title",
+    "projects-form-add-tag-placeholder": "ID",
+    "projects-form-add-description-placeholder": "description",
     "projects-form-add-btn": "Create",
     "projects-page-add-btn": "create project",
     "project-page-add-btn": "add task",
@@ -57,5 +59,7 @@
     "add-task-priority-select-placeholder": "Assign priority",
     "add-task-text-placeholder": "Add task text",
     "upload-files-placeholder": "Upload files....",
-    "add-task-btn": "Add"
+    "add-task-btn": "Add",
+    "created": "created",
+    "done": "done"
 }

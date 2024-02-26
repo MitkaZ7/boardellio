@@ -29,8 +29,10 @@
     "menu-settings": "настройки",
     "projects-page-title": "Текущие проекты",
     "projects-page-add-btn": "добавить проект",
-    "projects-form-add-title": "Добавление проекта",
-    "projects-form-add-placeholder": "название проекта...",
+    "projects-form-add-title": "добавить проект",
+    "projects-form-add-placeholder": "название проекта",
+    "projects-form-add-tag-placeholder": "идентификатор",
+    "projects-form-add-description-placeholder": "описание",
     "projects-form-add-btn": "добавить",
     "project-page-add-btn": "добавить задачу",
     "project-page-queue-section-title": "в очереди",
@@ -57,5 +59,7 @@
     "add-task-priority-select-placeholder": "Приоритет",
     "add-task-text-placeholder": "описание задачи",
     "upload-files-placeholder": "добавить файлы...",
-    "add-task-btn": "создать"
+    "add-task-btn": "создать",
+    "created": "создана",
+    "done": "выполнена"
 }

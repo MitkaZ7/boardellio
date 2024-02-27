@@ -61,5 +61,8 @@
     "upload-files-placeholder": "Upload files....",
     "add-task-btn": "Add",
     "created": "created",
+    "in-work": "in work",
+    "status": "status",
+    "priority": "priority",
     "done": "done"
 }

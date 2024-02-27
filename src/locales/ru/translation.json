@@ -61,5 +61,8 @@
     "upload-files-placeholder": "добавить файлы...",
     "add-task-btn": "создать",
     "created": "создана",
+    "in-work": "в работе",
+    "status": "состояние",
+    "priority": "приоритет",
     "done": "выполнена"
 }

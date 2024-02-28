@@ -9,7 +9,7 @@
         display: grid;
         grid-template-rows: auto auto;
         grid-template-columns: auto 1fr;
-        // align-items:start;
+        gap: 5px;
         justify-content: space-between;
         
     }

@@ -63,8 +63,8 @@ const Task = ({ taskId }) => {
             {t('status')}:&nbsp;{selectedTaskData.status.stringValue}
           </p>
           
-              <h4 className='task__project-title' onClick={navigateToProjectPage}>
-                {projecTitle}
+          <h4 className='task__project-title' onClick={navigateToProjectPage}>
+            {projecTitle}
           </h4>
         </header>
         <section className='task__data-block data-block'>
@@ -96,7 +96,7 @@ const Task = ({ taskId }) => {
             }</span> */}
           
           <div className="task__controls">
-            {/* <button className="task__controls-btn task-button task__controls-btn_type_edit"></button> */}
+            <button className="task__controls-btn task-button task__controls-btn_type_edit"></button>
             <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={handleRemoveTask}></button>
             </div>
         </section>

@@ -8,6 +8,7 @@ const options = {
         'any.required': 'Confirm password is required',
     }),
     taskTitle: Joi.string().min(5).max(120).required(),
+    taskStatus: Joi.string().required(),
     taskProject: Joi.string().required(),
     taskText: Joi.string().min(0),
     projectName: Joi.string().required(),
@@ -37,6 +38,14 @@ export const createTaskSchema = Joi.object({
     priority: options.taskPriority,
     author: options.taskAuthor,
 
+}).required();
+
+export const editTaskSchema = Joi.object({
+    title: options.taskTitle,
+    status: options.taskStatus,
+    projectTitle: options.projectName,
+    priority: options.taskPriority,
+    description: options.taskText,
 }).required();
 
 export const createProjectSchema = Joi.object({

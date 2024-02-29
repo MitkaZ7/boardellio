@@ -64,5 +64,6 @@
     "in-work": "in work",
     "status": "status",
     "priority": "priority",
-    "done": "done"
+    "done": "done",
+    "project": "project"
 }

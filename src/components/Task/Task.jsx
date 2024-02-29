@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { editTaskSchema } from '../../utils/validation';
-import Select from '../Select/Select';
+import CustomSelect from '../CustomSelect/CustomSelect';
+import { updateTask, updateTaskStatus } from '../../store/slices/tasksSlice';
+import Select from 'react-select';
 import Tooltip from '../Tooltip/Tooltip';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { daysCount, formateDate } from '../../utils/formateDate'
@@ -26,7 +28,8 @@ const Task = ({ taskId }) => {
   const [taskWorkTime, setTaskWorkTime] = useState('');
 
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedTaskPriority, setSelectedTaskPriority] = useState()
+  const [selectedTaskPriority, setSelectedTaskPriority] = useState(taskPriorityOptions.find(option => option.value === selectedTaskData.priority.stringValue));
+  const [selectedTaskStatus, setSelectedTaskStatus] = useState(taskStatusOptions.find(option => option.value === selectedTaskData.status.stringValue));
 
 
   const { 
@@ -76,13 +79,23 @@ const Task = ({ taskId }) => {
   }, [selectedTaskData, reset, projecTitle]);
 
 
+  
+
+  const handleSelectChangeStatus = (selectedOption) => {
+    setSelectedTaskStatus(selectedOption);
+  };
+
+  const handleSelectChangePriority = (selectedOption) => {
+    setSelectedTaskPriority(selectedOption);
+  };
+
   const onSubmit = (data) => {
+    // console.log(data)
     dispatch(updateTask({ taskId: selectedTaskId, newData: data }))
       .then(() => setIsEditing(false))
       .catch((error) => console.log(error));
   };
-
-
+  
   return (
     
     <>
@@ -93,45 +106,23 @@ const Task = ({ taskId }) => {
           <span className='task__data-item task__number' onClick={navigateToProjectPage}>
             {projectTag}-{selectedTaskData.number.integerValue}:
           </span>
-          <h3 className='task__task-title'>
-                {isEditing ? (
-                  <textarea
-                    type="text"
-                    {...register("title")}
-                    className="task__task-title"
-                  />
-                ) : (
-                  <>
-                    {selectedTaskData.title.stringValue}
-                  </>
-                )}
-              </h3>
-                {/* <span className='task__data-item task__number' onClick={navigateToProjectPage}>
-              {projectTag}-{selectedTaskData.number.integerValue}: 
-            </span>
-                &nbsp;{selectedTaskData.title.stringValue} */}
-          
-          <p className='task__data-item task__status'>
-            {isEditing ? (
-              <select
-                type="text"
-                {...register("status")}
-                className="task__input"
-                defaultValue={selectedTaskData.status.stringValue}
-              >
-                <option value='queue'>queue</option>
-                <option value='dev'>develpopment</option>
-                <option value='done'>done</option>
-              </select>
-              ) : (
-                <>
-                  {selectedTaskData.status.stringValue}
-                </>
-              )}
-          </p>
-          
+          <textarea  {...register("title")} type="text" className="task__task-title task__textarea-item" readOnly={isEditing ? false : true} />
+          <div className='task__data-item task__status'>
+            <select
+              className="form__select task__select-status"
+              {...register('status')}
+              onChange={handleSelectChangeStatus}
+              defaultValue={selectedTaskStatus}
+            >
+              {
+                taskStatusOptions.map((option) => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                  ))
+              }
+            </select>    
+          </div>
           <h4 className='task__project-title' onClick={navigateToProjectPage}>
-            {projecTitle}
+                {t('project')}: {projecTitle}
           </h4>
         </header>
         <section className='task__data-block data-block'>
@@ -144,24 +135,20 @@ const Task = ({ taskId }) => {
             }
             </span>
           </div>
-              <p className='task__data-item task__priority'>
-                {isEditing ? (
-                  <select
-                    type="text"
-                    {...register("priority")}
-                    className="task__input"
-                  >
-                    <option value="usual">usual</option>
-                    <option value="seriously">seriously</option>
-                    <option value="critical">critical</option>
-                  </select>
-                ) : (
-                  <>
-                    {t('priority')}: {selectedTaskData.priority.stringValue}
-                  </>
-                )}
-                {/* {t('priority')}: {selectedTaskData.priority.stringValue} */}
-              </p>
+              <div className='task__data-item task__priority'>
+                <select
+                  className="form__select task__select-status"
+                  {...register("priority")}
+                  onChange={handleSelectChangePriority}
+                  defaultValue={selectedTaskPriority}
+                >
+                  {
+                    taskPriorityOptions.map((option) => (
+                      <option key={option.value} value={option.value}>{option.label}</option>
+                    ))
+                  }
+                </select>
+              </div>
             {/* {
                 selectedTaskData.isCompleted.booleanValue ? 
                     <span className='task__metadata-item task__finish-date'>
@@ -179,13 +166,8 @@ const Task = ({ taskId }) => {
           
           
         </section>
-            <textarea className='task__text' readOnly={isEditing ? false : true} {...register("description")}>
+            <textarea className='task__text task__textarea-item' readOnly={isEditing ? false : true} {...register("description")}>
             </textarea>
-        {/* <section className='task__subtasks subtasks'>
-          <ul className='subtasks__list'>
-            <Subtask/>
-          </ul>
-        </section> */}
         <section className="form__file-wrapper">
           <label className="form__input-label" htmlFor="file">
             <span className="form__input-icon-wrapper">
@@ -195,12 +177,7 @@ const Task = ({ taskId }) => {
           </label>
           <input className="form__input-file" id="file" name="file" type="file" multiple />
         </section>
-        {/* <section className='task__comments comments'>
-          <ul className='comments__list'>
-            <CommentItem />
-          </ul>
-        </section> */}
-        {/* <button onClick={handleRemoveTask}>Remove task</button> */}
+
             <div className="task__controls">
               {isEditing ? (
                 <>

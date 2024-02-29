@@ -59,5 +59,6 @@
     "in-work": "在上班",
     "status": "任务状态",
     "priority": "优先权",
-    "done": "完毕"
+    "done": "完毕",
+    "project": "工程项目"
 }

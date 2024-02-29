@@ -4,12 +4,12 @@ export const ItemTypes = {
 };
 
 export const taskStatusOptions = [
-    { value:'queue', text: 'queue'},
-    { value: 'dev', text: 'development'},
-    { value: 'done', text: 'done' },
+    { value:'queue', label: 'queue'},
+    { value: 'dev', label: 'dev'},
+    { value: 'done', label: 'done' },
 ];
 export const taskPriorityOptions = [
-    { value: 'usual', text: 'usual' },
-    { value: 'seriously', text: 'seriously' },
-    { value: 'critical', text: 'critical' },
+    { value: 'usual', label: 'usual' },
+    { value: 'seriously', label: 'seriously' },
+    { value: 'critical', label: 'critical' },
 ]

@@ -7,11 +7,11 @@
         color: var(-font-clr-invert);
         border-bottom: 2px solid var(--bg-clr);
         display: grid;
-        grid-template-rows: min-content min-content;
-        grid-template-columns: max-content 1fr min-content;
+        grid-template-rows: auto auto;
+        grid-template-columns: auto 1fr max-content;
         gap: 5px;
         justify-content: space-between;
-        
+        align-items: start;
         
     }
         &__project-title {
@@ -25,7 +25,8 @@
         }
     
         &__task-title {
-            width: 99%;
+            resize: none;
+            // width: 99%;
             margin: 0;
             grid-row: 1;
             grid-column: 2;
@@ -34,6 +35,8 @@
             border-radius: 5px;
             // border: 1px solid #ccc;
             display: block;
+            padding: 0;
+            text-align: left;
         }
 
     &__content {
@@ -100,13 +103,17 @@
 
     &__status {
         // margin-left: 10px;
+
         text-transform: uppercase;
         margin: 0;
         grid-row: 1;
         grid-column: 3;
-        justify-self: end;
+        // justify-self: end;
         text-align: right;
-        min-width: 100px;
+        // min-width: 120px;
+    }
+    &__select-status {
+        
     }
 
     &__priority {
@@ -114,17 +121,22 @@
         align-self: center;
     
     }
-    &__text {
+   
+    &__textarea-item {
         resize: none;
         overflow-y: auto;
-        min-height: 300px;
-        // text-align: justify;
-        height: auto;
-        padding: 5px;
-        margin: 0 0 10px;
-        border: 2px solid var(--bg-clr);
-        border-radius: 5px;
+        border: none;
+            height: auto;
     }
+         &__text {
+    
+             min-height: 300px;
+             text-align: justify;
+             padding: 5px;
+             margin: 0 0 10px;
+             border: 2px solid var(--bg-clr);
+             border-radius: 5px;
+         }
     &__controls {
         
         display: flex;

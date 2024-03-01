@@ -91,17 +91,6 @@
     width: 100%;
     margin: 0;
 
-    &::after {
-      position: absolute;
-      background-image: url('../../assets/icons/arrow-rd.svg');
-      background-position: bottom center;
-      background-repeat: no-repeat;
-      content: '';
-      width: 35px;
-      height: 20px;
-      position: absolute;
-      // background-color: var(--process-clr);
-    }
   }
 
   &__item {

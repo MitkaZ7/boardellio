@@ -43,6 +43,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
 
     const onSubmit = (data) => {
         if (isRegistration) {
+             console.log(data)
             dispatch(createUser(data))
                 .then((resultAction) => {
                     if (createUser.fulfilled.match(resultAction)) {
@@ -55,6 +56,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                     }
                 });
         } else {
+            console.log(data)
             dispatch(authorizeUser(data))
                 .then((resultAction) => {
                     if (authorizeUser.fulfilled.match(resultAction)) {

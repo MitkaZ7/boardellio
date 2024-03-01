@@ -13,7 +13,9 @@
     }
 
     &__fieldset {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr max-content auto;
+        gap: 5px;
         justify-content: space-between;
         padding: 0;
         border: none;
@@ -26,8 +28,8 @@
     &__input {
         border: 2px solid var(--bg-clr);
         border-radius: 5px;
-        width: 100%;
-        margin-right: 10px;
+        // width: 100%;
+        // margin-right: 10px;
         padding: 5px 10px;
     }
 
@@ -36,12 +38,13 @@
         border: 2px solid var(--bg-clr);
         border-radius: 5px;
 
-        &:first-of-type {
-            margin-right: 10px;
-        }
+        // &:first-of-type {
+        //     margin-right: 10px;
+        // }
     }
 
     &__text-area {
+        resize: none;
         padding: 5px 10px;
         border: 2px solid var(--bg-clr);
         border-radius: 5px;

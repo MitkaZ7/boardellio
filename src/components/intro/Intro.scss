@@ -42,15 +42,9 @@
         margin: 15px 0 0 0;
         position: relative;
         left: 15px;
-        &::before {
-            content: '';
-            position: absolute;
-            height: 15px;
-            width: 6px;
-            left: -15px;
-            top: -2px;
-            border: 2px solid var(--subtitle-clr);
-            border-radius: 3px;
+        // @include list-item-decor;
+        &::before{
+            @include list-item-decor;
         }
     }
     &__tech-list {

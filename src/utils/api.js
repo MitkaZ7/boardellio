@@ -18,7 +18,7 @@ class Api {
                 isCompleted: { booleanValue: data.isCompleted },
                 deleted: { booleanValue: data.deleted },
                 number: { integerValue: data.number }, 
-                
+                files: { arrayValue: { values: [] } }
             }
         };
 
@@ -122,6 +122,63 @@ class Api {
                 return data;
             });
     }
+
+    getUserTasks(userEmail) {
+        return instance.post(':runQuery', {
+            structuredQuery: {
+                from: [
+                    { collectionId: "tasks" }
+                ],
+                where: {
+                    fieldFilter: {
+                        field: { fieldPath: 'author' },
+                        op: 'EQUAL',
+                        value: { stringValue: userEmail }
+                    }
+                }
+            }
+        })
+            .then((res) => {
+                const data = res.data.map((item) => {
+                    const id = item.document.name.split('/').pop();
+                    const fields = item.document.fields;
+                    return { id, ...fields };
+                });
+                return data;
+            });
+    }
+
+    getUserProjects(userEmail) {
+        return instance.post(':runQuery', {
+            structuredQuery: {
+                from: [
+                    { collectionId: "projects" }
+                ],
+                where: {
+                    fieldFilter: {
+                        field: { fieldPath: 'author' },
+                        op: 'EQUAL',
+                        value: { stringValue: userEmail }
+                    }
+                }
+            }
+        })
+            .then((res) => {
+                const data = res.data.map((item) => {
+                    const id = item.document.name.split('/').pop();
+                    const fields = item.document.fields;
+                    return { id, ...fields };
+                });
+                return data;
+            });
+    }
+
+
+
+
+
+
+
     //без филтра "удаленных" задач
     // getProjectTasks(projectId) {
     //     return instance.post(':runQuery',{
@@ -191,6 +248,31 @@ class Api {
             return { id: res.data.name.split('/').pop(), ...project };
         });
     }
+
+    // USER DATA:
+    createUserInDB(uid, userData) {
+        console.log(userData)
+        const requestData = {
+            fields: {
+                email: { stringValue: userData.email },
+                name: { stringValue: userData.name },
+                avatar: { stringValue: userData.avatar },
+                role: { stringValue: userData.role },
+            }
+        };
+
+        return instance.post(`/users/${uid}`, requestData)
+            .then((res) => {
+                console.log('Данные пользователя успешно добавлены в БД:', res.data);
+                return res.data;
+            })
+            .catch((error) => {
+                console.error('Ошибка при добавлении данных пользователя в БД:', error);
+                throw error;
+            });
+    }
+
+
 }
 
 const api = new Api(instance);

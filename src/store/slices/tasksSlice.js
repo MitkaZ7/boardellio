@@ -66,6 +66,33 @@ export const getTasks = createAsyncThunk(
     }
 );
 
+export const getUserTasks = createAsyncThunk(
+    'tasks/getTasksList',
+    async (userEmail, { rejectWithValue, dispatch }) => {
+        // dispatch(showLoader());
+        try {
+            console.log(userEmail)
+            const tasksList = await api.getUserTasks(userEmail);
+            if (tasksList && tasksList.length > 0) {
+                dispatch(hideLoader());
+                console.log(tasksList)
+                return tasksList;
+            } else {
+                dispatch(hideLoader());
+                return []; // Возвращаем пустой массив, если задачи не найдены
+            }
+        } catch (error) {
+            dispatch(hideLoader());
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+
+
+
+
+
 export const createTask = createAsyncThunk(
     'tasks/createTask',
     async (data, { rejectWithValue, dispatch, getState }) => {

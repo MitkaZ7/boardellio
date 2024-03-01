@@ -3,17 +3,45 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOneTask, logicDeleteTask, resetSelectedTaskData,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
 import { closePopup } from '../../store/slices/popupSlice';
-import Tooltip from '../Tooltip/Tooltip'
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { editTaskSchema } from '../../utils/validation';
+import CustomSelect from '../CustomSelect/CustomSelect';
+import { updateTask, updateTaskStatus } from '../../store/slices/tasksSlice';
+import Select from 'react-select';
+import Tooltip from '../Tooltip/Tooltip';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { daysCount, formateDate } from '../../utils/formateDate'
 import { useTranslation } from 'react-i18next'
+import { taskPriorityOptions, taskStatusOptions } from '../../utils/constants'
+
 const Task = ({ taskId }) => {
+
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
-  const { projectName } = useSelector(state => state.projects.selectedProject);
+  const projecTitle  = useSelector(state => state.projects.selectedProject.title.stringValue);
   const projectTag = useSelector(state => state.projects.selectedProject.tag.stringValue);
-  const [taskWorkTime, setTaskWorkTime] = useState('')
+  const [taskWorkTime, setTaskWorkTime] = useState('');
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedTaskPriority, setSelectedTaskPriority] = useState(taskPriorityOptions.find(option => option.value === selectedTaskData.priority.stringValue));
+  const [selectedTaskStatus, setSelectedTaskStatus] = useState(taskStatusOptions.find(option => option.value === selectedTaskData.status.stringValue));
+  
+  const { 
+    register, 
+    handleSubmit, 
+    reset } = useForm({
+    resolver: joiResolver(editTaskSchema),
+  });
+
+  const navigateToProjectPage = () => {
+    dispatch(closePopup());
+  }
+
   const handleRemoveTask = () => {
     dispatch(logicDeleteTask(selectedTaskId))
       .then(() => dispatch(closePopup()))
@@ -35,7 +63,48 @@ const Task = ({ taskId }) => {
       dispatch(resetSelectedTaskData());
     };
   }, [dispatch, selectedTaskId]);
+//
+  useEffect(() => {
+    if (selectedTaskData) {
+      reset({
+        title: selectedTaskData.title.stringValue,
+        status: selectedTaskData.status.stringValue,
+        projectTitle: projecTitle,
+        priority: selectedTaskData.priority.stringValue,
+        description: selectedTaskData.description.stringValue,
+      });
+    }
+  }, [selectedTaskData, reset, projecTitle]);
 
+
+  const onSubmit = (data) => {
+    // console.log(data)
+    dispatch(updateTask({ taskId: selectedTaskId, newData: data }))
+      .then(() => setIsEditing(false))
+      .catch((error) => console.log(error));
+  };
+
+  const handleSelectChangeStatus = (evt) => {
+    const reselectedStatus = evt.target.value;
+    
+    setSelectedTaskStatus(reselectedStatus);
+    // const formData = {
+    //   status: reselectedStatus,
+    // };
+    // dispatch(updateTask({ taskId: selectedTaskId, newData: reselectedStatus }));
+  };
+
+  const handleSelectChangePriority = (selectedOption) => {
+    setSelectedTaskPriority(selectedOption);
+    const formData = {
+      priority: selectedOption.value,
+    };
+    dispatch(updateTask({ taskId: selectedTaskId, newData: formData }));
+  };
+
+
+  
+  
   return (
     
     <>
@@ -43,31 +112,53 @@ const Task = ({ taskId }) => {
     <li className='task'>
       <article className='task__content'>
         <header className='task__header'>
-          
-          <h3 className='task__task-title'>
-                <span className='task__metadata-item task__number'>{projectTag}-{selectedTaskData.number.integerValue} </span>
-            {selectedTaskData.title.stringValue}
-          </h3>
-          <h4 className='task__project-title'>
-            {projectName}
-          </h4>
-          
-              
-          <div className='task__metadata-parametres'>
-                <span className='task__metadata-item task__priority'>proirity: {selectedTaskData.priority.stringValue}</span>
-
-                <span className='task__metadata-item task__status'>status: {selectedTaskData.status.stringValue}</span>
+          <span className='task__data-item task__number' onClick={navigateToProjectPage}>
+            {projectTag}-{selectedTaskData.number.integerValue}:
+          </span>
+          <textarea  {...register("title")} type="text" className="task__task-title task__textarea-item" readOnly={isEditing ? false : true} />
+          <div className='task__data-item task__status'>
+            <select
+              className="form__select task__select-status"
+              {...register('status')}
+              onChange={handleSelectChangeStatus}
+              defaultValue={selectedTaskStatus}
+            >
+              {
+                taskStatusOptions.map((option) => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                  ))
+              }
+            </select>    
           </div>
+          <h4 className='task__project-title' onClick={navigateToProjectPage}>
+                {t('project')}: {projecTitle}
+          </h4>
         </header>
-        <section className='task__metadata-block metadata-block'>
-          <div className='task__metadata-dates'>
-                <span className='task__metadata-item task__creation-date'>{t('created')}: {formateDate(selectedTaskData.createTime)}&nbsp;</span>
-            {/* <span className='task__metadata-item task__spent-time'>In work for: {
+        <section className='task__data-block data-block'>
+          <div className='task__data-dates'>
+                <span className='task__data-item task__creation-date'>{t('created')}:&nbsp;  
+              {formateDate(selectedTaskData.createTime)}
+            </span>
+                <span className='task__metadata-item task__work-time'>{t('in-work')}: 3 дня {
                   daysCount(selectedTaskData.createTime)
             }
-            </span> */}
-
-            {
+            </span>
+          </div>
+              <div className='task__data-item task__priority'>
+                <select
+                  className="form__select task__select-status"
+                  {...register("priority")}
+                  onChange={handleSelectChangePriority}
+                  defaultValue={selectedTaskPriority}
+                >
+                  {
+                    taskPriorityOptions.map((option) => (
+                      <option key={option.value} value={option.value}>{option.label}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            {/* {
                 selectedTaskData.isCompleted.booleanValue ? 
                     <span className='task__metadata-item task__finish-date'>
                       &nbsp;{t('done')}: сегодня
@@ -76,41 +167,34 @@ const Task = ({ taskId }) => {
                     <span className='task__metadata-item task__finish-date'>
                       &nbsp;{t('done')}: не завершена.
                     </span>
-            }
+            } */}
 
             {/* <span className='task__metadata-item task__finish-date'>&nbsp;{t('done')}: {
                   !selectedTaskData.isCompleted.booleanValue ? 'DDD' : 'NNNN'
             }</span> */}
-          </div>
-          <div className="task__controls">
-            {/* <button className="task__controls-btn task-button task__controls-btn_type_edit"></button> */}
-            <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={handleRemoveTask}></button>
-            </div>
+           
         </section>
-        <p className='task__text'>
-              {selectedTaskData.description.stringValue}
-        </p>
+            <textarea className='task__text task__textarea-item' readOnly={isEditing ? false : true} {...register("description")}>
+            </textarea>
+        
 
-        {/* <section className='task__subtasks subtasks'>
-          <ul className='subtasks__list'>
-            <Subtask/>
-          </ul>
-        </section> */}
-        <section className="form__file-wrapper">
-          <label className="form__input-label" htmlFor="file">
-            <span className="form__input-icon-wrapper">
-              <img className="popup__form-load-icon" src={Upload} alt="select files"></img>
-            </span>
-            <span className="form__input-file-text">Upload files...</span>
-          </label>
-          <input className="form__input-file" id="file" name="file" type="file" multiple />
-        </section>
-        {/* <section className='task__comments comments'>
-          <ul className='comments__list'>
-            <CommentItem />
-          </ul>
-        </section> */}
-        {/* <button onClick={handleRemoveTask}>Remove task</button> */}
+            <div className="task__controls">
+              {isEditing ? (
+                <>
+                  <button className="task__controls-btn task-button task__controls-btn_type_save" onClick={handleSubmit(onSubmit)}>
+                    {t('save')}
+                  </button>
+                  <button className="task__controls-btn task-button task__controls-btn_type_cancel" onClick={() => setIsEditing(false)}>
+                    {t('cancel')}
+                  </button>
+                </>
+              ) : (
+                <button className="task__controls-btn task-button task__controls-btn_type_edit" onClick={() => setIsEditing(true)}>
+                    {t('edit')}
+                </button>
+              )}
+              <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={handleRemoveTask}></button>
+            </div>
       </article>
     </li>
       )}

@@ -43,6 +43,28 @@ export const getProjects = createAsyncThunk(
     }
 );
 
+export const getUserProjects = createAsyncThunk(
+    'tasks/getTasksList',
+    async (userEmail, { rejectWithValue, dispatch }) => {
+        dispatch(showLoader());
+        try {
+            console.log(userEmail)
+            const projectsList = await api.getUserProjects(userEmail);
+            if (projectsList && projectsList.length > 0) {
+                dispatch(hideLoader());
+                console.log(projectsList)
+                return projectsList;
+            } else {
+                dispatch(hideLoader());
+                return []; 
+            }
+        } catch (error) {
+            dispatch(hideLoader());
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
 export const getOneProject = createAsyncThunk(
     'projects/getOnePeoject',
     async (projectId, thunkAPI) => {

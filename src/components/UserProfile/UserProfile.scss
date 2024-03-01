@@ -1,36 +1,110 @@
 .user-profile {
-    margin-top: 100px;
-    display: flex;
-    align-items: center;
+    margin: 20px 25px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 150px auto;
+    gap: 20px;
+    // align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
  
 
-    &__header {
-        
+    &__avatar-wrapper {
+        position: relative;
+       
     }
     &__avatar {
-        width: 150px;
+        border-radius: 10px;
+            background-position: center;
+            background-size: cover;
+            width: 150px;
+            height: 150px;
+            position: relative;
+    }
+    &__button-edit-avatar {
+        position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, .5);
+            background-image: url(../../assets/icons/pencil.svg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 26px 26px;
+            height: 150px;
+            width: 150px;
+            opacity: 0;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            &:hover {
+                opacity: 1;
+            }
     }
     &__info {
-        margin-left: 25px;
+        // margin-left: 25px;
+        display: flex;
+        color: var(--accent-clr);
+        max-height: 150px;
+  
+    }
+    &__info-wrapper {
         display: flex;
         flex-flow: column wrap;
-        color: var(--accent-clr);
+        // justify-content: start;
+        margin-left: 20px;
     }
     &__info-item {
         margin-bottom: 10px;
         @include link-hover;
+        font-size: 1.3em;
     }
-    &__projects {
-      width: 100%;
-      align-self: center;
-      justify-self: center;
+    &__edit-info-btn {
+        // width: 120px;
+        @include link-hover;
+        margin-top: 35px;
+        @include action-button;
+            width: 120px;
+            color: var(--process-clr);
+    }
+    &__relative-data {
+      max-width: 400px;
+      align-self: start;
+    //   justify-self: center;
     
-        text-align: center;
-        margin-bottom: 300px;
+        // text-align: center;
     }
-    &__projects-header {
+    &__relative-data-header {
+        text-transform: uppercase;
+    }
+    &__relative-data-list {
+        @include list;
+        max-width: 390px;
+        overflow-x: hidden;
        
+        > li {
+            @include link-hover;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            margin-left: 20px;
+            top: 5px;
+            position: relative;
+            white-space: nowrap;
+                position: relative;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            &::before {
+                @include list-item-decor;
+                top: 0;
+            }
+            
+            
+        }
+    }
+    &__user-projects {
+
+    }
+    &__relative-data-header {
+        margin: 0;
     }
 }

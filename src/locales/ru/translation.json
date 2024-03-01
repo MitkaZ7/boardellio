@@ -1,5 +1,5 @@
 {
-    "project-title": "Boardellio",
+    "project-title": "TaskTrek",
     "intro-title": "- Одностраниченое приложение",
     "intro-subtitle": " - для управления проектами и задачами",
     "features": {
@@ -61,5 +61,12 @@
     "upload-files-placeholder": "добавить файлы...",
     "add-task-btn": "создать",
     "created": "создана",
-    "done": "выполнена"
+    "in-work": "в работе",
+    "status": "состояние",
+    "priority": "приоритет",
+    "done": "выполнена",
+    "project": "проект",
+    "save": "сохранить",
+    "edit": "редактировать",
+    "cancel": "отменить"
 }

@@ -1,0 +1,5 @@
+.button-edit {
+    @include action-button;
+    min-width: 120px;
+    color: var(--process-clr);
+}

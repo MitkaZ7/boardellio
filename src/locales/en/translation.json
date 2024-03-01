@@ -1,5 +1,5 @@
 {
-    "project-title": "Boardellio",
+    "project-title": "TaskTrek",
     "intro-title": "A single page application",
     "intro-subtitle": "- Dashboard tool for project and task managment",
     "features": {
@@ -61,5 +61,12 @@
     "upload-files-placeholder": "Upload files....",
     "add-task-btn": "Add",
     "created": "created",
-    "done": "done"
+    "in-work": "in work",
+    "status": "status",
+    "priority": "priority",
+    "done": "done",
+    "project": "project",
+    "save": "save",
+    "edit": "edit",
+    "cancel": "cancel"
 }

@@ -95,7 +95,7 @@ const Form = ({ projects, validationSchema }) => {
                 placeholder={t('add-task-text-placeholder')}
                 spellCheck="true"
             ></textarea>
-            <div className="form__file-wrapper">
+            {/* <div className="form__file-wrapper">
                 <label className="form__input-label" htmlFor="file">
                     <span className="form__input-icon-wrapper">
                         <img className="popup__form-load-icon" src={Upload} alt="select files"></img>
@@ -103,7 +103,7 @@ const Form = ({ projects, validationSchema }) => {
                     <span className="form__input-file-text">{t('upload-files-placeholder')}</span>
                 </label>
                 <input className="form__input-file" id="file" name="file" type="file" multiple />
-            </div>
+            </div> */}
             <button type="submit" className="form__button-submit button" disabled={!isValid}>
                 {t('add-task-btn')}
             </button>

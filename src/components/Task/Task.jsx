@@ -30,12 +30,10 @@ const Task = ({ taskId }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedTaskPriority, setSelectedTaskPriority] = useState(taskPriorityOptions.find(option => option.value === selectedTaskData.priority.stringValue));
   const [selectedTaskStatus, setSelectedTaskStatus] = useState(taskStatusOptions.find(option => option.value === selectedTaskData.status.stringValue));
-
-
+  
   const { 
     register, 
     handleSubmit, 
-    setValue, 
     reset } = useForm({
     resolver: joiResolver(editTaskSchema),
   });
@@ -79,22 +77,33 @@ const Task = ({ taskId }) => {
   }, [selectedTaskData, reset, projecTitle]);
 
 
-  
-
-  const handleSelectChangeStatus = (selectedOption) => {
-    setSelectedTaskStatus(selectedOption);
-  };
-
-  const handleSelectChangePriority = (selectedOption) => {
-    setSelectedTaskPriority(selectedOption);
-  };
-
   const onSubmit = (data) => {
     // console.log(data)
     dispatch(updateTask({ taskId: selectedTaskId, newData: data }))
       .then(() => setIsEditing(false))
       .catch((error) => console.log(error));
   };
+
+  const handleSelectChangeStatus = (evt) => {
+    const reselectedStatus = evt.target.value;
+    
+    setSelectedTaskStatus(reselectedStatus);
+    // const formData = {
+    //   status: reselectedStatus,
+    // };
+    // dispatch(updateTask({ taskId: selectedTaskId, newData: reselectedStatus }));
+  };
+
+  const handleSelectChangePriority = (selectedOption) => {
+    setSelectedTaskPriority(selectedOption);
+    const formData = {
+      priority: selectedOption.value,
+    };
+    dispatch(updateTask({ taskId: selectedTaskId, newData: formData }));
+  };
+
+
+  
   
   return (
     
@@ -163,33 +172,26 @@ const Task = ({ taskId }) => {
             {/* <span className='task__metadata-item task__finish-date'>&nbsp;{t('done')}: {
                   !selectedTaskData.isCompleted.booleanValue ? 'DDD' : 'NNNN'
             }</span> */}
-          
-          
+           
         </section>
             <textarea className='task__text task__textarea-item' readOnly={isEditing ? false : true} {...register("description")}>
             </textarea>
-        <section className="form__file-wrapper">
-          <label className="form__input-label" htmlFor="file">
-            <span className="form__input-icon-wrapper">
-              <img className="popup__form-load-icon" src={Upload} alt="select files"></img>
-            </span>
-            <span className="form__input-file-text">Upload files...</span>
-          </label>
-          <input className="form__input-file" id="file" name="file" type="file" multiple />
-        </section>
+        
 
             <div className="task__controls">
               {isEditing ? (
                 <>
                   <button className="task__controls-btn task-button task__controls-btn_type_save" onClick={handleSubmit(onSubmit)}>
-                    save
+                    {t('save')}
                   </button>
                   <button className="task__controls-btn task-button task__controls-btn_type_cancel" onClick={() => setIsEditing(false)}>
-                    cancel
+                    {t('cancel')}
                   </button>
                 </>
               ) : (
-                <button className="task__controls-btn task-button task__controls-btn_type_edit" onClick={() => setIsEditing(true)}></button>
+                <button className="task__controls-btn task-button task__controls-btn_type_edit" onClick={() => setIsEditing(true)}>
+                    {t('edit')}
+                </button>
               )}
               <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={handleRemoveTask}></button>
             </div>

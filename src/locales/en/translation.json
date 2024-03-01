@@ -65,5 +65,8 @@
     "status": "status",
     "priority": "priority",
     "done": "done",
-    "project": "project"
+    "project": "project",
+    "save": "save",
+    "edit": "edit",
+    "cancel": "cancel"
 }

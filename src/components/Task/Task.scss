@@ -148,12 +148,16 @@
     &__controls-btn {
         
         &_type_edit {
-            @include custom-button;
-            background: center / contain no-repeat url('../../assets/icons/pencil.svg');
+            // @include custom-button;
+            // background: center / contain no-repeat url('../../assets/icons/pencil.svg');
             margin-right: 10px;
-    
+            @include action-button;
+            min-width: 120px;
+            color: var(--process-clr);
         }
         &_type_delete {
+            filter: brightness(0.2);
+         
             @include custom-button;
             background: center / contain no-repeat url('../../assets/icons/trash.svg');
         }

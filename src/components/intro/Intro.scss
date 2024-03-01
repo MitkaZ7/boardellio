@@ -42,7 +42,10 @@
         margin: 15px 0 0 0;
         position: relative;
         left: 15px;
-        @include list-item-decor;
+        // @include list-item-decor;
+        &::before{
+            @include list-item-decor;
+        }
     }
     &__tech-list {
         @include list;

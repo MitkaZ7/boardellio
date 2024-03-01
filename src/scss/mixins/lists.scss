@@ -4,14 +4,14 @@
 }
 
 @mixin list-item-decor {
-    &::before {
+    
             content: '';
             position: absolute;
             height: 15px;
             width: 6px;
             left: -15px;
-            top: -2px;
+            top: -3px;
             border: 2px solid var(--subtitle-clr);
             border-radius: 3px;
-        }
+        
 }

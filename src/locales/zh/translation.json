@@ -60,5 +60,8 @@
     "status": "任务状态",
     "priority": "优先权",
     "done": "完毕",
-    "project": "工程项目"
+    "project": "工程项目",
+    "save": "储蓄",
+    "edit": "编辑",
+    "cancel": "取消"
 }

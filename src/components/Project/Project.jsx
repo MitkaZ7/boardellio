@@ -54,7 +54,7 @@ const Project = () => {
 
   useEffect(() => {
     dispatch(getTasks());
-
+    console.log(tasks)
     return () => {
       dispatch(resetTasksState()); 
     };
@@ -109,7 +109,7 @@ const Project = () => {
         <section className='project__content'>
           <section className='project__tasks-section project__queue-tasks'>
             <div className="project__task-section-header-wrap">
-              <h3 className='project__tasks-section-header'>{t('project-page-queue-section-title')} ({tasks.queue.length})</h3>
+              <h3 className='project__tasks-section-header'>{t('project-page-queue-section-title')} </h3>
               {/* <FoldButton onClick={() => handleToggleVisibility('queue')} /> */}
             </div>
             {isQueueVisible && (
@@ -119,7 +119,7 @@ const Project = () => {
           </section>
           <section className='project__tasks-section project__dev-tasks'>
             <div className="project__task-section-header-wrap">
-              <h3 className='project__tasks-section-header'>{t('project-page-dev-section-title')} ({tasks.dev.length})</h3>
+              <h3 className='project__tasks-section-header'>{t('project-page-dev-section-title')} </h3>
               {/* <FoldButton onClick={() => handleToggleVisibility('dev')} /> */}
               {/* <button className="project__task-section-fold-btn"></button> */}
             </div>
@@ -130,7 +130,7 @@ const Project = () => {
           </section>
           <section className='project__tasks-section project__done-tasks'>
             <div className="project__task-section-header-wrap">
-              <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')} ({tasks.done.length})</h3>
+              <h3 className='project__tasks-section-header'>{t('project-page-done-section-title')} </h3>
               {/* <FoldButton onClick={() => handleToggleVisibility('done')} /> */}
               {/* <button className="project__task-section-fold-btn"></button> */}
             </div>

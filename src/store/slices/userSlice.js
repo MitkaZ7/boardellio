@@ -3,13 +3,6 @@ import authApi from '../../utils/authApi'
 import { app } from '../../utils/firebase';
 import { hideLoader, showLoader } from './loaderSlice';
 
-// const getToken = () => {
-//   const token = localStorage.getItem('jwt');
-//   if (token) {
-//     authApi.checkToken(token)
-//   }
-// }
-
 export const createUser = createAsyncThunk(
   'user/createUser',
   async (regData, { rejectWithValue, dispatch}) => {

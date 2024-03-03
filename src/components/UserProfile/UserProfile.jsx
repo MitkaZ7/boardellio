@@ -66,13 +66,13 @@ const UserProfile = () => {
         </div>
         <div className='user-profile__info-wrapper'>
           <div className='user-profile__info-item'>
-            email: <span> {user.email}</span> 
+            {t('email')}: <span> {user.email}</span> 
           </div>
           <div className='user-profile__info-item'>
-            ame: <span> Jhon Travolta</span>
+            {t('name')}: <span> Jhon Travolta</span>
           </div>
           <div className='user-profile__info-item'>
-            role:
+            {t('role')}:
             <span> user</span>
           </div>
           <button className="user-profile__edit-info-btn">
@@ -81,11 +81,12 @@ const UserProfile = () => {
         </div>
       </div>
       <div className='user-profile__relative-data'>
+        <div className="user-profile__relative-data-wrapper">
         <div className='user-profile__user-projects'>
           <h3 className='user-profile__relative-data-header'>
-            Created projects:
+            {t('my-created-projects')}:
           </h3>
-          <ul className="user-profile__relative-data-list">
+          <ol className="user-profile__relative-data-list">
             {
               userProjects.map((project) => {
                 return <li 
@@ -104,20 +105,21 @@ const UserProfile = () => {
                 </li>
               })
             }
-          </ul>
+          </ol>
         </div>
         <div className='user-profile__user-tasks'>
           <h3 className='user-profile__relative-data-header'>
-            Created tasks:
+            {t('my-created-tasks')}:
           </h3>
-          <ul className="user-profile__relative-data-list">
+          <ol className="user-profile__relative-data-list">
               {
                 userTasks.map((task)=> {
                   return <li key={task.id} id={task.id} onClick={() => openTaskPopupHandler(task.id)}>{task.title.stringValue}</li>
                 })
               }
-          </ul>
+          </ol>
         </div>
+      </div>
       </div>
       {activePopup === 'TaskPopup' && <TaskPopup />}
     </div>

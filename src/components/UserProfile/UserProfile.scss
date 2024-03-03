@@ -68,29 +68,39 @@
             color: var(--process-clr);
     }
     &__relative-data {
-      max-width: 400px;
+    //   max-width: 390px;
       align-self: start;
+      border: 1px solid red;
     //   justify-self: center;
     
         // text-align: center;
+    }
+    &__relative-data-wrapper {
+        width: 390px;
+        border: 1px solid green;
+        white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+
     }
     &__relative-data-header {
         text-transform: uppercase;
     }
     &__relative-data-list {
         @include list;
+      
         max-width: 390px;
-        overflow-x: hidden;
+        // overflow-x: hidden;
        
         > li {
             @include link-hover;
             font-size: 1.2em;
             margin-bottom: 10px;
-            margin-left: 20px;
+            // margin-left: 20px;
             top: 5px;
-            position: relative;
+            // position: relative;
             white-space: nowrap;
-                position: relative;
                 overflow: hidden;
                 text-overflow: ellipsis;
             &::before {

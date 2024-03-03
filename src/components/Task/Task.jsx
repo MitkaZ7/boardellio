@@ -139,7 +139,7 @@ const Task = ({ taskId }) => {
                 <span className='task__data-item task__creation-date'>{t('created')}:&nbsp;  
               {formateDate(selectedTaskData.createTime)}
             </span>
-                <span className='task__metadata-item task__work-time'>{t('in-work')}: 3 дня {
+                <span className='task__metadata-item task__work-time'>{t('in-work')}: {
                   daysCount(selectedTaskData.createTime)
             }
             </span>

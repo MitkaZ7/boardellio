@@ -68,5 +68,15 @@
     "project": "project",
     "save": "save",
     "edit": "edit",
-    "cancel": "cancel"
+    "cancel": "cancel",
+    "my-created-projects": "My created projects",
+    "my-created-tasks": "My created tasks",
+    "name": "name",
+    "role": "role",
+    "days": "days",
+    "day": "day",
+    "day-s": "days",
+    "hour": "hour",
+    "hours": "hours",
+    "hour-s": "hours"
 }

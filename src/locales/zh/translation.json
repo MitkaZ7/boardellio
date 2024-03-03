@@ -63,5 +63,15 @@
     "project": "工程项目",
     "save": "储蓄",
     "edit": "编辑",
-    "cancel": "取消"
+    "cancel": "取消",
+    "my-created-projects": "我的项目",
+    "my-created-tasks": "我的任务",
+    "name": "姓名",
+    "role": "角色",
+    "days": "天数",
+    "day": "日",
+    "day-s": "日",
+    "hour": "点",
+    "hours": "点",
+    "hour-s": "点"
 }

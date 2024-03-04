@@ -15,7 +15,7 @@ import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { daysCount, formateDate } from '../../utils/formateDate'
 import { useTranslation } from 'react-i18next'
 import { taskPriorityOptions, taskStatusOptions } from '../../utils/constants'
-import { swipeLeftTween } from '../../utils/animations'
+
 const Task = ({ taskId }) => {
   const saveButtonRef = useRef(null);
   const cancelButtonRef = useRef(null);

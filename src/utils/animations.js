@@ -102,37 +102,6 @@ export const fadeInToDown = (element) => {
     })
 }
 
-export const swipeLeftTween2 = (elements) => {
-    let btnTl = gsap.timeline({ delay: 0.2, stagger: 0.1 });
 
-    elements.forEach(el => {
-        btnTl.fromTo(el, {
-            x: () => parseFloat(el.style.x) || -200,
-            // opacity: 0,
-            ease: "none"
-        },
-            {
-                x: 0,
-                // opacity: 1,
-                duration: 1,
-                ease: "power2.out"
-            }
-        );
-    });
-}
-
-export const swipeLeftTween = (elem) => {
-
-    let btnTl = gsap.timeline({ ease: "none" });
-    btnTl.fromTo(elem, {
-        x: () => 50,
-        // opacity: 0,
-    },
-        {
-            x: 0,
-            // opacity: 1,
-          
-        })
-}
 
 

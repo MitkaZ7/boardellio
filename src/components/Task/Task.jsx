@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneTask, logicDeleteTask, resetSelectedTaskData,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
@@ -15,8 +15,13 @@ import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { daysCount, formateDate } from '../../utils/formateDate'
 import { useTranslation } from 'react-i18next'
 import { taskPriorityOptions, taskStatusOptions } from '../../utils/constants'
-
+import { swipeLeftTween } from '../../utils/animations'
 const Task = ({ taskId }) => {
+  const saveButtonRef = useRef(null);
+  const cancelButtonRef = useRef(null);
+  const btnsEditModeRef = useRef(null);
+
+  const buttonsRefs = useRef([]);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -74,6 +79,12 @@ const Task = ({ taskId }) => {
     }
   }, [selectedTaskData, reset, projecTitle]);
 
+  // useEffect(() => {
+  //   if (isEditing) {
+  //     swipeLeftTween([saveButtonRef.current, cancelButtonRef.current]);
+  //     swipeLeftTween(btnsEditModeRef.current)
+  //   }
+  // }, [isEditing]);
 
   const onSubmit = (data) => {
     // console.log(data)
@@ -97,6 +108,10 @@ const Task = ({ taskId }) => {
     handleSubmit(onSubmit)();
   };
 
+  const hadleRunEditMode = () => {
+    setIsEditing(true);
+   
+  };
 
   
   
@@ -192,16 +207,23 @@ const Task = ({ taskId }) => {
 
             <div className="task__controls">
               {isEditing ? (
-                <>
-                  <button className="task__controls-btn task-button task__controls-btn_type_save" onClick={handleSubmit(onSubmit)}>
-                    {t('save')}
-                  </button>
-                  <button className="task__controls-btn task-button task__controls-btn_type_cancel" onClick={() => setIsEditing(false)}>
+                <div ref={btnsEditModeRef}>
+                  
+                  <button 
+                    ref={cancelButtonRef}
+                    className="task__controls-btn task-button task__controls-btn_type_cancel" 
+                    onClick={() => setIsEditing(false)}>
                     {t('cancel')}
                   </button>
-                </>
+                  <button
+                    ref={saveButtonRef}
+                    className="task__controls-btn task-button task__controls-btn_type_save"
+                    onClick={handleSubmit(onSubmit)}>
+                    {t('save')}
+                  </button>
+                </div>
               ) : (
-                <button className="task__controls-btn task-button task__controls-btn_type_edit" onClick={() => setIsEditing(true)}>
+                <button className="task__controls-btn task-button task__controls-btn_type_edit" onClick={hadleRunEditMode}>
                     {t('edit')}
                 </button>
               )}

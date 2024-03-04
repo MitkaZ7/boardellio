@@ -167,6 +167,7 @@
             background: center / contain no-repeat url('../../assets/icons/trash.svg');
         }
         &_type_save {
+            min-width: 120px;
             @include action-button;
             border-color: var(--hover-bg-clr);
             color: var(--hover-bg-clr);
@@ -178,6 +179,7 @@
             border-color: var(--queue-clr);
             color: var(--queue-clr);
             margin-right: 10px;
+            min-width: 120px;
             @include link-hover;
         }
     }

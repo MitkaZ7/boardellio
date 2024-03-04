@@ -130,18 +130,32 @@ export const logicDeleteTask = createAsyncThunk(
     }
 );
 
+const toggleTaskCompletion = (status) => {
+    if (status === 'done') {
+       return true 
+    } else  return false 
+}
+
 export const updateTaskStatus = createAsyncThunk(
     'tasks/updateTaskStatus',
     async ({ id, newStatus }, { rejectWithValue, dispatch }) => {
-        try {
-            await api.updateTask(id, { status: newStatus });
+        
+        try {   
+            const newData = {
+                status: newStatus,
+                isCompleted: toggleTaskCompletion(newStatus)
+            }
+            console.log(newData)
+
+            await api.updateTask(id, newData);
             console.log(`Task with ID ${id} status changed to ${newStatus}.`);
             await dispatch(getTasks());
             return { id, newStatus };
         } catch (error) {
             return rejectWithValue(error.message);
         }
-    }
+    } 
+    
 );
 
 export const updateTask = createAsyncThunk(
@@ -197,9 +211,9 @@ export const taskSlice = createSlice({
             state.tasks.dev = state.tasks.dev.filter((task) => task.objectId !== taskId);
             state.tasks.done = state.tasks.done.filter((task) => task.objectId !== taskId);
         },
-        // updateTask(state, action) {
+        completeTask(state, action) {
             
-        // },
+        },
         setTaskData(state, action) {
             state.selectedTaskData = action.payload;
         },

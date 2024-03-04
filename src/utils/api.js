@@ -55,12 +55,21 @@ class Api {
     }
   
     updateTask(taskId, data) {
+        console.log(data)
         const requestData = {
             fields: {}
         };
         Object.keys(data).forEach(field => {
-            requestData.fields[field] = { stringValue: data[field] };
+            const fieldValue = data[field];
+            if (typeof fieldValue === 'boolean') {
+                requestData.fields[field] = { booleanValue: fieldValue };
+            } else if (Number.isInteger(fieldValue)) {
+                requestData.fields[field] = { integerValue: fieldValue };
+            } else {
+                requestData.fields[field] = { stringValue: fieldValue };
+            }
         });
+        console.log(requestData)
         const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
         return instance.patch(`/tasks/${taskId}?${updateMaskQuery}`, requestData);
     }

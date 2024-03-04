@@ -34,7 +34,8 @@ const Task = ({ taskId }) => {
   const { 
     register, 
     handleSubmit, 
-    reset } = useForm({
+    reset,
+    setValue } = useForm({
     resolver: joiResolver(editTaskSchema),
   });
 
@@ -48,10 +49,7 @@ const Task = ({ taskId }) => {
       .then(()=> dispatch(getTasks()));
 
   };
-  const handleTaskWorkTimeCounter = (creationDate) => {
-    console.log(creationDate)
-    setTaskWorkTime(creationDate)
-  }
+ 
   useEffect(() => {
     if (selectedTaskId) {
       dispatch(showLoader());
@@ -86,20 +84,17 @@ const Task = ({ taskId }) => {
 
   const handleSelectChangeStatus = (evt) => {
     const reselectedStatus = evt.target.value;
-    
+
     setSelectedTaskStatus(reselectedStatus);
-    // const formData = {
-    //   status: reselectedStatus,
-    // };
-    // dispatch(updateTask({ taskId: selectedTaskId, newData: reselectedStatus }));
+    setValue("status", reselectedStatus);
+    handleSubmit(onSubmit)();
   };
 
-  const handleSelectChangePriority = (selectedOption) => {
-    setSelectedTaskPriority(selectedOption);
-    const formData = {
-      priority: selectedOption.value,
-    };
-    dispatch(updateTask({ taskId: selectedTaskId, newData: formData }));
+  const handleSelectChangePriority = (evt) => {
+    const reselectedPriority = evt.target.value;
+    setSelectedTaskPriority(reselectedPriority);
+    setValue("priority", reselectedPriority);
+    handleSubmit(onSubmit)();
   };
 
 
@@ -115,10 +110,17 @@ const Task = ({ taskId }) => {
           <span className='task__data-item task__number' onClick={navigateToProjectPage}>
             {projectTag}-{selectedTaskData.number.integerValue}:
           </span>
-          <textarea  {...register("title")} type="text" className="task__task-title task__textarea-item" readOnly={isEditing ? false : true} />
+          <input  
+            {...register("title")} 
+            type="text" 
+            className={`task__task-title ${isEditing ? 'editable' : ''}`}
+            readOnly={isEditing ? false : true} 
+                title={selectedTaskData.title.stringValue}
+          />
           <div className='task__data-item task__status'>
             <select
-              className="form__select task__select-status"
+              className={`form__select task__select-status ${isEditing ? 'editable' : ''}`}
+
               {...register('status')}
               onChange={handleSelectChangeStatus}
               defaultValue={selectedTaskStatus}
@@ -130,9 +132,9 @@ const Task = ({ taskId }) => {
               }
             </select>    
           </div>
-          <h4 className='task__project-title' onClick={navigateToProjectPage}>
-                {t('project')}: {projecTitle}
-          </h4>
+              <h4 className='task__project-title' onClick={navigateToProjectPage}>
+                {projecTitle}
+              </h4>
         </header>
         <section className='task__data-block data-block'>
           <div className='task__data-dates'>
@@ -149,8 +151,10 @@ const Task = ({ taskId }) => {
               
           </div>
               <div className='task__data-item task__priority'>
+                {t('priority')}:&nbsp;
                 <select
-                  className="form__select task__select-status"
+                  className={`form__select task__select-priority ${isEditing ? 'editable' : ''}`}
+
                   {...register("priority")}
                   onChange={handleSelectChangePriority}
                   defaultValue={selectedTaskPriority}
@@ -178,7 +182,11 @@ const Task = ({ taskId }) => {
             }</span> */}
            
         </section>
-            <textarea className='task__text task__textarea-item' readOnly={isEditing ? false : true} {...register("description")}>
+            <textarea 
+              readOnly={isEditing ? false : true} 
+              {...register("description")}
+              className={`task__text task__textarea-item ${isEditing ? 'editable' : ''}`}
+              >
             </textarea>
         
 

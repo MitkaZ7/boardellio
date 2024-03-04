@@ -55,7 +55,6 @@ class Api {
     }
   
     updateTask(taskId, data) {
-        console.log(data)
         const requestData = {
             fields: {}
         };
@@ -69,7 +68,6 @@ class Api {
                 requestData.fields[field] = { stringValue: fieldValue };
             }
         });
-        console.log(requestData)
         const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
         return instance.patch(`/tasks/${taskId}?${updateMaskQuery}`, requestData);
     }

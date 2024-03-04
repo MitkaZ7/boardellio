@@ -23,7 +23,6 @@ const TaskList = ({ onClick, taskStatus }) => {
     setIsDragging(false);
   };
   const handleDrop = (id, newStatus) => {
-    // console.log('item dropped:', taskId);
     dispatch(updateTaskStatus({ id, newStatus, taskStatus }));
   };
 

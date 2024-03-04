@@ -136,13 +136,17 @@ const Task = ({ taskId }) => {
         </header>
         <section className='task__data-block data-block'>
           <div className='task__data-dates'>
-                <span className='task__data-item task__creation-date'>{t('created')}:&nbsp;  
-              {formateDate(selectedTaskData.createTime)}
-            </span>
-                <span className='task__metadata-item task__work-time'>{t('in-work')}: {
-                  daysCount(selectedTaskData.createTime)
-            }
-            </span>
+              <span className='task__data-item task__creation-date'>{t('created')}:&nbsp;
+                {formateDate(selectedTaskData.createTime)}
+              </span>
+              {
+                  !selectedTaskData.isCompleted.booleanValue && (
+                    <span className='task__metadata-item task__work-time'>{t('in-work')}:&nbsp;
+                      {daysCount(selectedTaskData.createTime)}
+                    </span>
+                  )
+              }
+              
           </div>
               <div className='task__data-item task__priority'>
                 <select

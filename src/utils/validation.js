@@ -7,7 +7,7 @@ const options = {
         'any.only': 'Passwords do not match',
         'any.required': 'Confirm password is required',
     }),
-    taskTitle: Joi.string().min(5).max(120).required(),
+    taskTitle: Joi.string().min(5).max(200).required(),
     taskStatus: Joi.string().required(),
     taskProject: Joi.string().required(),
     taskText: Joi.string().min(0),

@@ -3,13 +3,16 @@ import { resetSelectedTaskData } from './tasksSlice'
 const initialState = {
     isOpen: false,
     popups: [],
+    openedPopups: {},
     // taskPopupIsOpen: false,
     openedTaskId: null,
     // addTaskPopupIsOpen: false,
     activePopup: '',
     addProjectPopup: {
         isOpen: false,
-        data: null,
+    },
+    confrimPopup : {
+        isOpen: false,
     }
 }
 
@@ -24,13 +27,27 @@ const popupSlice = createSlice({
     name: 'popup',
     initialState,
     reducers: {
+        openConfirmPopup: (state,action) => {
+            state.confrimPopup.isOpen = true
+        },
+        closeConfirmPopup: (state, action) => {
+            state.confrimPopup.isOpen = false
+        },
         openPopup: (state, action) => {
+            const { name } = action.payload;
+            state.openedPopups[name] = { isOpen: true };
+        },
+        closePopup: (state, action) => {
+            const { name } = action.payload;
+            delete state.openedPopups[name]; 
+        },
+        openPopupOld: (state, action) => {
             state.popups = [];
             state.isOpen = true;
             state.activePopup = action.payload.name;
             state.popupData = action.payload.data; 
         },
-        closePopup: (state, action) => {
+        closePopupOld: (state, action) => {
             state.isOpen = false;
             state.activePopup = ''; 
             state.popupData = null; 

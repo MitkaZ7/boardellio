@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneTask, logicDeleteTask, resetSelectedTaskData,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
-import { closePopup } from '../../store/slices/popupSlice';
+import { closePopup, openCustomPopup } from '../../store/slices/popupSlice';
+import ConfirmPopup from '../ConfirmPopup/ConfirmPopup'
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -54,6 +55,11 @@ const Task = ({ taskId }) => {
       .then(()=> dispatch(getTasks()));
 
   };
+
+  const openConfirmPopupHandler = () => {
+    openCustomPopup(dispatch, 'confirmPopup')
+  };
+
  
   useEffect(() => {
     if (selectedTaskId) {
@@ -227,9 +233,10 @@ const Task = ({ taskId }) => {
                     {t('edit')}
                 </button>
               )}
-              <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={handleRemoveTask}></button>
+              <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={openConfirmPopupHandler}></button>
             </div>
       </article>
+      <ConfirmPopup/>
     </li>
       )}
     </>

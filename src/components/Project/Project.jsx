@@ -29,12 +29,12 @@ const Project = () => {
     isQueueVisible, 
     isDevVisible, 
     isDoneVisible } = useSelector(state => state.tasks.tasksVisibility);
-  const openAddTaskPopupHandler = () => {
-    openCustomPopup(dispatch, 'AddTaskPopup');
-  };
 
+  const openAddTaskPopupHandler = () => {
+    dispatch(openPopup({ name: 'addTaskPopup' }));
+  };
   const openTaskPopupHandler = () => {
-    openCustomPopup(dispatch, 'TaskPopup');
+    dispatch(openPopup({ name: 'taskPopup' }));
   };
   const handleProjectTitleClick = () => {
     if (!isProjectsMenuOpen) {
@@ -50,7 +50,7 @@ const Project = () => {
     // Реализовать логику поиска и обновления результатов
     // dispatch(setSearchResult(/* результаты поиска */));
   };
-
+  
 
   useEffect(() => {
     dispatch(getTasks());
@@ -147,8 +147,9 @@ const Project = () => {
         </section>
       </article>
       )}
-      {activePopup === 'AddTaskPopup' && <AddTaskPopup />}
-      {activePopup === 'TaskPopup' && <TaskPopup />}
+      <AddTaskPopup />
+      <TaskPopup />
+      
     </>
   );
 };

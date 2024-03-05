@@ -57,7 +57,7 @@ const Form = ({ projects, validationSchema }) => {
         );
             await dispatch(getTasks());
             await dispatch(getOneProject(selectedProjectId));
-            await dispatch(closePopup());
+            await dispatch(closePopup({ name: 'addTaskPopup' }));
         reset();
         } catch (error) {
              console.log("Ошибка при создании задачи или обновлении taskQty:", error);

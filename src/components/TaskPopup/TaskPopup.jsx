@@ -7,21 +7,19 @@ import { getOneTask } from '../../store/slices/tasksSlice';
 
 const TaskPopup = () => {
   const { selectedTaskId, selectedTaskData } = useSelector(state => state.tasks);
+  const { taskPopup: { isOpen } = false } = useSelector(state => state.popup.openedPopups);
+
+
   const dispatch = useDispatch();
   
   useEffect(() => {
     dispatch(getOneTask(selectedTaskId));
   }, [dispatch, selectedTaskId]);
-  
-  const handleClosePopup = () => {
-    dispatch(closePopup());
-
-  };
 
   return (
     <>
       {selectedTaskData && (
-        <Popup onCLose={handleClosePopup}>
+        <Popup  popupName={'taskPopup'} isOpen={isOpen}>
         <Task taskId={selectedTaskId} />
       </Popup>
       )}

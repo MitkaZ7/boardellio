@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { closePopup } from '../../store/slices/popupSlice';
 import { useForm } from 'react-hook-form'
 
-const Popup = ({ children, resetForm }) => {
-  const { isOpen } = useSelector((state) => state.popup);
+const Popup = ({ children, popupName, isOpen, onClose }) => {
+  // const { isOpen } = useSelector((state) => state.popup);
 
   const dispatch = useDispatch();
   function closePopupHandler() {
-    dispatch(closePopup());
-   
+    dispatch(closePopup({ name: popupName }));
+    onClose();
+
   }
 
   

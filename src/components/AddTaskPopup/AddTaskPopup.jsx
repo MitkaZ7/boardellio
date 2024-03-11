@@ -14,9 +14,9 @@ const AddTaskPopup = () => {
 
   const [isProjectsLoaded, setIsProjectsLoaded] = useState(false);
 
-  // const onClose = () => {
-  //   dispatch(closePopup());
-  // };
+  const onClose = () => {
+    // console.log('closed add new task popup')
+  };
 
   useEffect(() => {
     const loadProjects = async () => {
@@ -32,7 +32,7 @@ const AddTaskPopup = () => {
   // Рендер попапа только если isOpen === true и список проектов загружен
   if (!isOpen || !isProjectsLoaded) return null;
   return (
-    <Popup isOpen={isOpen} popupName={'addTaskPopup'}>
+    <Popup isOpen={isOpen} popupName={'addTaskPopup'} >
       <Form projects={projects} validationSchema={createTaskSchema} />
     </Popup>
   );

@@ -22,8 +22,6 @@ const Task = ({ taskId }) => {
   const cancelButtonRef = useRef(null);
   const btnsEditModeRef = useRef(null);
 
-  const buttonsRefs = useRef([]);
-
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -93,7 +91,6 @@ const Task = ({ taskId }) => {
   // }, [isEditing]);
 
   const onSubmit = (data) => {
-    // console.log(data)
     dispatch(updateTask({ taskId: selectedTaskId, newData: data }))
       .then(() => setIsEditing(false))
       .catch((error) => console.log(error));
@@ -120,7 +117,6 @@ const Task = ({ taskId }) => {
   };
 
   
-  
   return (
     
     <>
@@ -135,7 +131,7 @@ const Task = ({ taskId }) => {
             {...register("title")} 
             type="text" 
             className={`task__task-title ${isEditing ? 'editable' : ''}`}
-            readOnly={isEditing ? false : true} 
+            // readOnly={isEditing ? false : true} 
                 title={selectedTaskData.title.stringValue}
           />
           <div className='task__data-item task__status'>
@@ -236,7 +232,7 @@ const Task = ({ taskId }) => {
               <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={openConfirmPopupHandler}></button>
             </div>
       </article>
-      <ConfirmPopup/>
+      {/* <ConfirmPopup/> */}
     </li>
       )}
     </>

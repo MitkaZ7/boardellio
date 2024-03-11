@@ -27,12 +27,12 @@ const popupSlice = createSlice({
     name: 'popup',
     initialState,
     reducers: {
-        openConfirmPopup: (state,action) => {
-            state.confrimPopup.isOpen = true
-        },
-        closeConfirmPopup: (state, action) => {
-            state.confrimPopup.isOpen = false
-        },
+        // openConfirmPopup: (state,action) => {
+        //     state.confrimPopup.isOpen = true
+        // },
+        // closeConfirmPopup: (state, action) => {
+        //     state.confrimPopup.isOpen = false
+        // },
         openPopup: (state, action) => {
             const { name } = action.payload;
             state.openedPopups[name] = { isOpen: true };

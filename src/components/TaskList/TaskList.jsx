@@ -2,14 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import TaskCard from '../TaskCard/TaskCard';
-import { getTasks, updateTaskStatus, selectTask } from '../../store/slices/tasksSlice';
+import { getTasks, updateTaskStatus, selectTask, getOneTask, findTaskById } from '../../store/slices/tasksSlice';
 import Loader from '../Loader/Loader';
-import { openCustomPopup } from '../../store/slices/popupSlice';
+import { openPopup } from '../../store/slices/popupSlice';
 import { ItemTypes } from '../../utils/constants';
-
+import TaskPopup from '../TaskPopup/TaskPopup';
 const TaskList = ({ onClick, taskStatus }) => {
   const { tasks } = useSelector((state) => state.tasks);
-  const { selectedTaskId } = useSelector((state) => state.tasks);
+  const { selectedTaskId,selectedTaskData } = useSelector((state) => state.tasks);
 
   const filteredTasks = tasks[taskStatus] || [];
   const [isDragging, setIsDragging] = useState(false);
@@ -30,7 +30,6 @@ const TaskList = ({ onClick, taskStatus }) => {
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TASK_CARD,
     drop: (item) => {
-      console.log(item); // Выводит содержимое объекта item в консоль
       handleDrop(item.id, taskStatus, item.status.stringValue);
     },
     collect: (monitor) => ({
@@ -39,15 +38,27 @@ const TaskList = ({ onClick, taskStatus }) => {
   });
 
   const { isLoading } = useSelector((state) => state.loader);
-  // const { selectedTaskId } = useSelector((state) => state.tasks);
+  // const { selectedTaskId, selectedTaskData } = useSelector((state) => state.tasks);
 
-  const openTaskPopupHandler = () => {
-    openCustomPopup(dispatch, 'TaskPopup');
+  // const openTaskPopupHandler = () => {
+  //   openCustomPopup(dispatch, 'TaskPopup');
+  // };
+
+  const openTaskPopupHandler = (id) => {
+    dispatch(selectTask(id));
+    dispatch(openPopup({ name: 'taskPopup' }))
   };
 
-  const handleTaskClick = () => {
-    openTaskPopupHandler(selectedTaskId);
-    onClick();
+  const handleTaskClick = async (id) => {
+    // openTaskPopupHandler(selectedTaskId);
+    console.log('click at taskList: ' + id);
+    // dispatch(selectTask(id));
+    // dispatch(getOneTask(id));
+    // openTaskPopupHandler(id)
+    // console.log(selectedTaskData)
+
+    // dispatch(openPopup({ name: 'taskPopup' }))
+    // onClick();
   };
 
 
@@ -74,13 +85,14 @@ const TaskList = ({ onClick, taskStatus }) => {
             priority={task.priority.stringValue}
             status={taskStatus}
             id={task.id}
-            onClick={handleTaskClick}
             ref={(element) => {
               refs[task.id] = element;
             }}
           />
         ))}
       </ul>
+      {/* <TaskPopup /> */}
+
     </>
   );
 };

@@ -2,26 +2,27 @@ import React, { useEffect, forwardRef } from 'react';
 import { useDrag } from 'react-dnd';
 import { itemTypes } from '../../utils/constants';
 import { useDispatch,useSelector } from 'react-redux';
-import { openTaskPopup } from '../../store/slices/popupSlice';
+import { openTaskPopup, openPopup } from '../../store/slices/popupSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { getOneTask, selectTask } from '../../store/slices/tasksSlice';
+import { getOneTask, selectTask, findTaskById } from '../../store/slices/tasksSlice';
 import { ItemTypes } from '../../utils/constants';
-const TaskCard = forwardRef(({ title, priority, link, onClick, id, status }, ref) => {
+import Task from '../Task/Task'
+
+
+const TaskCard = forwardRef(({ title, priority, link, id, status }, ref) => {
   const { tasks, selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
 
-  
-
-
+ 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const openTaskPopupHandler = () => {
-    onClick()
     dispatch(selectTask(id))
+    // dispatch(findTaskById(id));
     // navigate(`/tasks/${taskId}`);
-    // dispatch(getOneTask(id))
-    // console.log(selectedTaskData)
+    dispatch(getOneTask(id))
+    dispatch(openPopup({ name: 'taskPopup' }))
 
   };
 
@@ -33,13 +34,17 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, id, status }, ref
       isDragging: !!monitor.isDragging(),
     }),
   });
-  
+  // useEffect(() => {
+  //   if (selectedTaskData) {
+  //     dispatch(openPopup({ name: 'taskPopup' }));
+  //   }
+  // }, [selectedTaskData]);
 
   return (
-
-      <li 
+    <>
+    <li 
       className={`task-item ${isDragging ? 'dragging' : ''}`}
-      onClick={openTaskPopupHandler} 
+      onClick={!isDragging ? openTaskPopupHandler : null}
       ref={(element) => {
         ref(element);
         drag(element);
@@ -50,7 +55,9 @@ const TaskCard = forwardRef(({ title, priority, link, onClick, id, status }, ref
           <span className="task-item__priotiry">{priority}</span>
         </a>
       </li>
- 
+      {selectedTaskData && <TaskPopup />}
+    </>
+   
   );
 });
 

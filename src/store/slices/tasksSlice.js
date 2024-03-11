@@ -33,14 +33,16 @@ const initialState = {
 
 export const getOneTask = createAsyncThunk(
     'tasks/getOneTask',
-    (taskId, { rejectWithValue, dispatch }) => {
-        return api.getTaskById(taskId)
-            .then(task => {
-                return task;
-            })
-            .catch(error => {
-                throw error;
-            });
+    async (taskId, { rejectWithValue, dispatch }) => {
+        try {
+            const task = await api.getTaskById(taskId);
+            // console.log(task)
+            return task
+        } catch (error) {
+            console.log(error)
+            return rejectWithValue(error.message);
+        }
+       
     }
 );
 
@@ -79,7 +81,7 @@ export const getUserTasks = createAsyncThunk(
                 return tasksList;
             } else {
                 dispatch(hideLoader());
-                return []; // Возвращаем пустой массив, если задачи не найдены
+                return []; 
             }
         } catch (error) {
             dispatch(hideLoader());
@@ -145,10 +147,8 @@ export const updateTaskStatus = createAsyncThunk(
                 status: newStatus,
                 isCompleted: toggleTaskCompletion(newStatus)
             }
-            console.log(newData)
-
             await api.updateTask(id, newData);
-            console.log(`Task with ID ${id} status changed to ${newStatus}.`);
+            // console.log(`Task with ID ${id} status changed to ${newStatus}.`);
             await dispatch(getTasks());
             return { id, newStatus };
         } catch (error) {
@@ -201,6 +201,22 @@ export const taskSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
+        findTaskById(state, action) {
+            const { taskId } = action.payload;
+            for (const key in state.tasks) {
+                if (Object.hasOwnProperty.call(state.tasks, key)) {
+                    const taskArray = state.tasks[key];
+                    const foundTask = taskArray.find(task => task.id === taskId);
+                    if (foundTask) {
+                        state.selectedTaskData = foundTask;
+                      
+                        return;
+                    }
+                }
+            }
+          
+            state.selectedTaskData = null;
+        },  
         addTask(state, action) {
             const { status } = action.payload;
             state.tasks[status].push(action.payload);
@@ -214,9 +230,6 @@ export const taskSlice = createSlice({
         completeTask(state, action) {
             
         },
-        setTaskData(state, action) {
-            state.selectedTaskData = action.payload;
-        },
         resetTasksState(state) {
             state.tasks = initialState.tasks;
         },
@@ -224,6 +237,7 @@ export const taskSlice = createSlice({
             state.selectedTaskId = action.payload;
             localStorage.setItem('selectedTaskId', JSON.stringify(action.payload));
         },
+
         resetSelectedTaskData: (state) => {
             state.selectedTaskData = null; 
         },
@@ -269,9 +283,9 @@ export const taskSlice = createSlice({
                 };
             })
             .addCase(getOneTask.fulfilled, (state, action) => {
-  
                 state.selectedTaskData = action.payload;
             });
+            
     },
 });
 
@@ -279,6 +293,7 @@ export const {
     addTask, 
     removeTask, 
     selectTask,
+    findTaskById,
     resetTasksState, 
     resetSelectedTaskData,
     toggleQueueVisibility,

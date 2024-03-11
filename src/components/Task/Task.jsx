@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneTask, logicDeleteTask, resetSelectedTaskData,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
-import { closePopup } from '../../store/slices/popupSlice';
+import { closePopup, openCustomPopup } from '../../store/slices/popupSlice';
+import ConfirmPopup from '../ConfirmPopup/ConfirmPopup'
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -20,8 +21,6 @@ const Task = ({ taskId }) => {
   const saveButtonRef = useRef(null);
   const cancelButtonRef = useRef(null);
   const btnsEditModeRef = useRef(null);
-
-  const buttonsRefs = useRef([]);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -54,6 +53,11 @@ const Task = ({ taskId }) => {
       .then(()=> dispatch(getTasks()));
 
   };
+
+  const openConfirmPopupHandler = () => {
+    openCustomPopup(dispatch, 'confirmPopup')
+  };
+
  
   useEffect(() => {
     if (selectedTaskId) {
@@ -87,7 +91,6 @@ const Task = ({ taskId }) => {
   // }, [isEditing]);
 
   const onSubmit = (data) => {
-    // console.log(data)
     dispatch(updateTask({ taskId: selectedTaskId, newData: data }))
       .then(() => setIsEditing(false))
       .catch((error) => console.log(error));
@@ -114,7 +117,6 @@ const Task = ({ taskId }) => {
   };
 
   
-  
   return (
     
     <>
@@ -129,7 +131,7 @@ const Task = ({ taskId }) => {
             {...register("title")} 
             type="text" 
             className={`task__task-title ${isEditing ? 'editable' : ''}`}
-            readOnly={isEditing ? false : true} 
+            // readOnly={isEditing ? false : true} 
                 title={selectedTaskData.title.stringValue}
           />
           <div className='task__data-item task__status'>
@@ -227,9 +229,10 @@ const Task = ({ taskId }) => {
                     {t('edit')}
                 </button>
               )}
-              <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={handleRemoveTask}></button>
+              <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={openConfirmPopupHandler}></button>
             </div>
       </article>
+      {/* <ConfirmPopup/> */}
     </li>
       )}
     </>

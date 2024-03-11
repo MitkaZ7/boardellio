@@ -6,7 +6,6 @@ import { openPopup, closePopup, openTaskPopup, closeTaskPopup, popupReducer } fr
 import { createProject, getProjects } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';
-// import { closePopup } from '../../store/slices/popupSlice';
 import { createProjectSchema } from '../../utils/validation.js'
 import { useTranslation } from 'react-i18next';
 
@@ -15,9 +14,13 @@ const AddProjectPopup = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ resolver: joiResolver(createProjectSchema) });
   // const navigate = useNavigate();
-  const { isOpen, data } = useSelector((state) => state.popup.addProjectPopup);
+  // const { isOpen, data } = useSelector((state) => state.popup.addProjectPopup);
+  const { addProjectPopup: { isOpen } = false } = useSelector(state => state.popup.openedPopups);
   const { t } = useTranslation();
-
+  const closePopupHandler = () => {
+    dispatch(closePopup({ name: 'addProjectPopup' }));
+    reset()
+  };
   const onSubmit = (formData) => {
     const data = { 
       ...formData, 
@@ -28,17 +31,18 @@ const AddProjectPopup = () => {
 
     dispatch(createProject(data))
       .then(() => dispatch(getProjects()))
-      .then(() => dispatch(closePopup()))
+      // .then(() => dispatch(closePopup()))
       .then(() => reset());
+    closePopupHandler();
   };
 
-  const closePopupHandler = () => {
-    dispatch(closePopup());
-    reset()
-  };
+  // const closePopupHandler = () => {
+   
+  //   reset()
+  // };
 
   return (
-    <Popup className="popup_place_addProjectPopup" isOpen={isOpen} onClose={closePopupHandler} resetForm={reset}>
+    <Popup className="popup_place_addProjectPopup" isOpen={isOpen} resetForm={reset} popupName={'addProjectPopup'}>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <h3 className="form__title">{t('projects-form-add-title')}</h3>
         <fieldset className="form__fieldset form__fieldset_place_add-project">

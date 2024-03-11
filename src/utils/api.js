@@ -33,14 +33,15 @@ class Api {
 
     getTaskById(taskId) {
         return instance.get(`/tasks/${taskId}`).then((res) => {
-            const task = res.data.fields;
-            return {
+            const task = {
                 id: res.data.name.split('/').pop(),
-                ...task,
+                ...res.data.fields,
                 createTime: res.data.createTime
             };
+            return task
         });
     }
+    
     increaseTaskQty(projectId, newTaskQty) {
         const requestData = {
             fields: {

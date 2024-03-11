@@ -7,13 +7,15 @@ import { getProjects } from '../../store/slices/projectSlice';
 import { createTaskSchema } from '../../utils/validation';
 const AddTaskPopup = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.popup.isOpen);
+  // const isOpen = useSelector((state) => state.popup.isOpen);
+  const { addTaskPopup: { isOpen } = false } = useSelector(state => state.popup.openedPopups);
+
   const { projects, isLoad } = useSelector(state => state.projects);
 
   const [isProjectsLoaded, setIsProjectsLoaded] = useState(false);
 
   const onClose = () => {
-    dispatch(closePopup());
+    // console.log('closed add new task popup')
   };
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const AddTaskPopup = () => {
   // Рендер попапа только если isOpen === true и список проектов загружен
   if (!isOpen || !isProjectsLoaded) return null;
   return (
-    <Popup>
+    <Popup isOpen={isOpen} popupName={'addTaskPopup'} >
       <Form projects={projects} validationSchema={createTaskSchema} />
     </Popup>
   );

@@ -1,0 +1,23 @@
+.confirm-popup {
+    display: grid;
+    align-items: center;
+    // justify-content: center;
+    grid-template-columns: auto auto;
+    gap: 10px;
+}
+
+.confirm-popup__button {
+    @include action-button;
+    width: 120px;
+}
+
+.confirm-popup__button_type_agreement {
+    color: var(--accent-clr);
+    border-color: var(--accent-clr);
+
+}
+
+.confirm-popup__button_type_decline {
+    color: var(--queue-clr);
+    border-color: var(--queue-clr);
+}

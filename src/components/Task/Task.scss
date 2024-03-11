@@ -95,9 +95,11 @@
 
         }
     }
-    &__work-time {
+    &__work-time, &__finish-date {
         margin-left: 5px;
     }
+    
+
 
     &__number {
         margin: 0;
@@ -187,7 +189,7 @@
 
 .editable {
     // border-bottom: 2px solid var(--accent-clr);
-                border: 2px dashed var(--accent-clr);
+                border: 2px solid var(--accent-clr);
                 // border-radius: 0;
         
                 

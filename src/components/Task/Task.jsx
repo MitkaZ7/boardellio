@@ -97,10 +97,11 @@ const Task = ({ taskId }) => {
   };
 
   const handleSelectChangeStatus = (evt) => {
-    const reselectedStatus = evt.target.value;
+    const newStatus = evt.target.value;
+    dispatch(updateTaskStatus({ id : selectedTaskId, newStatus }));
 
-    setSelectedTaskStatus(reselectedStatus);
-    setValue("status", reselectedStatus);
+    setSelectedTaskStatus(newStatus);
+    setValue("status", newStatus);
     handleSubmit(onSubmit)();
   };
 
@@ -159,11 +160,15 @@ const Task = ({ taskId }) => {
                 {formateDate(selectedTaskData.createTime)}
               </span>
               {
-                  !selectedTaskData.isCompleted.booleanValue && (
+                  !selectedTaskData.isCompleted.booleanValue ? 
                     <span className='task__metadata-item task__work-time'>{t('in-work')}:&nbsp;
                       {daysCount(selectedTaskData.createTime)}
                     </span>
-                  )
+                   : 
+                    <span className='task__metadata-item task__finish-date'>
+                      {t('done')}
+                    </span>
+                  
               }
               
           </div>

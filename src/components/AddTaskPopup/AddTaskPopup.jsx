@@ -7,16 +7,13 @@ import { getProjects } from '../../store/slices/projectSlice';
 import { createTaskSchema } from '../../utils/validation';
 const AddTaskPopup = () => {
   const dispatch = useDispatch();
-  // const isOpen = useSelector((state) => state.popup.isOpen);
   const { addTaskPopup: { isOpen } = false } = useSelector(state => state.popup.openedPopups);
 
   const { projects, isLoad } = useSelector(state => state.projects);
 
   const [isProjectsLoaded, setIsProjectsLoaded] = useState(false);
 
-  const onClose = () => {
-    // console.log('closed add new task popup')
-  };
+ 
 
   useEffect(() => {
     const loadProjects = async () => {

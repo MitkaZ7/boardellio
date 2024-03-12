@@ -10,7 +10,7 @@ const TaskPopup = () => {
   return (
     <>
       {selectedTaskData && (
-        <Popup  popupName={'taskPopup'} isOpen={isOpen}>
+        <Popup popupName={'taskPopup'} isOpen={isOpen}>
           <Task taskId={selectedTaskId} />
         </Popup>
       )}

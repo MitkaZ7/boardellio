@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Popup from '../Popup/Popup'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
-import { openPopup, closePopup, openTaskPopup, closeTaskPopup, popupReducer } from '../../store/slices/popupSlice';
+import { openPopup, closePopup, closeTaskPopup, popupReducer } from '../../store/slices/popupSlice';
 import { createProject, getProjects } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -14,7 +14,7 @@ const AddProjectPopup = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ resolver: joiResolver(createProjectSchema) });
   // const navigate = useNavigate();
-  // const { isOpen, data } = useSelector((state) => state.popup.addProjectPopup);
+
   const { addProjectPopup: { isOpen } = false } = useSelector(state => state.popup.openedPopups);
   const { t } = useTranslation();
   const closePopupHandler = () => {

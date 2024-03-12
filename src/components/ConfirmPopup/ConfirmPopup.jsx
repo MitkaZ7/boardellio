@@ -1,24 +1,25 @@
-import React from 'react'
-import Popup from '../ConfirmPopup/ConfirmPopup'
+import React,{useEffect} from 'react'
+import Popup from '../Popup/Popup'
 import { useDispatch, useSelector } from 'react-redux';
 
 const ConfirmPopup = () => {
+   
     const { confirmPopup: { isOpen } = false } = useSelector(state => state.popup.openedPopups);
-
-
-  return (
-      <Popup isOpen={isOpen} popupName={'confrimPopup'}>
-            <div className="confrim-popup">
-                <button className="confrim-popup__button">
+ 
+      return (
+          <Popup isOpen={isOpen} popupName={'confirmPopup'}>
+              <div className="confrim-popup">
+                  <button className="confrim-popup__button">
                     yes
                 </button>
                 <button className="confrim-popup__button">
                     no
                 </button>
-            </div>
+              </div>
 
-      </Popup>
-  )
+          </Popup>
+      )
+  
 }
 
 export default ConfirmPopup

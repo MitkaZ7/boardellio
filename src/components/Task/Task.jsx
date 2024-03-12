@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneTask, logicDeleteTask, resetSelectedTaskData,getTasks } from '../../store/slices/tasksSlice';
 import Upload from '../../assets/icons/upload.svg';
-import { closePopup, openCustomPopup } from '../../store/slices/popupSlice';
+import { closePopup, openPopup } from '../../store/slices/popupSlice';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup'
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -29,12 +29,13 @@ const Task = ({ taskId }) => {
   const { selectedTaskData, selectedTaskId } = useSelector(state => state.tasks);
   const projecTitle  = useSelector(state => state.projects.selectedProject.title.stringValue);
   const projectTag = useSelector(state => state.projects.selectedProject.tag.stringValue);
-  const [taskWorkTime, setTaskWorkTime] = useState('');
 
   const [isEditing, setIsEditing] = useState(false);
   const [selectedTaskPriority, setSelectedTaskPriority] = useState(taskPriorityOptions.find(option => option.value === selectedTaskData.priority.stringValue));
   const [selectedTaskStatus, setSelectedTaskStatus] = useState(taskStatusOptions.find(option => option.value === selectedTaskData.status.stringValue));
   
+  
+
   const { 
     register, 
     handleSubmit, 
@@ -47,19 +48,34 @@ const Task = ({ taskId }) => {
     dispatch(closePopup());
   }
 
-  const handleRemoveTask = () => {
+  const handleRemoveTaskBackup = () => {
     dispatch(logicDeleteTask(selectedTaskId))
-      .then(() => dispatch(closePopup()))
+      .then(() => dispatch(closePopup({name: 'taskPopup'})))
       .then(()=> dispatch(getTasks()));
 
   };
 
-  const openConfirmPopupHandler = () => {
-    openCustomPopup(dispatch, 'confirmPopup')
+  const handleRemoveTask =  async () => {
+    dispatch(closePopup({ name: 'taskPopup' }));
+    await dispatch(openPopup({ name: 'confirmPopup' }));
+      // .then(() => dispatch(getTasks()));
+
   };
+
+
+  const isConfirmationPopupOpen = useSelector(state => state.popup.openedPopups.confirmPopup?.isOpen || false);
+  const { confirmPopup: { isOpen: isConfirmPopupOpen } = false } = useSelector(state => state.popup.openedPopups);
+
+
+
+  const openConfirmPopupHandler = () => {
+    dispatch(openPopup({ name: 'confirmPopup' }));
+  };
+
 
  
   useEffect(() => {
+  
     if (selectedTaskId) {
       dispatch(showLoader());
       dispatch(getOneTask(selectedTaskId))
@@ -188,20 +204,7 @@ const Task = ({ taskId }) => {
                   }
                 </select>
               </div>
-            {/* {
-                selectedTaskData.isCompleted.booleanValue ? 
-                    <span className='task__metadata-item task__finish-date'>
-                      &nbsp;{t('done')}: сегодня
-                    </span>
-                    :
-                    <span className='task__metadata-item task__finish-date'>
-                      &nbsp;{t('done')}: не завершена.
-                    </span>
-            } */}
-
-            {/* <span className='task__metadata-item task__finish-date'>&nbsp;{t('done')}: {
-                  !selectedTaskData.isCompleted.booleanValue ? 'DDD' : 'NNNN'
-            }</span> */}
+            
            
         </section>
             <textarea 
@@ -235,11 +238,14 @@ const Task = ({ taskId }) => {
                 </button>
               )}
               <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={openConfirmPopupHandler}></button>
+                
             </div>
       </article>
-      {/* <ConfirmPopup/> */}
     </li>
       )}
+      
+      
+      {isConfirmPopupOpen && <ConfirmPopup />}
     </>
   )
 }

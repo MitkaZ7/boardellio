@@ -9,25 +9,26 @@ const Popup = ({ children, popupName, isOpen, }) => {
   const dispatch = useDispatch();
   function closePopupHandler() {
     dispatch(closePopup({ name: popupName }));
-    // onClose();
-
+     
   }
 
   
   const closeByOverlayClick = (evt) => {
     if (evt.target === evt.currentTarget) {
-      closePopupHandler()
+      closePopupHandler(popupName)
     }
   }
 
   useEffect(() => {
+    console.log(isOpen)
     const handleEsc = (event) => {
       if (event.keyCode === 27) {
-        closePopupHandler()
+        closePopupHandler(popupName)
       }
     };
     window.addEventListener('keydown', handleEsc);
     return () => {
+      
       window.removeEventListener('keydown', handleEsc);
     };
   }, []);

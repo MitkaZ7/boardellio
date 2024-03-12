@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TaskList from '../TaskList/TaskList';
 import AddTaskPopup from '../AddTaskPopup/AddTaskPopup';
 import { useDispatch, useSelector } from 'react-redux';
-import { openPopup, openCustomPopup } from '../../store/slices/popupSlice';
+import { openPopup } from '../../store/slices/popupSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { getOneProject } from '../../store/slices/projectSlice'
 
@@ -13,7 +13,7 @@ import {
   toggleDevVisibility,
   toggleDoneVisibility
 } from '../../store/slices/tasksSlice';
-import TaskPopup from '../TaskPopup/TaskPopup';
+
 import { openProjectsMenu, closeProjectsMenu, setProjetcs } from '../../store/slices/projectsMenuSlice';
 import { useTranslation } from 'react-i18next';
 import SearchForm from '../SearchForm/SearchForm';
@@ -36,9 +36,7 @@ const Project = () => {
     dispatch(openPopup({name: 'addTaskPopup'}))
   };
 
-  const openTaskPopupHandler = () => {
-    openCustomPopup(dispatch, 'taskPopup');
-  };
+  
   const handleProjectTitleClick = () => {
     if (!isProjectsMenuOpen) {
       // dispatch(setProjects(/* список проектов */));
@@ -150,10 +148,7 @@ const Project = () => {
         </article>
       )}
       <AddTaskPopup />
-      {/* <TaskPopup /> */}
-      {/* {activePopup === 'AddTaskPopup' && <AddTaskPopup />} */}
-      {/* {activePopup === 'TaskPopup' && <TaskPopup />} */}
-      {/* {selectedTaskData && <TaskPopup />}  */}
+    
     </>
   );
 };

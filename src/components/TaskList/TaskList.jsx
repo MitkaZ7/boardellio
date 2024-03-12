@@ -7,7 +7,7 @@ import Loader from '../Loader/Loader';
 import { openPopup } from '../../store/slices/popupSlice';
 import { ItemTypes } from '../../utils/constants';
 
-import ConfirmPopup from '../ConfirmPopup/ConfirmPopup'
+
 const TaskList = ({ onClick, taskStatus,isCompleted }) => {
   const { tasks } = useSelector((state) => state.tasks);
   const { selectedTaskId,selectedTaskData } = useSelector((state) => state.tasks);
@@ -90,8 +90,7 @@ const TaskList = ({ onClick, taskStatus,isCompleted }) => {
           />
         ))}
       </ul>
-      {/* <TaskPopup /> */}
-      {/* <ConfirmPopup/> */}
+ 
     </>
   );
 };

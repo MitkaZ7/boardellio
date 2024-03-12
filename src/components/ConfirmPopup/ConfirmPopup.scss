@@ -1,14 +1,17 @@
 .confirm-popup {
     display: grid;
     align-items: center;
-    // justify-content: center;
+    // margin-top: 20px;
+    justify-content: center;
     grid-template-columns: auto auto;
     gap: 10px;
+    // max-width: 50px;
+ 
 }
 
 .confirm-popup__button {
     @include action-button;
-    width: 120px;
+    width: 90px;
 }
 
 .confirm-popup__button_type_agreement {

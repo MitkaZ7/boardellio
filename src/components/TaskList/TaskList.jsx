@@ -7,7 +7,7 @@ import Loader from '../Loader/Loader';
 import { openPopup } from '../../store/slices/popupSlice';
 import { ItemTypes } from '../../utils/constants';
 import TaskPopup from '../TaskPopup/TaskPopup';
-const TaskList = ({ onClick, taskStatus }) => {
+const TaskList = ({ onClick, taskStatus,isCompleted }) => {
   const { tasks } = useSelector((state) => state.tasks);
   const { selectedTaskId,selectedTaskData } = useSelector((state) => state.tasks);
 
@@ -22,14 +22,15 @@ const TaskList = ({ onClick, taskStatus }) => {
   const handleDragEnd = () => {
     setIsDragging(false);
   };
-  const handleDrop = (id, newStatus) => {
-    dispatch(updateTaskStatus({ id, newStatus, taskStatus }));
+  const handleDrop = (id, newStatus, isComleted ) => {
+    dispatch(updateTaskStatus({ id, newStatus, taskStatus, isCompleted }));
   };
 
 
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TASK_CARD,
     drop: (item) => {
+    
       handleDrop(item.id, taskStatus, item.status.stringValue);
     },
     collect: (monitor) => ({
@@ -80,6 +81,7 @@ const TaskList = ({ onClick, taskStatus }) => {
       <ul className={`taskList ${isOver || isDragging ? 'drag-over' : ''}`} ref={drop} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         {filteredTasks.map((task) => (
           <TaskCard
+            
             key={task.id}
             title={task.title.stringValue}
             priority={task.priority.stringValue}

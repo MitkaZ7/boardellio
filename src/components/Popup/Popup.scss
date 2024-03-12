@@ -45,7 +45,15 @@
             cursor: pointer;
         }
     }
-    
+    &_type_confirm-popup {
+        .popup__container {
+            max-width: 180px;
+            padding: 20px;
+        }
+        .popup__button-close {
+            display: none;
+        }
+    }
 
 }
 .popup_state_open {
@@ -54,3 +62,5 @@
     transition: opacity 0.4s linear;
     
 }
+
+

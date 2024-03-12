@@ -10,7 +10,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { editTaskSchema } from '../../utils/validation';
 import CustomSelect from '../CustomSelect/CustomSelect';
 import { updateTask, updateTaskStatus } from '../../store/slices/tasksSlice';
-import Select from 'react-select';
 import Tooltip from '../Tooltip/Tooltip';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { daysCount, formateDate } from '../../utils/formateDate'
@@ -48,20 +47,14 @@ const Task = ({ taskId }) => {
     dispatch(closePopup());
   }
 
-  const handleRemoveTaskBackup = () => {
+  const handleRemoveTask = () => {
     dispatch(logicDeleteTask(selectedTaskId))
       .then(() => dispatch(closePopup({name: 'taskPopup'})))
       .then(()=> dispatch(getTasks()));
 
   };
 
-  const handleRemoveTask =  async () => {
-    dispatch(closePopup({ name: 'taskPopup' }));
-    await dispatch(openPopup({ name: 'confirmPopup' }));
-      // .then(() => dispatch(getTasks()));
-
-  };
-
+ 
 
   const isConfirmationPopupOpen = useSelector(state => state.popup.openedPopups.confirmPopup?.isOpen || false);
   const { confirmPopup: { isOpen: isConfirmPopupOpen } = false } = useSelector(state => state.popup.openedPopups);
@@ -245,7 +238,7 @@ const Task = ({ taskId }) => {
       )}
       
       
-      {isConfirmPopupOpen && <ConfirmPopup />}
+      {isConfirmationPopupOpen && <ConfirmPopup agreeHandler={handleRemoveTask}/>}
     </>
   )
 }

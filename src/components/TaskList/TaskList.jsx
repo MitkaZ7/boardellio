@@ -6,7 +6,8 @@ import { getTasks, updateTaskStatus, selectTask, getOneTask, findTaskById } from
 import Loader from '../Loader/Loader';
 import { openPopup } from '../../store/slices/popupSlice';
 import { ItemTypes } from '../../utils/constants';
-import TaskPopup from '../TaskPopup/TaskPopup';
+
+import ConfirmPopup from '../ConfirmPopup/ConfirmPopup'
 const TaskList = ({ onClick, taskStatus,isCompleted }) => {
   const { tasks } = useSelector((state) => state.tasks);
   const { selectedTaskId,selectedTaskData } = useSelector((state) => state.tasks);
@@ -39,11 +40,7 @@ const TaskList = ({ onClick, taskStatus,isCompleted }) => {
   });
 
   const { isLoading } = useSelector((state) => state.loader);
-  // const { selectedTaskId, selectedTaskData } = useSelector((state) => state.tasks);
-
-  // const openTaskPopupHandler = () => {
-  //   openCustomPopup(dispatch, 'TaskPopup');
-  // };
+ 
 
   const openTaskPopupHandler = (id) => {
     dispatch(selectTask(id));
@@ -94,7 +91,7 @@ const TaskList = ({ onClick, taskStatus,isCompleted }) => {
         ))}
       </ul>
       {/* <TaskPopup /> */}
-
+      {/* <ConfirmPopup/> */}
     </>
   );
 };

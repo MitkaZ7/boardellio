@@ -2,7 +2,7 @@ import React, { useEffect, forwardRef } from 'react';
 import { useDrag } from 'react-dnd';
 import { itemTypes } from '../../utils/constants';
 import { useDispatch,useSelector } from 'react-redux';
-import { openTaskPopup, openPopup } from '../../store/slices/popupSlice';
+import { openPopup } from '../../store/slices/popupSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -34,11 +34,6 @@ const TaskCard = forwardRef(({ title, priority, link, id, status }, ref) => {
       isDragging: !!monitor.isDragging(),
     }),
   });
-  // useEffect(() => {
-  //   if (selectedTaskData) {
-  //     dispatch(openPopup({ name: 'taskPopup' }));
-  //   }
-  // }, [selectedTaskData]);
 
   return (
     <>

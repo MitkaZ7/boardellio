@@ -1,9 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
-
-const Unauthorized = () => {
-  const { t } = useTranslation();
+import WithTranslation from '../hoc/WithTranslation';
+const Unauthorized = ({t}) => {
+ 
   const navigate = useNavigate();
   const goBack = () => navigate('/login');
 
@@ -16,4 +16,4 @@ const Unauthorized = () => {
   )
 }
 
-export default Unauthorized
+export default WithTranslation(Unauthorized);

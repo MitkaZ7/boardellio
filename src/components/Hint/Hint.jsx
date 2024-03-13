@@ -1,7 +1,8 @@
 import React, {useState,useRef} from 'react'
-import { useTranslation } from 'react-i18next';
-const Hint = ({children,text}) => {
-    const { t } = useTranslation();
+import WithTranslation from '../hoc/WithTranslation';
+
+const Hint = ({children,text,t}) => {
+   
     const [isVisible, setIsVisible] = useState(false);
     const refSetTimeout = useRef();
     const onMouseEnterHandler = () => {
@@ -24,4 +25,4 @@ const Hint = ({children,text}) => {
   )
 }
 
-export default Hint
+export default WithTranslation(Hint);

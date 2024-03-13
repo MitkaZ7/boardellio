@@ -7,16 +7,16 @@ import { createProject, getProjects } from '../../store/slices/projectSlice';
 import { useNavigate } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { createProjectSchema } from '../../utils/validation.js'
-import { useTranslation } from 'react-i18next';
+import WithTranslation from '../hoc/WithTranslation';
 
-const AddProjectPopup = () => {
+const AddProjectPopup = ({t}) => {
   const projectAuthor = useSelector((state)=> state.user.user.email)
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ resolver: joiResolver(createProjectSchema) });
   // const navigate = useNavigate();
 
   const { addProjectPopup: { isOpen } = false } = useSelector(state => state.popup.openedPopups);
-  const { t } = useTranslation();
+
   const closePopupHandler = () => {
     dispatch(closePopup({ name: 'addProjectPopup' }));
     reset()
@@ -59,4 +59,4 @@ const AddProjectPopup = () => {
   )
 }
 
-export default AddProjectPopup
+export default WithTranslation(AddProjectPopup)

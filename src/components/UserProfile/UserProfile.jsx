@@ -8,10 +8,10 @@ import { getOneTask, selectTask } from '../../store/slices/tasksSlice';
 import { openCustomPopup } from '../../store/slices/popupSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { useNavigate } from 'react-router-dom';
+import WithTranslation from '../hoc/WithTranslation';
 
-
-const UserProfile = () => {
-    const { t } = useTranslation();
+const UserProfile = ({t}) => {
+  
     const dispatch = useDispatch();
     const { user } = useSelector((state)=> state.user);
     const [userTasks, setUserTasks] = useState([]);
@@ -126,4 +126,4 @@ const UserProfile = () => {
   )
 }
 
-export default UserProfile
+export default WithTranslation(UserProfile);

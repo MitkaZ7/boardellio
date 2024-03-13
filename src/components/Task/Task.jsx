@@ -13,15 +13,14 @@ import { updateTask, updateTaskStatus } from '../../store/slices/tasksSlice';
 import Tooltip from '../Tooltip/Tooltip';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { daysCount, formateDate } from '../../utils/formateDate'
-import { useTranslation } from 'react-i18next'
+import WithTranslation from '../hoc/WithTranslation';
 import { taskPriorityOptions, taskStatusOptions } from '../../utils/constants'
 
-const Task = ({ taskId }) => {
+const Task = ({ taskId, t}) => {
   const saveButtonRef = useRef(null);
   const cancelButtonRef = useRef(null);
   const btnsEditModeRef = useRef(null);
 
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -243,4 +242,4 @@ const Task = ({ taskId }) => {
   )
 }
 
-export default Task
+export default WithTranslation(Task);

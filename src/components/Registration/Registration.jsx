@@ -3,10 +3,9 @@ import { useDispatch } from 'react-redux'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import EntryForm from '../EntryForm/EntryForm'
 import { registrationSchema } from '../../utils/validation'
-import { useTranslation } from 'react-i18next'
+import WithTranslation from '../hoc/WithTranslation'
+const Registration = ({t}) => {
 
-const Registration = () => {
-  const { t } = useTranslation();
 
   return (
     <EntryForm
@@ -22,4 +21,4 @@ const Registration = () => {
   )
 }
 
-export default Registration
+export default WithTranslation(Registration)

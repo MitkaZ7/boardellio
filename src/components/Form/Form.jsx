@@ -6,15 +6,15 @@ import { closePopup } from '../../store/slices/popupSlice';
 import { createTask, getTasks } from '../../store/slices/tasksSlice';
 import { getOneProject } from '../../store/slices/projectSlice'
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useTranslation } from 'react-i18next'
+import WithTranslation from '../hoc/WithTranslation';
 
 
-const Form = ({ projects, validationSchema }) => {
+const Form = ({ projects, validationSchema, t}) => {
     const { email } = useSelector(state => state.user.user)
     const { selectedProject } = useSelector(state => state.projects);
     const [selectedProjectId, setSelectedProjectId] = useState(selectedProject ? selectedProject.id : '' );
     const currentTaskQtyInProject = Number(selectedProject.taskQty.integerValue);
-    const { t } = useTranslation();
+  
     const dispatch = useDispatch();
     const { register,
         handleSubmit,
@@ -111,4 +111,4 @@ const Form = ({ projects, validationSchema }) => {
     );
 };
 
-export default Form;
+export default WithTranslation(Form);

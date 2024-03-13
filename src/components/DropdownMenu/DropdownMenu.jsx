@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 
-const DropdownMenu = ({ isOpen, onExitClick, onProfileClick }) => {
+import WithTranslation from '../hoc/WithTranslation';
+
+const DropdownMenu = ({ isOpen, onExitClick, onProfileClick,t }) => {
     const dropdownRef = useRef(null);
     const userLinkRef = useRef(null); 
-    const { t } = useTranslation();
+ 
     const [isDropdownMenuOpen, setIsDropdownMenuOpen] = useState(false);
     const handleClickOutside = (evt) => {
         if (!dropdownRef.current.contains(evt.target)) {
@@ -41,4 +42,4 @@ const DropdownMenu = ({ isOpen, onExitClick, onProfileClick }) => {
     );
 };
 
-export default DropdownMenu;
+export default WithTranslation(DropdownMenu);

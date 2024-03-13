@@ -1,8 +1,9 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import WithTranslation from '../hoc/WithTranslation';
 
-const ButtonEdit = () => {
-const { t } = useTranslation();
+const ButtonEdit = ({t}) => {
+
   return (
       <button className="button-edit">
           {t('edit')}
@@ -10,4 +11,4 @@ const { t } = useTranslation();
   )
 }
 
-export default ButtonEdit
+export default WithTranslation(ButtonEdit);

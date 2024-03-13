@@ -5,9 +5,11 @@ import technologies from '../../data/technologies.json';
 import FadeInAnimation from "../FadeInAnimtion/FadeInAnimation";
 import { gsap } from "gsap";
 import Hint from '../Hint/Hint.jsx';
-import { useTranslation } from 'react-i18next';
-const Intro = () => {
-  const { t } = useTranslation();
+import WithTranslation from '../hoc/WithTranslation';
+
+
+const Intro = ({t}) => {
+
   const introRef = useRef();
   const listRef = useRef(null);
   const buttonsRefs = useRef({}); // объект для хранения рефов кнопок
@@ -101,4 +103,4 @@ const Intro = () => {
   )
 }
 
-export default Intro
+export default WithTranslation(Intro);

@@ -1,17 +1,24 @@
 .confirm-popup {
-    display: grid;
-    align-items: center;
-    // margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+
     justify-content: center;
-    grid-template-columns: auto auto;
-    gap: 10px;
-    // max-width: 50px;
- 
+
+    &__text {
+        text-align: center;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+ &__buttons-wrap {
+    display: flex;
+    justify-content: space-between
+ }
 }
 
 .confirm-popup__button {
     @include action-button;
-    width: 90px;
+    width: 80px;
 }
 
 .confirm-popup__button_type_agreement {

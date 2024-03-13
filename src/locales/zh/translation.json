@@ -73,5 +73,8 @@
     "day-s": "日",
     "hour": "点",
     "hours": "点",
-    "hour-s": "点"
+    "hour-s": "点",
+    "agree": "是的",
+    "disagree": "不",
+    "confrirm-delete": "您確定要刪除該任務嗎？"
 }

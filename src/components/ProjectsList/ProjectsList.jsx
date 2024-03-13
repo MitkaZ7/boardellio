@@ -8,13 +8,13 @@ import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import Loader from '../Loader/Loader';
 import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-const ProjectsList = () => {
+import WithTranslation from '../hoc/WithTranslation';
+const ProjectsList = ({t}) => {
   const { projects, isLoad } = useSelector(state => state.projects);
   const { isLoading } = useSelector(state => state.loader);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+
   useEffect(() => {
       dispatch(getProjects());
   }, []);
@@ -60,4 +60,4 @@ const ProjectsList = () => {
 
 };
 
-export default ProjectsList;
+export default WithTranslation(ProjectsList);

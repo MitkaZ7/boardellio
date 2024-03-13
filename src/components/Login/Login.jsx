@@ -5,15 +5,14 @@ import EntryForm from '../EntryForm/EntryForm'
 import { loginSchema } from '../../utils/validation'
 import Tooltip from '../Tooltip/Tooltip'
 import { resetError } from '../../store/slices/userSlice'
-import { useTranslation } from 'react-i18next'
-
-const Login = () => {
+import WithTranslation from '../hoc/WithTranslation'
+const Login = ({t}) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [isShown, setIsShown] = useState(false);
   const authError = useSelector(state => state.user.error)
   const fromPage = location.state?.from?.pathname || '/';
-  const { t } = useTranslation();
+
 
 
   useEffect(() => {
@@ -53,4 +52,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default WithTranslation(Login);

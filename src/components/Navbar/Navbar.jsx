@@ -1,18 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import WithTranslation from '../hoc/WithTranslation';
 import { useNavigate } from 'react-router-dom';
 import { removeUser } from '../../store/slices/userSlice';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import OptionsPanel from '../OptionsPanel/OptionsPanel';
 import { closeMenu } from '../../store/slices/sideMenuSlice'
-const Navbar = () => {
+const Navbar = ({t}) => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
   const { isAuthorized, user } = useSelector(state => state.user);
-  const { t } = useTranslation();
+  
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state) => state.sideMenu)
 
@@ -97,4 +97,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default WithTranslation(Navbar);

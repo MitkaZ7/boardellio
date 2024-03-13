@@ -6,18 +6,19 @@ import { fadeInAnimation } from '../../utils/animations'
 import { createUser, authorizeUser } from '../../store/slices/userSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next'
+
+import WithTranslation from '../hoc/WithTranslation';
 
 
 import Popup from '../Popup/Popup';
 
 // import { loginSchema, registrationSchema } from '../../utils/validation'
-const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegistration, validationSchema }) => {
+const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegistration, validationSchema,t }) => {
     const dispatch = useDispatch();
     const { error } = useSelector((state) => state.user);
     const formRef = useRef();
     const navigate = useNavigate();
-    const { t } = useTranslation();
+
 
     const { register,
         handleSubmit,
@@ -150,4 +151,4 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
     )
 }
 
-export default EntryForm
+export default WithTranslation(EntryForm)

@@ -4,16 +4,17 @@ import logo from '../../assets/icons/logo.svg'
 import logoMonochrome from '../../assets/icons/logo-monochrome.svg'
 import Navbar from '../Navbar/Navbar'
 import FadeInAnimation from "../FadeInAnimtion/FadeInAnimation";
-import { useTranslation } from 'react-i18next'
+
 import MenuToggler from '../MenuToggler/MenuToggler'
 import { useSelector, useDispatch } from 'react-redux';
 import { openMenu, closeMenu } from '../../store/slices/sideMenuSlice'
+import WithTranslation from '../hoc/WithTranslation';
 
-const Header = () => {
+const Header = ({t}) => {
   const { isAuthorized } = useSelector(state => state.user);
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state) => state.sideMenu)
-  const { t } = useTranslation();
+ 
   function handleToggleMenu() {
     if (isMenuOpen) {
       dispatch(closeMenu());
@@ -42,4 +43,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default WithTranslation(Header);

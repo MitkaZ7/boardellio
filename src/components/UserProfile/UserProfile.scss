@@ -70,14 +70,14 @@
     &__relative-data {
     //   max-width: 390px;
       align-self: start;
-      border: 1px solid red;
+    //   border: 1px solid red;
     //   justify-self: center;
     
         // text-align: center;
     }
     &__relative-data-wrapper {
         width: 390px;
-        border: 1px solid green;
+        // border: 1px solid green;
         white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;

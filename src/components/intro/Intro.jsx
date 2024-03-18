@@ -46,10 +46,10 @@ const Intro = ({t}) => {
           <li className="intro__features-item">{t(`features.Drag'n'Drop oparations`)}</li>        
           <li className="intro__features-item">{t('features.Task state managment')}</li>
           <li className="intro__features-item">{t('features.Projects managment')}</li>
-          <li className="intro__features-item">{t('features.Сommenting')}</li>
-          <li className="intro__features-item">{t('features.File uploadind')}</li>
+          {/* <li className="intro__features-item">{t('features.Сommenting')}</li> */}
+          {/* <li className="intro__features-item">{t('features.File uploadind')}</li> */}
           <li className="intro__features-item">{t('features.Form validation')}</li>
-          <li className="intro__features-item">{t('features.Actual React version')}</li>
+          <li className="intro__features-item">{t('features. React 18 version')}</li>
           <li className="intro__features-item">{t('features.Re-usable components')}</li>
           <li className="intro__features-item">{t('features.And a litle bit of animations')}</li>
           <li className="intro__features-item">{t('features.Theme changing')}</li>

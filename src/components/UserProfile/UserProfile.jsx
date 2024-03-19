@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserTasks } from '../../store/slices/tasksSlice';
 import { getUserProjects, selectProject } from '../../store/slices/projectSlice';
 import { getOneTask, selectTask } from '../../store/slices/tasksSlice';
-import { openCustomPopup } from '../../store/slices/popupSlice';
+import { openCustomPopup, openPopup } from '../../store/slices/popupSlice';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import { useNavigate } from 'react-router-dom';
 import WithTranslation from '../hoc/WithTranslation';
-
+import EditProfilePopup from '../EditProfilePopup/EditProfilePopup';
 
 const UserProfile = ({t}) => {
   
@@ -19,6 +19,15 @@ const UserProfile = ({t}) => {
     const [userProjects, setUserProjects] = useState([]);
     const activePopup = useSelector(state => state.popup.activePopup);
     const navigate = useNavigate();
+
+    const [isEditing, setIsEditing] = useState(false);
+
+  const openEditProfilePopupHandler = () => {
+    dispatch(openPopup({ name: 'editProfilePopup' }));
+  };
+
+
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -44,12 +53,11 @@ const UserProfile = ({t}) => {
   }, [dispatch]); 
 
   const openTaskPopupHandler = (id) => {
-    console.log(id)
     dispatch(selectTask(id))
-    openCustomPopup(dispatch, 'TaskPopup');
+    // dispatch(findTaskById(id));
     // navigate(`/tasks/${taskId}`);
-    // dispatch(getOneTask(id))
-    // console.log(selectedTaskData)
+    dispatch(getOneTask(id))
+    dispatch(openPopup({ name: 'taskPopup' }))
 
   };
   const handleProjectClick = (title,id,author,taskQty) => {
@@ -72,11 +80,18 @@ const UserProfile = ({t}) => {
           <div className='user-profile__info-item'>
             {t('name')}: <span> Jhon Travolta</span>
           </div>
+
+          {/* <input
+            {...register("name")}
+            type="text"
+            className={`user-profile__info-item ${isEditing ? 'editable' : ''}`}
+            title={selectedTaskData.title.stringValue}
+          /> */}
           <div className='user-profile__info-item'>
             {t('role')}:
             <span> user</span>
           </div>
-          <button className="user-profile__edit-info-btn">
+          <button className="user-profile__edit-info-btn" onClick={openEditProfilePopupHandler}>
             {t('edit')}
           </button>
         </div>
@@ -122,7 +137,8 @@ const UserProfile = ({t}) => {
         </div>
       </div>
       </div>
-      {activePopup === 'TaskPopup' && <TaskPopup />}
+      <TaskPopup />
+      <EditProfilePopup/>
     </div>
   )
 }

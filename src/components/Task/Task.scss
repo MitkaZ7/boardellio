@@ -1,6 +1,6 @@
 .task {
     list-style: none;
-    
+    min-width: 600px;
     &__header {
         // margin: 0;
         // padding: 0 0 5px;
@@ -146,11 +146,16 @@
          }
     &__controls {
         
-        display: flex;
-        align-self: end;
-        margin-top: 10px;
-        justify-self: flex-end;
-        // width: 50px;
+        display: grid;
+        grid-template-columns: 1fr min-content min-content;
+        // justify-content: space-between;
+        align-items: center;
+        // justify-self: flex-end;
+      
+    }
+    &__author {
+        color: var(--subtitle-clr);
+        
     }
     &__controls-btn {
         

@@ -140,7 +140,6 @@ const Task = ({ taskId, t}) => {
             {...register("title")} 
             type="text" 
             className={`task__task-title ${isEditing ? 'editable' : ''}`}
-            // readOnly={isEditing ? false : true} 
                 title={selectedTaskData.title.stringValue}
           />
           <div className='task__data-item task__status'>
@@ -208,6 +207,8 @@ const Task = ({ taskId, t}) => {
         
 
             <div className="task__controls">
+              <span className="task__author">{t('author')}: {selectedTaskData.author.stringValue}</span>
+              
               {isEditing ? (
                 <div ref={btnsEditModeRef}>
                   
@@ -230,7 +231,7 @@ const Task = ({ taskId, t}) => {
                 </button>
               )}
               <button className="task__controls-btn task-button task__controls-btn_type_delete" onClick={openConfirmPopupHandler}></button>
-                
+                 
             </div>
       </article>
     </li>

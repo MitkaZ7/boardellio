@@ -8,6 +8,7 @@ import sideMenuSlice from './slices/sideMenuSlice';
 import userSlice from './slices/userSlice';
 import themeSlice from './slices/themeSlice';
 import projectsMenuSlice from './slices/projectsMenuSlice';
+import tooltipSlice from './slices/tooltipSlice';
 import errorTransformMiddleware from './middlewares/errorTransformMiddleware';
 import localStorageMiddleware from './middlewares/localStorageMiddleware';
 import rejectionMiddleware from './middlewares/rejectionMiddleware'
@@ -21,6 +22,7 @@ export default configureStore ({
         sideMenu: sideMenuSlice,
         user: userSlice,
         theme: themeSlice,
+        tooltip: tooltipSlice,
 
     },
     middleware: (getDefaultMiddleware) => 

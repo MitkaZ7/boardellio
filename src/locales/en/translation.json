@@ -86,5 +86,6 @@
     "404-title": "Page not found",
     "404-notfound-text": "Unfortunately the page you were looking for could not be found.",
     "404-unavaliable-text": "It may be temporarily unavailable, moved or no longer exist.",
-    "404-check-please-text": "Check the URL you entered for any mistakes and try again."
+    "404-check-please-text": "Check the URL you entered for any mistakes and try again.",
+    "author": "created by"
 }

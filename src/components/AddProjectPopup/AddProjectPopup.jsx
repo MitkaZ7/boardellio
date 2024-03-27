@@ -43,7 +43,7 @@ const AddProjectPopup = ({t}) => {
 
   return (
     <Popup className="popup_type_add-project-popup" isOpen={isOpen} resetForm={reset} popupName={'addProjectPopup'}>
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
+      <form onSubmit={handleSubmit(onSubmit)} className="form add-project-popup">
         <h3 className="form__title">{t('projects-form-add-title')}</h3>
         <fieldset className="form__fieldset form__fieldset_place_add-project">
           <input placeholder={t('projects-form-add-placeholder')} {...register('title')} id='project-title' type='text' className='form__input form__input_place_add-project' />

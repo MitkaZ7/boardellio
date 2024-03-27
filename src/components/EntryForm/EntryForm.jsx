@@ -6,7 +6,7 @@ import { fadeInAnimation } from '../../utils/animations'
 import { createUser, authorizeUser } from '../../store/slices/userSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { showTooltip, hideTooltip } from '../../store/slices/tooltipSlice';
 import WithTranslation from '../hoc/WithTranslation';
 
 
@@ -49,12 +49,15 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                 .then((resultAction) => {
                     if (createUser.fulfilled.match(resultAction)) {
                         // Успешная регистрация
+                        dispatch(showTooltip({ message: "Регистрация прошла успешно!" }));
                         reset();
                         navigate(linkTo);
                     } else {
-                        // Ошибка при регистрации
-                        // Можно не выполнять редирект, так как произошла ошибка
+                        dispatch(showTooltip({ message: "Ошибка при регистрации. Пожалуйста, попробуйте снова.", messageType: "Error" }));
                     }
+                })
+                .catch((error) => {
+                    dispatch(showTooltip({ message: transformError(error.message), messageType: "Error" }));
                 });
         } else {
             console.log(data)
@@ -62,12 +65,15 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                 .then((resultAction) => {
                     if (authorizeUser.fulfilled.match(resultAction)) {
                         // Успешная авторизация
+                        dispatch(showTooltip({ message: "Авторизация прошла успешно!" }));
                         reset();
                         navigate('/projects');
                     } else {
-                        // Ошибка при авторизации
-                        // Можно не выполнять редирект, так как произошла ошибка
+                        dispatch(showTooltip({ message: "Ошибка при авторизации. Пожалуйста, проверьте свои данные.", messageType: "Error" }));
                     }
+                })
+                .catch((error) => {
+                    dispatch(showTooltip({ message: transformError(error.message), messageType: "Error" }));
                 });
         }
     };

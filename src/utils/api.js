@@ -258,27 +258,69 @@ class Api {
     }
 
     // USER DATA:
-    createUserInDB(uid, userData) {
-        console.log(userData)
+    createUserInDB(userId, userData) {
         const requestData = {
             fields: {
-                email: { stringValue: userData.email },
                 name: { stringValue: userData.name },
                 avatar: { stringValue: userData.avatar },
                 role: { stringValue: userData.role },
-            }
+                email: { stringValue: userData.email }
+            },
         };
+        console.log(requestData)
+        const requestData2 = {
+            fields: {
+                name: { stringValue: userData.name },
+                avatar: { stringValue: userData.avatar },
+                role: { stringValue: userData.role },
+                email: { stringValue: userData.email }
+            },
+        };
+        console.log(requestData2)
 
-        return instance.post(`/users/${uid}`, requestData)
+        const params = {
+            documentId: userId,
+        };
+        return instance.post(`/users`, requestData, { params })
             .then((res) => {
-                console.log('Данные пользователя успешно добавлены в БД:', res.data);
+                console.log('Пользователь успешно создан в Firestore');
                 return res.data;
             })
             .catch((error) => {
-                console.error('Ошибка при добавлении данных пользователя в БД:', error);
+                console.error('Ошибка при создании пользователя в Firestore:', error);
                 throw error;
             });
     }
+
+    getUserData(userId) {
+        return instance.get(`/users/${userId}`).then((res) => {
+            const userData = {
+                id: res.data.name.split('/').pop(),
+                ...res.data.fields,
+             
+            };
+            return userData
+        });
+    }
+
+    updateUserData(userId, data) {
+        const requestData = {
+            fields: {}
+        };
+        Object.keys(data).forEach(field => {
+            const fieldValue = data[field];
+            if (typeof fieldValue === 'boolean') {
+                requestData.fields[field] = { booleanValue: fieldValue };
+            } else if (Number.isInteger(fieldValue)) {
+                requestData.fields[field] = { integerValue: fieldValue };
+            } else {
+                requestData.fields[field] = { stringValue: fieldValue };
+            }
+        });
+        const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
+        return instance.patch(`/users/${userId}?${updateMaskQuery}`, requestData);
+    }
+
 
 
 }

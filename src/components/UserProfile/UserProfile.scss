@@ -60,12 +60,9 @@
         font-size: 1.3em;
     }
     &__edit-info-btn {
-        // width: 120px;
-        @include link-hover;
+     
         margin-top: 35px;
-        @include action-button;
-            width: 120px;
-            color: var(--process-clr);
+        @include usual-button;
     }
     &__relative-data {
     //   max-width: 390px;
@@ -85,7 +82,14 @@
 
     }
     &__relative-data-header {
-        text-transform: uppercase;
+        display: flex;
+        text-align: center;
+       
+        
+    }
+    &__relative-data-title {
+        margin: 0;
+        font-size: 1.4em;
     }
     &__relative-data-list {
         @include list;

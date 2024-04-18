@@ -78,5 +78,7 @@
     "agree": "是的",
     "disagree": "不",
     "confrirm-delete": "您確定要刪除該任務嗎？",
-    "author": "作者"
+    "author": "作者",
+    "no-tasks-placeholder": "你没有任务",
+    "no-projects-placeholder": "你没有项目"
 }

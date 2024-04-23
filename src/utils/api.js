@@ -220,6 +220,7 @@ class Api {
         .then((res) => {
             const data = res.data.documents.map((doc) => ({
                 id: doc.name.split('/').pop(),
+                createTime: doc.createTime,
                 ...doc.fields,
             }));
             return data;
@@ -267,16 +268,6 @@ class Api {
                 email: { stringValue: userData.email }
             },
         };
-        console.log(requestData)
-        const requestData2 = {
-            fields: {
-                name: { stringValue: userData.name },
-                avatar: { stringValue: userData.avatar },
-                role: { stringValue: userData.role },
-                email: { stringValue: userData.email }
-            },
-        };
-        console.log(requestData2)
 
         const params = {
             documentId: userId,
@@ -327,3 +318,5 @@ class Api {
 
 const api = new Api(instance);
 export default api;
+
+

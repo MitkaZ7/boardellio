@@ -9,12 +9,14 @@ import Loader from '../Loader/Loader';
 import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import WithTranslation from '../hoc/WithTranslation';
+import ButtonAdd from '../ButtonAdd/ButtonAdd';
+
 const ProjectsList = ({t}) => {
   const { projects, isLoad } = useSelector(state => state.projects);
   const { isLoading } = useSelector(state => state.loader);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const sortedProjects = [...projects].sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
   useEffect(() => {
       dispatch(getProjects());
   }, []);
@@ -33,14 +35,12 @@ const ProjectsList = ({t}) => {
       <section className="projects-list">
         <header className="projects-list__header">
           <h2 className="projects-list__title">{t('projects-page-title')}</h2>
-          <button className="projects-list__add-button" onClick={openPopupHandler}>
-            {t('projects-page-add-btn')}
-          </button>
+          <ButtonAdd buttonText={t('projects-page-add-btn')} onClick={openPopupHandler} />
         </header>
 
         <ul className="projects-list__list">
           { 
-            projects?.map((projectItem) => 
+            sortedProjects.map((projectItem) => 
               
               <ProjectCard 
                 key={projectItem.id} 

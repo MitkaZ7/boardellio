@@ -4,11 +4,11 @@
     text-align: center;
     margin: 0;
     padding: 0 20px;
-   
+    min-width: 700px;
     &__title {
         font-weight: 400;
         text-transform: uppercase;
-        margin: 20px 0 0;
+        margin: 0;
         color: var(--accent-clr);
     }
 
@@ -31,6 +31,7 @@
         // width: 100%;
         // margin-right: 10px;
         padding: 5px 10px;
+     
     }
 
     &__select {
@@ -55,6 +56,9 @@
         opacity: 0;
         visibility: hidden;
         position: absolute;
+        @include link-hover;
+         border: 1px dashed var(--bg-clr);
+     
     }
 
     &__file-wrapper {
@@ -67,6 +71,7 @@
         align-items: center;
         padding: 3px;
         justify-content: left;
+        // @include link-hover;
     }
 
     &__form-load-icon {
@@ -78,6 +83,7 @@
 
     &__input-label {
         width: 100%;
+        // @include link-hover;
     }
 
     &__button-submit {

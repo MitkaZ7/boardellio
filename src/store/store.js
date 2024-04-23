@@ -26,7 +26,7 @@ export default configureStore ({
 
     },
     middleware: (getDefaultMiddleware) => 
-        getDefaultMiddleware().concat(localStorageMiddleware, rejectionMiddleware, ),
+        getDefaultMiddleware().concat(errorTransformMiddleware,localStorageMiddleware, rejectionMiddleware, ),
     
        
 })

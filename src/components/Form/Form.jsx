@@ -49,7 +49,7 @@ const Form = ({ projects, validationSchema, t}) => {
                 description: data.description,
                 priority: data.priority,
                 projectId: selectedProjectId,
-                author: email,
+                author: email.stringValue,
                 deleted: false,
                 number: nextTaskNumber,
                 

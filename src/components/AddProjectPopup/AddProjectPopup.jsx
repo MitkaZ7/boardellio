@@ -25,7 +25,7 @@ const AddProjectPopup = ({t}) => {
     const data = { 
       ...formData, 
       taskQty: 0,
-      author: projectAuthor,
+      author: projectAuthor.stringValue,
     };
     console.log(data)
 

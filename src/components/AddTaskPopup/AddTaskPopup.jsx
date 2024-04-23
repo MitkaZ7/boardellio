@@ -30,7 +30,7 @@ const AddTaskPopup = () => {
   if (!isOpen || !isProjectsLoaded) return null;
   return (
     <Popup isOpen={isOpen} popupName={'addTaskPopup'} >
-      <Form projects={projects} validationSchema={createTaskSchema} />
+      <Form projects={projects} validationSchema={createTaskSchema} className='add-task-popup'/>
     </Popup>
   );
 };

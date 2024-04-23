@@ -9,35 +9,14 @@ import WithTranslation from '../hoc/WithTranslation'
 const Login = ({t}) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const [isShown, setIsShown] = useState(false);
+
   const authError = useSelector(state => state.user.error)
   const fromPage = location.state?.from?.pathname || '/';
-
-
-
-  useEffect(() => {
-    let timeoutId;
-
-    if (authError) {
-      setIsShown(true);
-
-      timeoutId = setTimeout(() => {
-        setIsShown(false);
-        dispatch(resetError())
-      }, 2000);
-    } else {
-      setIsShown(false);
-    }
-
-    return () => {
-      // Очищаем таймер при размонтировании компонента
-      clearTimeout(timeoutId);
-    };
-  }, [authError]);
+  const { isShown, message } = useSelector((state) => state.tooltip); 
 
   return (
     <>
-      {authError && <Tooltip isShown={isShown} messageText={authError} messageType={'Error'} />}
+      {isShown && <Tooltip messageText={message} />} 
       <EntryForm
         buttonText={t('log-in')}
         formTitle={t('log-in')}

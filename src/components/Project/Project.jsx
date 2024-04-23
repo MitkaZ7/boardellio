@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openPopup } from '../../store/slices/popupSlice';
 import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { getOneProject } from '../../store/slices/projectSlice'
-
+import ButtonAdd from '../ButtonAdd/ButtonAdd';
 import {
   getTasks,
   resetTasksState,
@@ -102,9 +102,9 @@ const Project = () => {
               <SearchForm />
 
             )}
-            <button className='project__button-add-task' onClick={openAddTaskPopupHandler}>
-              {t('add-task-form-title')}
-            </button>
+      
+            <ButtonAdd buttonText={t('add-task-form-title')} onClick={openAddTaskPopupHandler} />
+
           </div>
           <section className='project__content'>
             <section className='project__tasks-section project__queue-tasks'>

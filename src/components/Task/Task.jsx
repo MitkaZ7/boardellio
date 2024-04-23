@@ -89,7 +89,7 @@ const Task = ({ taskId, t}) => {
         description: selectedTaskData.description.stringValue,
       });
     }
-  }, [selectedTaskData, reset, projecTitle]);
+  }, [selectedTaskData, reset, ]);
 
   // useEffect(() => {
   //   if (isEditing) {
@@ -99,6 +99,7 @@ const Task = ({ taskId, t}) => {
   // }, [isEditing]);
 
   const onSubmit = (data) => {
+    console.log('closked save')
     dispatch(updateTask({ taskId: selectedTaskId, newData: data }))
       .then(() => setIsEditing(false))
       .catch((error) => console.log(error));
@@ -134,7 +135,7 @@ const Task = ({ taskId, t}) => {
       <article className='task__content'>
         <header className='task__header'>
           <span className='task__data-item task__number' onClick={navigateToProjectPage}>
-            {projectTag}-{selectedTaskData.number.integerValue}:
+                {projectTag}-{selectedTaskData.number.integerValue}:
           </span>
           <input  
             {...register("title")} 
@@ -210,19 +211,20 @@ const Task = ({ taskId, t}) => {
               <span className="task__author">{t('author')}: {selectedTaskData.author.stringValue}</span>
               
               {isEditing ? (
-                <div ref={btnsEditModeRef}>
+                <div ref={btnsEditModeRef} className='task__buttons-block'>
                   
-                  <button 
-                    ref={cancelButtonRef}
-                    className="task__controls-btn task-button task__controls-btn_type_cancel" 
-                    onClick={() => setIsEditing(false)}>
-                    {t('cancel')}
-                  </button>
+                  
                   <button
                     ref={saveButtonRef}
                     className="task__controls-btn task-button task__controls-btn_type_save"
                     onClick={handleSubmit(onSubmit)}>
                     {t('save')}
+                  </button>
+                  <button
+                    ref={cancelButtonRef}
+                    className="task__controls-btn task-button task__controls-btn_type_cancel"
+                    onClick={() => setIsEditing(false)}>
+                    {t('cancel')}
                   </button>
                 </div>
               ) : (

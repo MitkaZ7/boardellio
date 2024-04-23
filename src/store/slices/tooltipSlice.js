@@ -17,6 +17,7 @@ const tooltipSlice = createSlice({
         },
         hideTooltip: (state, action) => {
             state.isShown = false;
+            state.message = '';
         },
     },
 });

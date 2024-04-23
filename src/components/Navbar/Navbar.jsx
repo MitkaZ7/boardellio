@@ -43,7 +43,7 @@ const Navbar = ({t}) => {
         {(isMenuOpen && isAuthorized) && (
           <>
             <div className='menu__user-link' onClick={() => navigate('users/me')}>
-              {user.email}
+              {user.email.stringValue}
 
             </div>
             <button className='menu__logout-btn' onClick={handleExitClick}></button>
@@ -70,10 +70,12 @@ const Navbar = ({t}) => {
           <>
             <li className='navbar__item'><Link to='/projects' className='navbar__link'>{t('menu-item-projects-list')}</Link></li>
             {/* <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-project-tasks')}</Link></li> */}
+          <li className='navbar__item'><Link to='/users/me' className='navbar__link'>{t('user-profile-link')}</Link></li>
+
           </>
         }
 
-        <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-contacts')}</Link></li>
+        <li className='navbar__item'><Link to='contacts' className='navbar__link'>{t('menu-item-contacts')}</Link></li>
         <li className='navbar__item'><Link to='https://github.com/MitkaZ7/boardellio' className='navbar__link' target="_blank">{t('menu-item-github')}</Link></li>
         {/* <li className='navbar__item'><Link to='/changelog' className='navbar__link'>{t('menu-item-changelog')}</Link></li> */}
 

@@ -73,7 +73,7 @@ export const getUserTasks = createAsyncThunk(
     async (userEmail, { rejectWithValue, dispatch }) => {
         // dispatch(showLoader());
         try {
-            console.log(userEmail)
+
             const tasksList = await api.getUserTasks(userEmail);
             if (tasksList && tasksList.length > 0) {
                 dispatch(hideLoader());
@@ -99,6 +99,7 @@ export const createTask = createAsyncThunk(
     'tasks/createTask',
     async (data, { rejectWithValue, dispatch, getState }) => {
         try {
+            console.log(data)
             await api.createTask(data);
             await dispatch(increaseTaskQty({ projectId: data.projectId, newQty: data.number }))
         } catch (error) {

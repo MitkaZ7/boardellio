@@ -14,20 +14,21 @@
     z-index: 1;
     opacity: 0;
     visibility: hidden;
-    
+    box-sizing: border-box;
     // backdrop-filter: blur(2px);
 
     &__container {
-        max-width: 600px;
+        // max-width: 600px;
         width: 100%;
         background-color: var(--popup-bg-clr);
         color: var(--font-clr-invert);
         border-radius: 5px;
         margin: 0 auto;
-        padding-bottom: 20px;
+        padding: 20px 0px;
         z-index: 2;
         position: relative;
-        
+        display: flex;
+        width: fit-content;
     }
        
     &__button-close {
@@ -54,6 +55,15 @@
             display: none;
         }
     }
+
+    // &_type_edit-profile {
+    //     .popup__container {
+    //             max-width: 360px;
+    //             padding: 10px;
+    //             margin: 0;
+    //         }
+        
+    // }
 
 }
 .popup_state_open {

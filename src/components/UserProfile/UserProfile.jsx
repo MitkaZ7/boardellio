@@ -36,30 +36,32 @@ const UserProfile = ({t}) => {
     dispatch(openPopup({ name: 'addProjectPopup' }));
   };
 
+  const fetchProjects = async () => {
+    try {
+      const res = await dispatch(getUserProjects(user.email.stringValue));
+      setUserProjects(res.payload);
+    } catch (error) {
+      console.error('Ошибка при получении проектов пользователя:', error);
+    }
+  };
+  const fetchTasks = async () => {
+    try {
+      const res = await dispatch(getUserTasks(user.email.stringValue));
+      setUserTasks(res.payload);
+    } catch (error) {
+      console.error('Ошибка при получении задач пользователя:', error);
+    }
+  };
+  useEffect(() => {
+    // fetchTasks();
+    // fetchProjects();
+  }, []); 
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const res = await dispatch(getUserTasks(user.email.stringValue));
-        setUserTasks(res.payload);
-      } catch (error) {
-        console.error('Ошибка при получении задач пользователя:', error);
-      }
-    };
-    // dispatch(getUserProjects(user.email))
-    const fetchProjects = async () => {
-      try {
-        const res = await dispatch(getUserProjects(user.email.stringValue));
-        setUserProjects(res.payload);
-      } catch (error) {
-        console.error('Ошибка при получении проектов пользователя:', error);
-      }
-    };
-
-    fetchTasks();
-    fetchProjects();
-
-  }, [dispatch]); 
+    // fetchProjects();
+  }, [])
+  
+  
 
   const openTaskPopupHandler = (id) => {
     dispatch(selectTask(id))
@@ -119,24 +121,27 @@ const UserProfile = ({t}) => {
             </div>
           
           <ol className="user-profile__relative-data-list">
-            {
-              userProjects.map((project) => {
-                return <li 
-                key={project.id} 
-                id={project.id}
-                title={project.title.stringValue}
-              
-                  onClick={() => handleProjectClick(
-                    project.title.stringValue,
-                    project.id,
-                    project.author.stringValue,
-                    project.taskQty.integerValue,
+              {userProjects && userProjects.length > 0 ? (
+                userProjects.map((project) => {
+                  return <li
+                    key={project.id}
+                    id={project.id}
+                    title={project.title.stringValue}
+
+                    onClick={() => handleProjectClick(
+                      project.title.stringValue,
+                      project.id,
+                      project.author.stringValue,
+                      project.taskQty.integerValue,
                     )}
-                >
-                {project.title.stringValue}
-                </li>
-              })
-            }
+                  >
+                    {project.title.stringValue}
+                  </li>
+                })
+              ) : (
+                <p className="">{t('no-projects-placeholder')}</p>
+              )}
+
           </ol>
         </div>
         <div className='user-profile__user-tasks'>
@@ -147,11 +152,18 @@ const UserProfile = ({t}) => {
             <ButtonAdd buttonText={t('add-task-form-title')} onClick={openAddTaskPopupHandler}/>
           </div>
           <ol className="user-profile__relative-data-list">
-              {
-                userTasks.map((task)=> {
+              {userProjects && userProjects.length > 0 ? (
+                userTasks.map((task) => {
                   return <li key={task.id} id={task.id} onClick={() => openTaskPopupHandler(task.id)}>{task.title.stringValue}</li>
                 })
+              ) : (
+                <p className="">{t('no-tasks-placeholder')}</p>
+              )
+              
+              
               }
+                
+              
           </ol>
         </div>
       </div>

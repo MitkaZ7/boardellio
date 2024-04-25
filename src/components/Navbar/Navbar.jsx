@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import WithTranslation from '../hoc/WithTranslation';
 import { useNavigate } from 'react-router-dom';
-import { removeUser } from '../../store/slices/userSlice';
+import { logoutUser } from '../../store/slices/userSlice';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import OptionsPanel from '../OptionsPanel/OptionsPanel';
 import { closeMenu } from '../../store/slices/sideMenuSlice'
@@ -19,7 +19,7 @@ const Navbar = ({t}) => {
 
 
   const handleExitClick = () => {
-    dispatch(removeUser());
+    dispatch(logoutUser());
     navigate('/login');
     dispatch(closeMenu())
   };
@@ -43,7 +43,7 @@ const Navbar = ({t}) => {
         {(isMenuOpen && isAuthorized) && (
           <>
             <div className='menu__user-link' onClick={() => navigate('users/me')}>
-              {user.user.email.stringValue}
+              {user.email}
 
             </div>
             <button className='menu__logout-btn' onClick={handleExitClick}></button>

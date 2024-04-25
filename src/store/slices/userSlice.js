@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authApi from '../../utils/authApi'
 import api from '../../utils/api'
 import { app } from '../../utils/firebase';
+import { generateRandomName } from '../../utils/generateUserName';
 import { hideLoader, showLoader } from './loaderSlice';
 
 
@@ -22,19 +23,66 @@ const handleErrors = (error, dispatch) => {
 export const createUser = createAsyncThunk(
   'user/createUser',
   async (regData, { rejectWithValue, dispatch }) => {
-    const { email } = regData;
-    const { name, avatar, role } = initialState.user;
-    try {
-      dispatch(showLoader()); // Показываем индикатор загрузки
-      const res = await authApi.register(regData);
-      await api.createUserInDB(res.data.localId, { email, name, avatar, role });
-      dispatch(hideLoader()); // Прячем индикатор загрузки
-    } catch (error) {
-      handleErrors(error, dispatch); // Обработка ошибок
-      return rejectWithValue(error.message);
-    }
+
+    // console.log('regData: ', { ...regData, displayName: generateRandomName()});
+    const res = await authApi.register({ ...regData, displayName: generateRandomName() });
+    console.log(res)
+    // const { email, password } = regData;
+    // const { name, avatar, role } = initialState.user;
+    // try {
+    //   dispatch(showLoader()); // Показываем индикатор загрузки
+    //   const res = await authApi.register(regData);
+    //   await api.createUserInDB(res.data.localId, { email, name, avatar, role });
+    //   dispatch(hideLoader()); // Прячем индикатор загрузки
+    // } catch (error) {
+    //   console.log(error.message)
+    //   dispatch(setError(error.message))
+    //   return rejectWithValue((error.message))
+    // }
+
+  });
+
+export const authorizeUser = createAsyncThunk(
+  'user/authorizeUser',
+  async (authData, { rejectWithValue, dispatch }) => {
+    console.log('authData at slice: ', authData);
+    // const { email, password } = authData;
+    // try {
+
+    //   const user = await authApi.authorize({ ...authData, returnSecureToken: true });
+    //   const userData = {
+    //     email: user.data.email,
+    //     ...await dispatch(getUserData(user.data.localId)).unwrap(),
+    //   };
+
+
+
+    //   dispatch(setAuthorizationStatus(true));
+
+    //   await dispatch(setUser(userData));
+    //   console.log('data after SetUser: ', userData);
+    // } catch (error) {
+    //   if (error.response && error.response.data && error.response.data.error) {
+    //     // Обработка ошибки от сервера
+    //     const errorMessage = error.response.data.error.message;
+    //     console.log('Firebase error message:', errorMessage);
+    //     dispatch(setError(errorMessage));
+    //   } else if (error.message) {
+    //     // Обработка других ошибок
+    //     console.log('Error message:', error.message);
+    //     dispatch(setError(error.message));
+
+    //   } else {
+    //     // Обработка других случаев
+    //     console.log('Unexpected error:', error);
+    //     dispatch(setError('Unexpected error occurred'));
+    //   }
+    //   return rejectWithValue(error.message);
+    // }
   }
 );
+
+
 
 const getUserData = createAsyncThunk(
   'user/getUserData',
@@ -77,74 +125,45 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-// export const authorizeUser2 = createAsyncThunk(
-//   'user/authorizeUser',
-//   async (authData, { rejectWithValue, dispatch }) => {
-//     try {
-//       dispatch(showLoader());
-
-//       const user = await authApi.authorize({ ...authData, returnSecureToken: true });
-//       const token = user.data.idToken;
-//       localStorage.setItem('authToken', token);
-//       const userData = await getUserDataFromToken(token)
-//       // const userData = {
-//       //   email: user.data.email,
-//       //   ...await dispatch(getUserData(user.data.localId)).unwrap(),
-//       // };
 
 
 
-//       dispatch(setUser(userData));
-//       dispatch(setAuthorizationStatus(true));
-//       dispatch(hideLoader());
-//     } catch (error) {
-//       handleErrors(error, dispatch);
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 
-
-export const authorizeUser = createAsyncThunk(
-  'user/authorizeUser',
-  async (authData, { rejectWithValue, dispatch }) => {
-    try {
-      dispatch(showLoader()); 
-     
-      const user = await authApi.authorize({...authData, returnSecureToken: true});
-      const userData = {
-        email: user.data.email,
-        ...await dispatch(getUserData(user.data.localId)).unwrap(),
-      };
-
-      localStorage.setItem('authToken', user.data.idToken);
-      localStorage.setItem('userData', JSON.stringify(userData));
-
-      dispatch(setUser(userData));
-      dispatch(setAuthorizationStatus(true));
-
-      dispatch(hideLoader()); 
-    } catch (error) {
-      handleErrors(error, dispatch); 
-      return rejectWithValue(error.message);
-    }
-  }
-);
 const userDataFromLocalStorage = localStorage.getItem('userData');
 // if (userDataFromLocalStorage) {
 //     initialState = JSON.parse(userDataFromLocalStorage);
 // }
-// (userDataFromLocalStorage) ? JSON.parse(userDataFromLocalStorage) : 
+// const initialState = (userDataFromLocalStorage) ? JSON.parse(userDataFromLocalStorage) : {
+//   // email: null,
+//   // name: null,
+//   user: {
+//     email: '',
+//     name: '',
+//     role: 'user',
+//     avatar: null,
+//   },
+//   // accessToken: null,
+//   // idToken: null,
+//   refreshToken: null,
+//   // userId: null,
+//   isAuthorized: false,
+//   error: null,
+// }
 const initialState = {
-  user: JSON.parse(localStorage.getItem('userData')) || {
-    email: '',
-    name: 'Vincent Vega',
+  user: {
+    email: 'noemail@noemail.ru',
+    name: '',
     role: 'user',
-    avatar: 'https://dummyimage.com/150/b8b8b8/fff',
+    photoUrl: 'https://dummyimage.com/150/b8b8b8/fff',
   },
-  isAuthorized: !!localStorage.getItem('authToken'),
+  
+  
+  refreshToken: null,
+  
+  isAuthorized: false,
   error: null,
-};
+
+}
 
 export const userSlice = createSlice({
   name: 'user',

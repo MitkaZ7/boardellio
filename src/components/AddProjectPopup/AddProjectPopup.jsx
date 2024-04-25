@@ -10,7 +10,7 @@ import { createProjectSchema } from '../../utils/validation.js'
 import WithTranslation from '../hoc/WithTranslation';
 
 const AddProjectPopup = ({t}) => {
-  const projectAuthor = useSelector((state)=> state.user.user.email)
+  const projectAuthor = useSelector((state)=> state.user.email)
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ resolver: joiResolver(createProjectSchema) });
   // const navigate = useNavigate();

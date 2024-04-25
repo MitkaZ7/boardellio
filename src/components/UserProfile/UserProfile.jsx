@@ -38,7 +38,7 @@ const UserProfile = ({t}) => {
 
   const fetchProjects = async () => {
     try {
-      const res = await dispatch(getUserProjects(user.email.stringValue));
+      const res = await dispatch(getUserProjects(user.email));
       setUserProjects(res.payload);
     } catch (error) {
       console.error('Ошибка при получении проектов пользователя:', error);
@@ -46,7 +46,7 @@ const UserProfile = ({t}) => {
   };
   const fetchTasks = async () => {
     try {
-      const res = await dispatch(getUserTasks(user.email.stringValue));
+      const res = await dispatch(getUserTasks(user.email));
       setUserTasks(res.payload);
     } catch (error) {
       console.error('Ошибка при получении задач пользователя:', error);
@@ -81,15 +81,15 @@ const UserProfile = ({t}) => {
     <div className='user-profile'>
       <div className="user-profile__info">
         <div className="user-profile__avatar-wrapper">
-          <img src={user.user.avatar.stringValue} alt="user avatar" className="user-profile__avatar" />
+          <img src={user.photoUrl} alt="user avatar" className="user-profile__avatar" />
           <button className="user-profile__button-edit-avatar" type="button" ></button>
         </div>
         <div className='user-profile__info-wrapper'>
           <div className='user-profile__info-item'>
-            {t('email')}: <span> {user.user.email.stringValue}</span> 
+            {t('email')}: <span> {user.email}</span> 
           </div>
           <div className='user-profile__info-item' onClick={openEditProfilePopupHandler}>
-            {t('name')}: <span>{user.user.name.stringValue}</span>
+            {t('name')}: <span>{user.name}</span>
           </div>
 
           {/* <input
@@ -99,7 +99,7 @@ const UserProfile = ({t}) => {
             title={selectedTaskData.title.stringValue}
           /> */}
           <div className='user-profile__info-item'>
-            {t('role')}: <span>{user.user.role.stringValue}</span>
+            {/* {t('role')}: <span>{user.user.role.stringValue}</span> */}
           </div>
           {/* <ButtonEdit className="user-profile__edit-info-btn" /> */}
           <button className="user-profile__edit-info-btn" onClick={openEditProfilePopupHandler}>
@@ -171,7 +171,7 @@ const UserProfile = ({t}) => {
       <TaskPopup />
       <AddTaskPopup/>
       <AddProjectPopup />
-      <EditProfilePopup userName={user.user.name.stringValue}/>
+      <EditProfilePopup userName={user.name}/>
     </div>
   )
 }

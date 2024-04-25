@@ -9,6 +9,6 @@ export const generateRandomName = () => {
     const randomFirstNameIndex = getRandomIndex(firstNames);
     const randomLastNameIndex = getRandomIndex(lastNames);
 
-    return `${lastNames[randomLastNameIndex]} ${firstNames[randomFirstNameIndex]} `;
+    return `${lastNames[randomLastNameIndex]} ${firstNames[randomFirstNameIndex]}`;
 };
 

@@ -77,24 +77,55 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+// export const authorizeUser2 = createAsyncThunk(
+//   'user/authorizeUser',
+//   async (authData, { rejectWithValue, dispatch }) => {
+//     try {
+//       dispatch(showLoader());
 
+//       const user = await authApi.authorize({ ...authData, returnSecureToken: true });
+//       const token = user.data.idToken;
+//       localStorage.setItem('authToken', token);
+//       const userData = await getUserDataFromToken(token)
+//       // const userData = {
+//       //   email: user.data.email,
+//       //   ...await dispatch(getUserData(user.data.localId)).unwrap(),
+//       // };
+
+
+
+//       dispatch(setUser(userData));
+//       dispatch(setAuthorizationStatus(true));
+//       dispatch(hideLoader());
+//     } catch (error) {
+//       handleErrors(error, dispatch);
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 
 export const authorizeUser = createAsyncThunk(
   'user/authorizeUser',
   async (authData, { rejectWithValue, dispatch }) => {
     try {
-      dispatch(showLoader()); // Показываем индикатор загрузки
-      const user = await authApi.authorize(authData);
+      dispatch(showLoader()); 
+     
+      const user = await authApi.authorize({...authData, returnSecureToken: true});
       const userData = {
         email: user.data.email,
         ...await dispatch(getUserData(user.data.localId)).unwrap(),
       };
-      await dispatch(setUser(userData));
-      await dispatch(setAuthorizationStatus(true));
-      dispatch(hideLoader()); // Прячем индикатор загрузки
+
+      localStorage.setItem('authToken', user.data.idToken);
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      dispatch(setUser(userData));
+      dispatch(setAuthorizationStatus(true));
+
+      dispatch(hideLoader()); 
     } catch (error) {
-      handleErrors(error, dispatch); // Обработка ошибок
+      handleErrors(error, dispatch); 
       return rejectWithValue(error.message);
     }
   }
@@ -103,22 +134,17 @@ const userDataFromLocalStorage = localStorage.getItem('userData');
 // if (userDataFromLocalStorage) {
 //     initialState = JSON.parse(userDataFromLocalStorage);
 // }
-const initialState = (userDataFromLocalStorage) ? JSON.parse(userDataFromLocalStorage) : {
-  
-  user: {
+// (userDataFromLocalStorage) ? JSON.parse(userDataFromLocalStorage) : 
+const initialState = {
+  user: JSON.parse(localStorage.getItem('userData')) || {
     email: '',
     name: 'Vincent Vega',
     role: 'user',
     avatar: 'https://dummyimage.com/150/b8b8b8/fff',
-
   },
-
-  refreshToken: null,
-
-  isAuthorized: false,
+  isAuthorized: !!localStorage.getItem('authToken'),
   error: null,
-}
-
+};
 
 export const userSlice = createSlice({
   name: 'user',

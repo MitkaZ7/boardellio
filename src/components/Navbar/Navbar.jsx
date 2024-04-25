@@ -43,7 +43,7 @@ const Navbar = ({t}) => {
         {(isMenuOpen && isAuthorized) && (
           <>
             <div className='menu__user-link' onClick={() => navigate('users/me')}>
-              {user.email.stringValue}
+              {user.user.email.stringValue}
 
             </div>
             <button className='menu__logout-btn' onClick={handleExitClick}></button>

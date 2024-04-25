@@ -49,11 +49,11 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                 .then((resultAction) => {
                     if (createUser.fulfilled.match(resultAction)) {
                         // Успешная регистрация
-                        dispatch(showTooltip({ message: "Регистрация прошла успешно!" }));
+                        // dispatch(showTooltip({ message: "Регистрация прошла успешно!" }));
                         reset();
                         navigate(linkTo);
                     } else {
-                        dispatch(showTooltip({ message: "Ошибка при регистрации. Пожалуйста, попробуйте снова.", messageType: "Error" }));
+                        // dispatch(showTooltip({ message: "Ошибка при регистрации. Пожалуйста, попробуйте снова.", messageType: "Error" }));
                     }
                 })
                 .catch((error) => {
@@ -64,15 +64,15 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                 .then((resultAction) => {
                     if (authorizeUser.fulfilled.match(resultAction)) {
                         // Успешная авторизация
-                        dispatch(showTooltip({ message: "Авторизация прошла успешно!" }));
+                        // dispatch(showTooltip({ message: "Авторизация прошла успешно!" }));
                         reset();
                         navigate('/projects');
                     } else {
-                        dispatch(showTooltip({ message: "Ошибка при авторизации. Пожалуйста, проверьте свои данные.", messageType: "Error" }));
+                        // dispatch(showTooltip({ message: "Ошибка при авторизации. Пожалуйста, проверьте свои данные.", messageType: "Error" }));
                     }
                 })
                 .catch((error) => {
-                    dispatch(showTooltip({ message: transformError(error.message), messageType: "Error" }));
+                    // dispatch(showTooltip({ message: transformError(error.message), messageType: "Error" }));
                 });
         }
     };

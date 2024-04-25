@@ -7,6 +7,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import WithTranslation from '../hoc/WithTranslation';
 import { setUserName, updateUser } from '../../store/slices/userSlice';
 import Upload from '../../assets/icons/upload.svg';
+import { closePopup } from '../../store/slices/popupSlice';
 
 const EditProfilePopup = ({ t }) => {
     const { editProfilePopup: { isOpen } = false } = useSelector(state => state.popup.openedPopups);
@@ -41,7 +42,7 @@ const EditProfilePopup = ({ t }) => {
     const onSubmit = (formData) => {
      
         dispatch(updateUser({ userId: user.id, newData: formData }));
-
+        dispatch(closePopup({ name: 'editProfilePopup' }))
     };
 
 

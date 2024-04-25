@@ -1,4 +1,9 @@
 import axios from 'axios';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore,doc,setDoc } from 'firebase/firestore';  
+
+
+
 const instance = axios.create({
     baseURL: 'https://identitytoolkit.googleapis.com/v1',
     params: {
@@ -7,29 +12,32 @@ const instance = axios.create({
 })
 
 class AuthApi {
-    register(data){
-        return instance.post('/accounts:signUp?',data);
+    register(data) {
+      try {
+        const res = instance.post('/accounts:signUp?', data);
+        const { localId } = res.data;
+
+        
+      } catch (error) {
+        
+      }
     }
+    // register(data){
+    //     return instance.post('/accounts:signUp?',data);
+    // }
     authorize(data){
         return instance.post('/accounts:signInWithPassword?', data)
+    }
+    updataProfile(data){
+        console.log(data)
+        return instance.post('/accounts:update?', data)
+    
     }
 
     checkToken(token){
         return instance.post('/accounts:signInWithCustomToken?', token)
     }
-    // getUserInfo(){
-    //     return instance.get
-    // }
-
-    // checkToken(token){
-    //     return fetch(`${url}/users/me`, {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${token}`,
-    //         },
-    //     }).then(checkResponse);
-    // };
+   
 }
 
 

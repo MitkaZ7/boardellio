@@ -81,15 +81,15 @@ const UserProfile = ({t}) => {
     <div className='user-profile'>
       <div className="user-profile__info">
         <div className="user-profile__avatar-wrapper">
-          <img src={user.avatar.stringValue} alt="user avatar" className="user-profile__avatar" />
+          <img src={user.user.avatar.stringValue} alt="user avatar" className="user-profile__avatar" />
           <button className="user-profile__button-edit-avatar" type="button" ></button>
         </div>
         <div className='user-profile__info-wrapper'>
           <div className='user-profile__info-item'>
-            {t('email')}: <span> {user.email.stringValue}</span> 
+            {t('email')}: <span> {user.user.email.stringValue}</span> 
           </div>
           <div className='user-profile__info-item' onClick={openEditProfilePopupHandler}>
-            {t('name')}: <span>{user.name.stringValue}</span>
+            {t('name')}: <span>{user.user.name.stringValue}</span>
           </div>
 
           {/* <input
@@ -99,7 +99,7 @@ const UserProfile = ({t}) => {
             title={selectedTaskData.title.stringValue}
           /> */}
           <div className='user-profile__info-item'>
-            {t('role')}: <span>{user.role.stringValue}</span>
+            {t('role')}: <span>{user.user.role.stringValue}</span>
           </div>
           {/* <ButtonEdit className="user-profile__edit-info-btn" /> */}
           <button className="user-profile__edit-info-btn" onClick={openEditProfilePopupHandler}>
@@ -171,7 +171,7 @@ const UserProfile = ({t}) => {
       <TaskPopup />
       <AddTaskPopup/>
       <AddProjectPopup />
-      <EditProfilePopup userName={user.name.stringValue}/>
+      <EditProfilePopup userName={user.user.name.stringValue}/>
     </div>
   )
 }

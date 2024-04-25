@@ -268,17 +268,18 @@ class Api {
                 email: { stringValue: userData.email }
             },
         };
-
+        console.log(requestData)
         const params = {
             documentId: userId,
         };
         return instance.post(`/users`, requestData, { params })
             .then((res) => {
                 console.log('Пользователь успешно создан в Firestore');
+                console.log(res.data)
                 return res.data;
             })
             .catch((error) => {
-                console.error('Ошибка при создании пользователя в Firestore:', error);
+                console.error('Ошибка при записи данных пользователя в Firestore:', error);
                 throw error;
             });
     }

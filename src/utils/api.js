@@ -17,7 +17,7 @@ class Api {
                 projectId: { stringValue: data.projectId },
                 isCompleted: { booleanValue: data.isCompleted },
                 deleted: { booleanValue: data.deleted },
-                number: { integerValue: data.number }, 
+                number: { integerValue: data.number },
                 files: { arrayValue: { values: [] } }
             }
         };
@@ -41,7 +41,7 @@ class Api {
             return task
         });
     }
-    
+
     increaseTaskQty(projectId, newTaskQty) {
         const requestData = {
             fields: {
@@ -54,7 +54,7 @@ class Api {
 
 
     }
-  
+
     updateTask(taskId, data) {
         const requestData = {
             fields: {}
@@ -116,12 +116,12 @@ class Api {
                         ]
                     }
 
-                    
+
                 }
             }
         })
             .then((res) => {
-                
+
                 const data = res.data.map((item) => {
                     const id = item.document.name.split('/').pop();
                     const fields = item.document.fields;
@@ -217,14 +217,13 @@ class Api {
 
     getProjects() {
         return instance.get('/projects')
-        .then((res) => {
-            const data = res.data.documents.map((doc) => ({
-                id: doc.name.split('/').pop(),
-                createTime: doc.createTime,
-                ...doc.fields,
-            }));
-            return data;
-        });
+            .then((res) => {
+                const data = res.data.documents.map((doc) => ({
+                    id: doc.name.split('/').pop(),
+                    ...doc.fields,
+                }));
+                return data;
+            });
     }
 
     createProject(data) {
@@ -241,11 +240,11 @@ class Api {
         return instance.post('/projects', requestData)
             .then((res) => {
                 console.log('Проект успешно создан:', res.data);
-                return res.data; 
+                return res.data;
             })
             .catch((error) => {
                 console.error('Ошибка при создании проекта:', error);
-                throw error; 
+                throw error;
             });
     }
 
@@ -284,40 +283,8 @@ class Api {
             });
     }
 
-    getUserData(userId) {
-        return instance.get(`/users/${userId}`).then((res) => {
-            const userData = {
-                id: res.data.name.split('/').pop(),
-                ...res.data.fields,
-             
-            };
-            return userData
-        });
-    }
-
-    updateUserData(userId, data) {
-        const requestData = {
-            fields: {}
-        };
-        Object.keys(data).forEach(field => {
-            const fieldValue = data[field];
-            if (typeof fieldValue === 'boolean') {
-                requestData.fields[field] = { booleanValue: fieldValue };
-            } else if (Number.isInteger(fieldValue)) {
-                requestData.fields[field] = { integerValue: fieldValue };
-            } else {
-                requestData.fields[field] = { stringValue: fieldValue };
-            }
-        });
-        const updateMaskQuery = Object.keys(requestData.fields).map(field => `updateMask.fieldPaths=${field}`).join('&');
-        return instance.patch(`/users/${userId}?${updateMaskQuery}`, requestData);
-    }
-
-
 
 }
 
 const api = new Api(instance);
 export default api;
-
-

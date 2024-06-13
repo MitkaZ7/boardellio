@@ -3,6 +3,7 @@ import authApi from '../../utils/authApi'
 import api from '../../utils/api'
 import { app } from '../../utils/firebase';
 import { generateRandomName } from '../../utils/generateUserName';
+import { defaultProfilePhoto } from '../../utils/constants';
 import { hideLoader, showLoader } from './loaderSlice';
 
 
@@ -23,66 +24,85 @@ const handleErrors = (error, dispatch) => {
 export const createUser = createAsyncThunk(
   'user/createUser',
   async (regData, { rejectWithValue, dispatch }) => {
-
-    // console.log('regData: ', { ...regData, displayName: generateRandomName()});
-    const res = await authApi.register({ ...regData, displayName: generateRandomName() });
-    console.log(res)
-    // const { email, password } = regData;
-    // const { name, avatar, role } = initialState.user;
-    // try {
-    //   dispatch(showLoader()); // Показываем индикатор загрузки
-    //   const res = await authApi.register(regData);
-    //   await api.createUserInDB(res.data.localId, { email, name, avatar, role });
-    //   dispatch(hideLoader()); // Прячем индикатор загрузки
-    // } catch (error) {
-    //   console.log(error.message)
-    //   dispatch(setError(error.message))
-    //   return rejectWithValue((error.message))
-    // }
-
+    regData.photoUrl = defaultProfilePhoto;
+    regData.displayName = generateRandomName();
+    dispatch(showLoader());
+    try {
+      const res = await authApi.register(regData);
+      console.log(res.data);
+      dispatch(hideLoader());
+    } catch (error) {
+      console.log(error.message);
+      return rejectWithValue((error.message))
+    }
   });
 
 export const authorizeUser = createAsyncThunk(
-  'user/authorizeUser',
-  async (authData, { rejectWithValue, dispatch }) => {
-    console.log('authData at slice: ', authData);
-    // const { email, password } = authData;
-    // try {
+  "user/authorizeUser",
+  async (authData, { dispatch }) => {
+    try {
+      const res = await authApi.authorize(authData);
+      const { refreshToken, idToken, ...userData } = res.data;
+      const tokens = {
+        accessToken: res.data.idToken,
+        refreshToken: res.data.refreshToken,
+      }
+      console.log(userData)
+      if (refreshToken) {
+        dispatch(setUser(userData));
+        dispatch(setAuthorizationStatus(true));
+      }
+      // localStorage.setItem("accessToken", idToken);
+      // localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem('jwt', JSON.stringify(tokens));
 
-    //   const user = await authApi.authorize({ ...authData, returnSecureToken: true });
-    //   const userData = {
-    //     email: user.data.email,
-    //     ...await dispatch(getUserData(user.data.localId)).unwrap(),
-    //   };
-
-
-
-    //   dispatch(setAuthorizationStatus(true));
-
-    //   await dispatch(setUser(userData));
-    //   console.log('data after SetUser: ', userData);
-    // } catch (error) {
-    //   if (error.response && error.response.data && error.response.data.error) {
-    //     // Обработка ошибки от сервера
-    //     const errorMessage = error.response.data.error.message;
-    //     console.log('Firebase error message:', errorMessage);
-    //     dispatch(setError(errorMessage));
-    //   } else if (error.message) {
-    //     // Обработка других ошибок
-    //     console.log('Error message:', error.message);
-    //     dispatch(setError(error.message));
-
-    //   } else {
-    //     // Обработка других случаев
-    //     console.log('Unexpected error:', error);
-    //     dispatch(setError('Unexpected error occurred'));
-    //   }
-    //   return rejectWithValue(error.message);
-    // }
+      
+    } catch (error) {
+      console.error("Failed to authorize user:", error);
+      throw error;
+    }
   }
 );
 
+// export const authorizeUser = createAsyncThunk(
+//   'user/authorizeUser',
+//   async (authData, { rejectWithValue, dispatch }) => {
+   
+//     try {
+//       const res = await authApi.authorize(authData);
+      // const userData = {
+      //   email: res.data.email,
+      //   name: res.data.displayName,
+      //   photoUrl: res.data.photoUrl || defaultProfilePhoto,
+      //   localId: res.data.localId,
+      //   refreshToken: res.data.refreshToken,
+      // }
 
+//       await dispatch(setUser(userData));
+//       await dispatch(setAuthorizationStatus(true));
+//       console.log(userData);
+//       localStorage.setItem('refreshToken', JSON.stringify(userData.refreshToken));
+//     } catch (error) {
+      
+//     }
+//   }
+// );
+
+
+export const refrehUserToken = createAsyncThunk(
+  "user/refreshUserData",
+  async (refreshToken, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await authApi.refreshToken(refreshToken);
+      const data = response.data.userData;
+      console.log(data);
+      // dispatch(setUser(data));
+      dispatch(setAuthorizationStatus(true));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 const getUserData = createAsyncThunk(
   'user/getUserData',
@@ -126,68 +146,47 @@ export const updateUser = createAsyncThunk(
 );
 
 
-
-
-
-const userDataFromLocalStorage = localStorage.getItem('userData');
-// if (userDataFromLocalStorage) {
-//     initialState = JSON.parse(userDataFromLocalStorage);
-// }
-// const initialState = (userDataFromLocalStorage) ? JSON.parse(userDataFromLocalStorage) : {
-//   // email: null,
-//   // name: null,
-//   user: {
-//     email: '',
-//     name: '',
-//     role: 'user',
-//     avatar: null,
-//   },
-//   // accessToken: null,
-//   // idToken: null,
-//   refreshToken: null,
-//   // userId: null,
-//   isAuthorized: false,
-//   error: null,
-// }
 const initialState = {
   user: {
-    email: 'noemail@noemail.ru',
-    name: '',
-    role: 'user',
-    photoUrl: 'https://dummyimage.com/150/b8b8b8/fff',
+    email: "",
+    name: "",
+    role: "user",
+    photoUrl: "",
+    localId: null,
+    
   },
-  
-  
-  refreshToken: null,
-  
   isAuthorized: false,
-  error: null,
-
-}
+  refreshToken: null,
+};
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser(state, action) {
-      Object.keys(action.payload).forEach((key) => {
-        if (key in state.user) {
-          state.user[key] = action.payload[key];
-        }
-      });
+      state.user = action.payload;
+    
+      // Object.keys(action.payload).forEach((key) => {
+      //   if (key in state.user) {
+      //     state.user[key] = action.payload[key];
+      //   }
+      // });
     },
     setAuthorizationStatus(state, action) {
-      state.isAuthorized = action.payload;
+      const refreshToken = localStorage.getItem("refreshToken");
+      state.isAuthorized = Boolean(refreshToken);
     },
+    // setAuthorizationStatus(state, action) {
+    //   state.isAuthorized = action.payload;
+    // },
     setUserName(state, action) {
-      state.user.name.stringValue = action.payload;
+      state.user.name = action.payload;
     },
     setUserAvatar(state, action) {
-      state.user.avatar.stringValue = action.payload;
+      state.user.avatar = action.payload;
     },
-    removeUser(state) {
-        localStorage.removeItem('userData');
-      
+    logoutUser(state) {
+        localStorage.removeItem('refreshToken');
         state.isAuthorized = false;
         state.user = {};
     },
@@ -196,6 +195,9 @@ export const userSlice = createSlice({
     },
     resetError(state, action) {
       state.error = null
+    },
+    saveRefrehToken(state, action) {
+
     }
   },
   extraReducers: (builder) => {
@@ -206,6 +208,12 @@ export const userSlice = createSlice({
       .addCase(authorizeUser.fulfilled, (state, action) => {
         state.isAuthorized = true; 
         
+      })
+      // .addCase(refrehUserToken.pending, (state, action) => {
+      //   state.isLoading = true;
+      // })
+      .addCase(refrehUserToken.fulfilled, (state, action) => {
+        state.isAuthorized = true;
       })
       .addCase(getUserData.fulfilled, (state, action) => {
         state.user = action.payload;
@@ -219,7 +227,7 @@ export const userSlice = createSlice({
       .addMatcher(
         (action) => action.type.endsWith('/fulfilled'),
         (state, action) => {
-          state.error = null;
+          // state.error = null;
         }
       );
   } 
@@ -229,7 +237,7 @@ export const {
   setUser,
   setUserName,
   setUserAvatar, 
-  removeUser, 
+  logoutUser, 
   setError, 
   resetError, 
   setAuthorizationStatus  

@@ -31,16 +31,20 @@
         "Wolverine",
         "Dragon",
         "Fennec",
-        "Pigeon"
-
+        "Pigeon",
+        "Seagull",
+        "Sparrow",
+        "Orca"
     ],
     "lastNames": [
         "Brave",
         "Strong",
         "Clever",
-        "Beautiful",
+        "Flexible",
         "Swift",
         "Wise",
+        "Freaky",
+        "Shiny",
         "Noble",
         "Graceful",
         "Mysterious",
@@ -60,8 +64,9 @@
         "Fearless",
         "Awesome",
         "Kind",
-        "Greedy",
-        "Tasty",
-        "Breathtaking"
+        "Fabulous",
+        "Marvelous",
+        "Breathtaking",
+        "Artificial"
     ]
 }

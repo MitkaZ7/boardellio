@@ -7,7 +7,7 @@ import { createUser, authorizeUser } from '../../store/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { showTooltip } from '../../store/slices/tooltipSlice';
 import WithTranslation from '../hoc/WithTranslation';
-
+import { generateRandomName } from '../../utils/generateUserName';
 
 
 
@@ -43,6 +43,7 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
 
 
     const onSubmit = (data) => {
+       
         if (isRegistration) {
              console.log(data)
             dispatch(createUser(data))

@@ -30,8 +30,8 @@ const EditProfilePopup = ({ t }) => {
     });
 
     useEffect(() => {
-        if (isOpen && user && user.name && user.name.stringValue) {
-            setValue('name', user.name.stringValue);
+        if (isOpen && user && user.name && user.name) {
+            setValue('name', user.name);
         } else {
             reset();
         }

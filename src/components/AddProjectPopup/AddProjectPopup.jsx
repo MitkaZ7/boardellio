@@ -10,7 +10,7 @@ import { createProjectSchema } from '../../utils/validation.js'
 import WithTranslation from '../hoc/WithTranslation';
 
 const AddProjectPopup = ({t}) => {
-  const projectAuthor = useSelector((state)=> state.user.user.email)
+  const projectAuthor = useSelector((state)=> state.user.email)
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ resolver: joiResolver(createProjectSchema) });
   // const navigate = useNavigate();
@@ -25,7 +25,7 @@ const AddProjectPopup = ({t}) => {
     const data = { 
       ...formData, 
       taskQty: 0,
-      author: projectAuthor,
+      author: projectAuthor.stringValue,
     };
     console.log(data)
 
@@ -43,7 +43,7 @@ const AddProjectPopup = ({t}) => {
 
   return (
     <Popup className="popup_type_add-project-popup" isOpen={isOpen} resetForm={reset} popupName={'addProjectPopup'}>
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
+      <form onSubmit={handleSubmit(onSubmit)} className="form add-project-popup">
         <h3 className="form__title">{t('projects-form-add-title')}</h3>
         <fieldset className="form__fieldset form__fieldset_place_add-project">
           <input placeholder={t('projects-form-add-placeholder')} {...register('title')} id='project-title' type='text' className='form__input form__input_place_add-project' />

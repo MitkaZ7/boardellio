@@ -18,6 +18,7 @@
     },
     "intro-tech-title": "開發者：",
     "intro-access-choice-title": "選擇模式並嘗試：",
+    "intro-welcome-title": "嘗試",
     "intro-hint": "前往註冊",
     "intro-btn-readonly": "只讀",
     "intro-btn-fullaccess": "完全存取權限",
@@ -76,5 +77,8 @@
     "hour-s": "点",
     "agree": "是的",
     "disagree": "不",
-    "confrirm-delete": "您確定要刪除該任務嗎？"
+    "confrirm-delete": "您確定要刪除該任務嗎？",
+    "author": "作者",
+    "no-tasks-placeholder": "你没有任务",
+    "no-projects-placeholder": "你没有项目"
 }

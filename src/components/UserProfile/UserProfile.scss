@@ -60,24 +60,21 @@
         font-size: 1.3em;
     }
     &__edit-info-btn {
-        // width: 120px;
-        @include link-hover;
+     
         margin-top: 35px;
-        @include action-button;
-            width: 120px;
-            color: var(--process-clr);
+        @include usual-button;
     }
     &__relative-data {
     //   max-width: 390px;
       align-self: start;
-      border: 1px solid red;
+    //   border: 1px solid red;
     //   justify-self: center;
     
         // text-align: center;
     }
     &__relative-data-wrapper {
         width: 390px;
-        border: 1px solid green;
+        // border: 1px solid green;
         white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -85,7 +82,14 @@
 
     }
     &__relative-data-header {
-        text-transform: uppercase;
+        display: flex;
+        text-align: center;
+       
+        
+    }
+    &__relative-data-title {
+        margin: 0;
+        font-size: 1.4em;
     }
     &__relative-data-list {
         @include list;

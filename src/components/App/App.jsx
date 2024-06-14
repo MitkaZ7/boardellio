@@ -17,10 +17,14 @@ import UserProfile from '../UserProfile/UserProfile';
 import Unauthorized from '../Unauthorized/Unauthorized';
 import RequireAuth from '../hoc/RequireAuth';
 import Changelog from '../ChangeLog/Changelog';
+import Tooltip from '../Tooltip/Tooltip'
+import { hideTooltip } from '../../store/slices/tooltipSlice';
+
 function App() {
   const theme = useSelector(state => state.theme);
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
+  const { isShown } = useSelector((state) => state.tooltip);
   useEffect(() => {
     const storedLanguage = localStorage.getItem('i18nextLng');
     const userData = localStorage.getItem('userData');
@@ -43,12 +47,22 @@ function App() {
 
   }, [theme, i18n, dispatch]);
 
+  // useEffect(() => {
+  //   if (isShown) {
+ 
+  //     const timer = setTimeout(() => {
+  //       dispatch(hideTooltip());
+  //     }, 3000);
 
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [isShown]);
 
 
 
   return (
     <DndProvider backend={HTML5Backend}>
+      {/* {isShown && <Tooltip/>} */}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path='*' element={<NotFound />} />

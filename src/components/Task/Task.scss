@@ -1,6 +1,6 @@
 .task {
     list-style: none;
-    
+    min-width: 600px;
     &__header {
         // margin: 0;
         // padding: 0 0 5px;
@@ -19,7 +19,7 @@
             overflow-wrap: break-word;
             margin: 0;
             color: var(--additional-color);
-            text-transform: lowercase;
+            // text-transform: lowercase;
             font-weight: 100;
             @include link-hover;
             grid-row: 2;
@@ -146,11 +146,19 @@
          }
     &__controls {
         
+        display: grid;
+        grid-template-columns: 1fr min-content min-content;
+        // justify-content: space-between;
+        align-items: center;
+        // justify-self: flex-end;
+      
+    }
+    &__author {
+        color: var(--subtitle-clr);
+        max-width: 250px;
+    }
+    &__buttons-block {
         display: flex;
-        align-self: end;
-        margin-top: 10px;
-        justify-self: flex-end;
-        // width: 50px;
     }
     &__controls-btn {
         

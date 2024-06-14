@@ -86,13 +86,13 @@ export const fadeInAnimation = (element) => {
 }
 
 export const fadeInToDown = (element) => {
-    let tl = gsap.timeline().timeScale(2.5)
+    let tl = gsap.timeline()
     tl.from(element, {
   
         y: -100
     })
     .to(element, {
-        ease: 'none',
+        ease: "power2.out",
         
         y: 100
     })
@@ -101,6 +101,36 @@ export const fadeInToDown = (element) => {
         y: -100
     })
 }
+
+export const fadeInTooltip = (element) => {
+    gsap.fromTo(
+        element,
+        {
+            autoAlpha: 0,
+            y: -100,
+        },
+        {
+            duration: 0.3,
+            autoAlpha: 1,
+            y: 100,
+            ease: "power2.out",
+        }
+    );
+};
+export const fadeOutTooltip = (element, delay = 3) => {
+    gsap.to(element, {
+        delay,
+        autoAlpha: 0,
+        y: -20,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+            // Скрыть тултип после завершения анимации
+            element.style.display = "none";
+        },
+    });
+};
+
 
 
 

@@ -1,4 +1,6 @@
 import axios from 'axios';
+
+
 const instance = axios.create({
     baseURL: 'https://identitytoolkit.googleapis.com/v1',
     params: {
@@ -7,47 +9,70 @@ const instance = axios.create({
 })
 
 class AuthApi {
+    checkResponse(res) {
+        res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+    }
+   
     register(data){
-        return instance.post('/accounts:signUp?',data);
+        return instance.post('/accounts:signUp?', { ...data, returnSecureToken: true });
     }
     authorize(data){
-        return instance.post('/accounts:signInWithPassword?', data)
+        return instance.post('/accounts:signInWithPassword?', {...data, returnSecureToken: true})
     }
-
-    checkToken(token){
-        return instance.post('/accounts:signInWithCustomToken?', token)
+    refreshToken(refreshToken) {
+        console.log(refreshToken)
+        return instance.post('/token', null, {
+            params: {
+                grant_type: 'refresh_token',
+                refresh_token: refreshToken,
+            },
+        });
     }
-    // getUserInfo(){
-    //     return instance.get
-    // }
-
-    // checkToken(token){
-    //     return fetch(`${url}/users/me`, {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${token}`,
+    updateProfile(data){
+        console.log(data)
+        return instance.post('/accounts:update?', data)
+    
+    }
+    getUserById(uid) {
+        return instance.get('/accounts:lookup?localId=' + uid);
+    }
+    getUserData(idToken){
+        return instance.get('/accounts:lookup?idToken='+idToken)
+    
+    }
+    checkToken(idToken) {
+        return instance.get('/accounts:lookup?idToken=' + idToken)
+            .then(res => res.data)
+            .catch(err => {
+                console.log('ошибка проверки токена ', err) 
+                throw err
+            
+            });
+    
+    }
+    // checkToken(idToken) {
+    //     const response = instance.get('/accounts:lookup', {
+    //         params: {
+    //             idToken,
     //         },
-    //     }).then(checkResponse);
-    // };
+    //     });
+
+    //     if (response.data.error) {
+    //         throw new Error(response.data.error.message);
+    //     }
+    //     console.log(response.data.users[0]);
+    //     return response.data.users[0];
+    // }
+    // checkToken(token){
+    //     return instance.get('/accounts:lookup?idToken=' + token)
+    //         // .then(checkResponse).then(res => console.log(res));
+    // }
+   
 }
 
 
-// const checkResponse = (res) =>
-//   res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 
-// export const register = (email, password) => {
-//   return fetch(`${url}/registration`, {
-//     method: "POST",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ email, password })
-//   }).then(checkResponse);
-// };
-
-
+const checkResponse = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 
 const authApi = new AuthApi(instance);
 export default authApi;

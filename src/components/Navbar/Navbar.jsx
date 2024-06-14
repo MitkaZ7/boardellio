@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import WithTranslation from '../hoc/WithTranslation';
 import { useNavigate } from 'react-router-dom';
-import { removeUser } from '../../store/slices/userSlice';
+import { logoutUser } from '../../store/slices/userSlice';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import OptionsPanel from '../OptionsPanel/OptionsPanel';
 import { closeMenu } from '../../store/slices/sideMenuSlice'
@@ -19,7 +19,7 @@ const Navbar = ({t}) => {
 
 
   const handleExitClick = () => {
-    dispatch(removeUser());
+    dispatch(logoutUser());
     navigate('/login');
     dispatch(closeMenu())
   };
@@ -70,10 +70,12 @@ const Navbar = ({t}) => {
           <>
             <li className='navbar__item'><Link to='/projects' className='navbar__link'>{t('menu-item-projects-list')}</Link></li>
             {/* <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-project-tasks')}</Link></li> */}
+          <li className='navbar__item'><Link to='/users/me' className='navbar__link'>{t('user-profile-link')}</Link></li>
+
           </>
         }
 
-        <li className='navbar__item'><Link to='tasks' className='navbar__link'>{t('menu-item-contacts')}</Link></li>
+        <li className='navbar__item'><Link to='contacts' className='navbar__link'>{t('menu-item-contacts')}</Link></li>
         <li className='navbar__item'><Link to='https://github.com/MitkaZ7/boardellio' className='navbar__link' target="_blank">{t('menu-item-github')}</Link></li>
         {/* <li className='navbar__item'><Link to='/changelog' className='navbar__link'>{t('menu-item-changelog')}</Link></li> */}
 

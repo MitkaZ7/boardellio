@@ -1,0 +1,4 @@
+.button_type_add {
+    @include button-add;
+    @include link-hover;
+}

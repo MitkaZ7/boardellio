@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { fadeInAnimation } from '../../utils/animations'
 import { createUser, authorizeUser } from '../../store/slices/userSlice';
-import { showLoader, hideLoader } from '../../store/slices/loaderSlice';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { showTooltip } from '../../store/slices/tooltipSlice';
 import WithTranslation from '../hoc/WithTranslation';
+import { generateRandomName } from '../../utils/generateUserName';
 
 
-import Popup from '../Popup/Popup';
 
-// import { loginSchema, registrationSchema } from '../../utils/validation'
+
 const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegistration, validationSchema,t }) => {
     const dispatch = useDispatch();
     const { error } = useSelector((state) => state.user);
     const formRef = useRef();
     const navigate = useNavigate();
+    const { isShown } = useSelector((state) => state.tooltip);
 
 
     const { register,
@@ -43,31 +43,37 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
 
 
     const onSubmit = (data) => {
+       
         if (isRegistration) {
              console.log(data)
             dispatch(createUser(data))
                 .then((resultAction) => {
                     if (createUser.fulfilled.match(resultAction)) {
                         // Успешная регистрация
+                        // dispatch(showTooltip({ message: "Регистрация прошла успешно!" }));
                         reset();
                         navigate(linkTo);
                     } else {
-                        // Ошибка при регистрации
-                        // Можно не выполнять редирект, так как произошла ошибка
+                        // dispatch(showTooltip({ message: "Ошибка при регистрации. Пожалуйста, попробуйте снова.", messageType: "Error" }));
                     }
+                })
+                .catch((error) => {
+                    dispatch(showTooltip({ message: transformError(error.message), messageType: "Error" }));
                 });
         } else {
-            console.log(data)
             dispatch(authorizeUser(data))
                 .then((resultAction) => {
                     if (authorizeUser.fulfilled.match(resultAction)) {
                         // Успешная авторизация
+                        // dispatch(showTooltip({ message: "Авторизация прошла успешно!" }));
                         reset();
                         navigate('/projects');
                     } else {
-                        // Ошибка при авторизации
-                        // Можно не выполнять редирект, так как произошла ошибка
+                        // dispatch(showTooltip({ message: "Ошибка при авторизации. Пожалуйста, проверьте свои данные.", messageType: "Error" }));
                     }
+                })
+                .catch((error) => {
+                    // dispatch(showTooltip({ message: transformError(error.message), messageType: "Error" }));
                 });
         }
     };
@@ -75,7 +81,9 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
 
     return (
         <div className='entryForm-container'>
+      
             <form className='entryForm' onSubmit={handleSubmit(onSubmit)} ref={formRef}>
+            
                 <h3 className="entryForm__title">{formTitle}</h3>
 
                 <fieldset className='entryForm__fieldset'>

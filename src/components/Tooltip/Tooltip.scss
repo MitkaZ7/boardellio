@@ -12,17 +12,17 @@
     // right: 0;
     max-height: fit-content;
 
-    &_state_open {
-        // top: 30px;
-        // display: flex;
-        // transition: all 1.0s ease-in-out;
-        // opacity: 1;
-    }
+    // &_state_shown {
+    //     top: 30px;
+    //     display: flex;
+    //     transition: all 1.0s ease-in-out;
+    //     opacity: 1;
+    // }
     &__container {
         max-width: 375px;
             // width: 100%;
             background-color: var(--queue-clr);
-            color: var(--bg-clr);
+            color: var(--white-clr);
             border-radius: 5px;
             margin: 0 auto;
             padding: 10px;

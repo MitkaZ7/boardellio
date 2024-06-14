@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { notDeletedProjecTasks } from './firebase'
 import { formateDate } from '../utils/formateDate'
+const accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImRmOGIxNTFiY2Q5MGQ1YjMwMjBlNTNhMzYyZTRiMzA3NTYzMzdhNjEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiU21hcnQgRm94IiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2Rhc2hib2FyZC1hcHAtMmFkMDYiLCJhdWQiOiJkYXNoYm9hcmQtYXBwLTJhZDA2IiwiYXV0aF90aW1lIjoxNzE4MTM4NzMzLCJ1c2VyX2lkIjoiQ3J2WXN1Q2hjak83cTVMNW53Vm1SUWZVYkpHMyIsInN1YiI6IkNydllzdUNoY2pPN3E1TDVud1ZtUlFmVWJKRzMiLCJpYXQiOjE3MTgxMzg3MzMsImV4cCI6MTcxODE0MjMzMywiZW1haWwiOiJpQG1pdGthZGV2LnJ1IiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImlAbWl0a2FkZXYucnUiXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.eoA0h2ok7jz7Z2G2XuX_9kq_uIsfHBNb6Wg6Lojpj2oIKCQyriEtoJIr7S6-2e3x7aVWqCnv60EjHVnyqONqnes8Tnl8IGoQZkCOj5kmklq0sWSVqIu0wtI2kBDUcKDe9HLJTaWWXE_mdjQTvXgmdKDu89gnayvUN3encIfMdyVsLtfesxFo5uymKLbukVXand9e6mE7UiegVyIYME5yzvLF_IeI6EBTRl8R7b-rl-wLNg29BRFzawtjwo0BiVmyC9zMRNCDB4fJp_DH7ig7QukEqTNcHnYWlc1QsxmZ7dRj90MqLJwOaYK8zk3cEl2bCzFQKJj8P-BsBFpl4JfEXQ';
 const instance = axios.create({
     baseURL: 'https://firestore.googleapis.com/v1/projects/dashboard-app-2ad06/databases/(default)/documents',
+    headers: {
+        Authorization: `Bearer ${accessToken}`
+    }
 });
 
 class Api {
@@ -17,13 +21,15 @@ class Api {
                 projectId: { stringValue: data.projectId },
                 isCompleted: { booleanValue: data.isCompleted },
                 deleted: { booleanValue: data.deleted },
-                number: { integerValue: data.number }, 
+                number: { integerValue: data.number },
                 files: { arrayValue: { values: [] } }
             }
         };
 
         return instance.post('/tasks', requestData)
+           
             .then((res) => {
+                console.log(requestData)
                 return res.data;
             })
             .catch((error) => {
@@ -41,7 +47,7 @@ class Api {
             return task
         });
     }
-    
+
     increaseTaskQty(projectId, newTaskQty) {
         const requestData = {
             fields: {
@@ -54,7 +60,7 @@ class Api {
 
 
     }
-  
+
     updateTask(taskId, data) {
         const requestData = {
             fields: {}
@@ -116,12 +122,12 @@ class Api {
                         ]
                     }
 
-                    
+
                 }
             }
         })
             .then((res) => {
-                
+
                 const data = res.data.map((item) => {
                     const id = item.document.name.split('/').pop();
                     const fields = item.document.fields;
@@ -217,13 +223,13 @@ class Api {
 
     getProjects() {
         return instance.get('/projects')
-        .then((res) => {
-            const data = res.data.documents.map((doc) => ({
-                id: doc.name.split('/').pop(),
-                ...doc.fields,
-            }));
-            return data;
-        });
+            .then((res) => {
+                const data = res.data.documents.map((doc) => ({
+                    id: doc.name.split('/').pop(),
+                    ...doc.fields,
+                }));
+                return data;
+            });
     }
 
     createProject(data) {
@@ -240,11 +246,11 @@ class Api {
         return instance.post('/projects', requestData)
             .then((res) => {
                 console.log('Проект успешно создан:', res.data);
-                return res.data; 
+                return res.data;
             })
             .catch((error) => {
                 console.error('Ошибка при создании проекта:', error);
-                throw error; 
+                throw error;
             });
     }
 
@@ -258,24 +264,27 @@ class Api {
     }
 
     // USER DATA:
-    createUserInDB(uid, userData) {
-        console.log(userData)
+    createUserInDB(userId, userData) {
         const requestData = {
             fields: {
-                email: { stringValue: userData.email },
                 name: { stringValue: userData.name },
                 avatar: { stringValue: userData.avatar },
                 role: { stringValue: userData.role },
-            }
+                email: { stringValue: userData.email }
+            },
         };
-
-        return instance.post(`/users/${uid}`, requestData)
+        console.log(requestData)
+        const params = {
+            documentId: userId,
+        };
+        return instance.post(`/users`, requestData, { params })
             .then((res) => {
-                console.log('Данные пользователя успешно добавлены в БД:', res.data);
+                console.log('Пользователь успешно создан в Firestore');
+                console.log(res.data)
                 return res.data;
             })
             .catch((error) => {
-                console.error('Ошибка при добавлении данных пользователя в БД:', error);
+                console.error('Ошибка при записи данных пользователя в Firestore:', error);
                 throw error;
             });
     }

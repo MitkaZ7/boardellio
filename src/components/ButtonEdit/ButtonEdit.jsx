@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import WithTranslation from '../hoc/WithTranslation';
 
-const ButtonEdit = ({t}) => {
+const ButtonEdit = ({ t, className }) => {
 
   return (
       <button className="button-edit">

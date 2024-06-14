@@ -1,7 +1,7 @@
 import Joi from 'joi'
 
 const options = {
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'ru'] } }).min(6).max(20),
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'ru', 'net'] } }),
     password: Joi.string().min(6).max(30).required(),
     confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
         'any.only': 'Passwords do not match',
@@ -16,6 +16,7 @@ const options = {
     projectTag: Joi.string().required(),
     taskPriority: Joi.string(),
     taskAuthor: Joi.string(),
+    userName: Joi.string(),
 }
 
 
@@ -53,3 +54,9 @@ export const createProjectSchema = Joi.object({
     description: options.projectDescription,
     tag: options.projectTag,
 }).required();
+
+export const userProfileSchema = Joi.object({
+    name: options.userName,
+    // email: options.email, 
+
+});

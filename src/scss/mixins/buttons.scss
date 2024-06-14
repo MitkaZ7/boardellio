@@ -61,3 +61,10 @@
     border: none;
    
 }
+
+@mixin usual-button {
+    @include link-hover;
+    @include action-button;
+    width: 120px;
+    color: var(--process-clr);
+}

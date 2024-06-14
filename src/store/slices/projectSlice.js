@@ -48,11 +48,9 @@ export const getUserProjects = createAsyncThunk(
     async (userEmail, { rejectWithValue, dispatch }) => {
         dispatch(showLoader());
         try {
-            console.log(userEmail)
             const projectsList = await api.getUserProjects(userEmail);
             if (projectsList && projectsList.length > 0) {
                 dispatch(hideLoader());
-                console.log(projectsList)
                 return projectsList;
             } else {
                 dispatch(hideLoader());

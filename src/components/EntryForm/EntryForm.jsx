@@ -3,7 +3,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { fadeInAnimation } from '../../utils/animations'
-import { createUser, authorizeUser } from '../../store/slices/userSlice';
+import { createUser, loginUser } from '../../store/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { showTooltip } from '../../store/slices/tooltipSlice';
 import WithTranslation from '../hoc/WithTranslation';
@@ -61,9 +61,9 @@ const EntryForm = ({ buttonText, formTitle, linkText, linkTitle, linkTo, isRegis
                     dispatch(showTooltip({ message: transformError(error.message), messageType: "Error" }));
                 });
         } else {
-            dispatch(authorizeUser(data))
+            dispatch(loginUser(data))
                 .then((resultAction) => {
-                    if (authorizeUser.fulfilled.match(resultAction)) {
+                    if (loginUser.fulfilled.match(resultAction)) {
                         // Успешная авторизация
                         // dispatch(showTooltip({ message: "Авторизация прошла успешно!" }));
                         reset();

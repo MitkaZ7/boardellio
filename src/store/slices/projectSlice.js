@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { hideLoader, showLoader } from './loaderSlice';
 import { closePopup } from './popupSlice';
-import api from '../../utils/api';
+import api from '../../utils/Api';
 
 const getInitialSelectedProject = () => {
     const storedSelectedProject = localStorage.getItem('selectedProject');

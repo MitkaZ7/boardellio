@@ -11,7 +11,7 @@ import Intro from '../intro/Intro';
 import NotFound from '../NotFound/NotFound';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { setUser } from '../../store/slices/userSlice';
+import { setUser, refreshUserToken } from '../../store/slices/userSlice';
 import { useTranslation } from 'react-i18next';
 import UserProfile from '../UserProfile/UserProfile';
 import Unauthorized from '../Unauthorized/Unauthorized';
@@ -19,6 +19,7 @@ import RequireAuth from '../hoc/RequireAuth';
 import Changelog from '../ChangeLog/Changelog';
 import Tooltip from '../Tooltip/Tooltip'
 import { hideTooltip } from '../../store/slices/tooltipSlice';
+// import { getTokens } from '../../utils/tokenUtils';
 
 function App() {
   const theme = useSelector(state => state.theme);
@@ -28,6 +29,7 @@ function App() {
   useEffect(() => {
     const storedLanguage = localStorage.getItem('i18nextLng');
     const userData = localStorage.getItem('userData');
+    // const tokens = getTokens();
 
     if (storedLanguage) {
       i18n.changeLanguage(storedLanguage);
@@ -44,6 +46,9 @@ function App() {
         dispatch(setUser(user))
       }
     }
+    // if (tokens && tokens.refreshToken) {
+    //   dispatch(refreshUserToken());
+    // }
 
   }, [theme, i18n, dispatch]);
 
@@ -58,6 +63,14 @@ function App() {
   //   }
   // }, [isShown]);
 
+  
+  // useEffect(() => {
+  //   // Проверяем наличие токенов в localStorage и обновляем их, если они существуют
+  //   const tokens = JSON.parse(localStorage.getItem('jwt') || '{}');
+  //   if (tokens && tokens.refreshToken) {
+  //     dispatch(refreshUserToken());
+  //   }
+  // }, [dispatch]);
 
 
   return (

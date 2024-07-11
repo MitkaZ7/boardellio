@@ -1,4 +1,4 @@
-export const saveTokens = (tokens) => {
+export const setTokens = (tokens) => {
     localStorage.setItem('jwt', JSON.stringify(tokens));
 };
 

@@ -81,7 +81,7 @@ const UserProfile = ({t}) => {
     <div className='user-profile'>
       <div className="user-profile__info">
         <div className="user-profile__avatar-wrapper">
-          <img src={user.photoUrl} alt="user avatar" className="user-profile__avatar" />
+          <img src={user.photoUrl || avatar} alt="user avatar" className="user-profile__avatar" />
           <button className="user-profile__button-edit-avatar" type="button" ></button>
         </div>
         <div className='user-profile__info-wrapper'>
@@ -89,7 +89,7 @@ const UserProfile = ({t}) => {
             {t('email')}: <span> {user.email}</span> 
           </div>
           <div className='user-profile__info-item' onClick={openEditProfilePopupHandler}>
-            {t('name')}: <span>{user.name}</span>
+            {t('name')}: <span>{user.displayName}</span>
           </div>
 
           {/* <input

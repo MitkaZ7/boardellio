@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import api from '../../utils/api';
+import api from '../../utils/Api';
 import { hideLoader, showLoader } from './loaderSlice';
 import { increaseTaskQty } from './projectSlice';
 
